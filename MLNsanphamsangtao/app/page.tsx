@@ -12,38 +12,32 @@ const TIMELINE_YEARS = [
   { 
     year: 1945, 
     label: '1945', 
-    title: 'Cách Mạng Tháng Tám',
-    position: 'left'
+    title: 'Cách Mạng Tháng Tám'
   },
   { 
     year: 1954, 
     label: '1954', 
-    title: 'Điện Biên Phủ',
-    position: 'right' 
+    title: 'Điện Biên Phủ'
   },
   { 
     year: 1975, 
     label: '1975', 
-    title: 'Thống Nhất Đất Nước',
-    position: 'left' 
+    title: 'Thống Nhất Đất Nước'
   },
   { 
     year: 1986, 
     label: '1986', 
-    title: 'Đổi Mới',
-    position: 'right' 
+    title: 'Đổi Mới'
   },
   { 
     year: 1991, 
     label: '1991', 
-    title: 'Đại Hội VII',
-    position: 'left' 
+    title: 'Đại Hội VII'
   },
   { 
     year: 2011, 
     label: '2011', 
-    title: 'Đại Hội XI',
-    position: 'right' 
+    title: 'Đại Hội XI'
   },
 ];
 
@@ -85,104 +79,115 @@ export default function Home() {
 
       {/* Main Content */}
       <div className="max-w-6xl mx-auto px-6 py-8">
-        {/* Timeline Section - Desktop */}
-        <div className="hidden lg:block relative">
-          {/* Main vertical line */}
-          <div className="absolute left-1/2 -translate-x-1/2 top-0 bottom-0 w-0.5 bg-primary/50" />
-          
-          {/* Timeline Items */}
-          <div className="space-y-16 py-4">
-            {TIMELINE_YEARS.map((item, index) => {
-              const isActive = activeYear === item.year;
-              const isLeft = item.position === 'left';
-              
-              return (
-                <div
-                  key={item.year}
-                  className={`relative flex ${isLeft ? 'flex-row' : 'flex-row-reverse'}`}
-                >
-                  {/* Timeline Content */}
-                  <div className="w-1/2">
-                    <div className={`${isLeft ? 'pr-12 text-right' : 'pl-12 text-left'}`}>
-                      <button
-                        onClick={() => setActiveYear(item.year)}
-                        className={`group inline-block w-full max-w-xs ${isLeft ? 'text-right ml-auto' : 'text-left mr-auto'}`}
-                      >
-                        <div className={`rounded-lg border p-5 transition-all ${
-                          isActive 
-                            ? 'border-primary bg-primary/5' 
-                            : 'border-border/50 bg-card hover:border-primary/30'
-                        }`}>
-                          {/* Year */}
-                          <div className={`inline-flex items-center justify-center w-10 h-10 rounded-full mb-3 ${
-                            isActive 
-                              ? 'bg-primary text-primary-foreground' 
-                              : 'bg-muted text-muted-foreground group-hover:bg-primary/20'
-                          }`}>
-                            <span className="text-sm font-bold">{item.label}</span>
-                          </div>
-                          
-                          {/* Title */}
-                          <h3 className={`text-lg font-bold mb-1 ${
-                            isActive ? 'text-primary' : 'text-foreground'
-                          }`}>
-                            {item.title}
-                          </h3>
-                          
-                          {/* Description */}
-                          <p className="text-xs text-muted-foreground">
-                            Nhấn để xem chi tiết
-                          </p>
-                        </div>
-                      </button>
+        {/* Horizontal Timeline */}
+        <div className="mb-8">
+          {/* Timeline Line */}
+          <div className="relative">
+            {/* Main horizontal line */}
+            <div className="absolute left-0 right-0 top-1/2 h-0.5 bg-primary/30 -translate-y-1/2" />
+            
+            {/* Timeline Items Container */}
+            <div className="relative flex justify-between items-center py-8">
+              {TIMELINE_YEARS.map((item, index) => {
+                const isActive = activeYear === item.year;
+                const isFirst = index === 0;
+                const isLast = index === TIMELINE_YEARS.length - 1;
+                
+                return (
+                  <div key={item.year} className="relative flex flex-col items-center">
+                    {/* Circle on timeline */}
+                    <div className="relative z-10 mb-6">
+                      <div className={`w-8 h-8 rounded-full border-4 border-background transition-all duration-300 flex items-center justify-center ${
+                        isActive 
+                          ? 'bg-primary scale-125 shadow-lg shadow-primary/30' 
+                          : 'bg-primary/40 hover:scale-110'
+                      }`}>
+                        {isActive && (
+                          <div className="w-2 h-2 rounded-full bg-background" />
+                        )}
+                      </div>
                     </div>
-                  </div>
 
-                  {/* Timeline Circle */}
-                  <div className="absolute left-1/2 -translate-x-1/2 w-10 h-10 flex items-center justify-center z-10">
-                    <div className={`w-4 h-4 rounded-full border-2 border-background transition-all ${
-                      isActive ? 'bg-primary scale-125' : 'bg-primary/40'
-                    }`} />
+                    {/* Content Card */}
+                    <button
+                      onClick={() => setActiveYear(item.year)}
+                      className={`w-32 transition-all duration-300 ${
+                        isActive ? 'scale-105' : 'hover:scale-[1.02]'
+                      }`}
+                    >
+                      <div className={`rounded-lg border p-4 text-center ${
+                        isActive 
+                          ? 'border-primary bg-primary/5 shadow-md' 
+                          : 'border-border/50 bg-card hover:border-primary/30'
+                      }`}>
+                        {/* Year */}
+                        <div className={`text-lg font-bold mb-1 ${
+                          isActive ? 'text-primary' : 'text-foreground'
+                        }`}>
+                          {item.label}
+                        </div>
+                        
+                        {/* Title */}
+                        <div className={`text-sm font-medium mb-1 ${
+                          isActive ? 'text-primary' : 'text-foreground'
+                        }`}>
+                          {item.title}
+                        </div>
+                        
+                        {/* Description */}
+                        <div className="text-xs text-muted-foreground">
+                          Nhấn để xem chi tiết
+                        </div>
+                      </div>
+                    </button>
+
+                    {/* Connecting line (between circles) */}
+                    {!isLast && (
+                      <div className="absolute left-1/2 top-4 w-full h-0.5 bg-primary/30 -z-10" 
+                        style={{ left: 'calc(50% + 1rem)' }} />
+                    )}
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
+            </div>
           </div>
         </div>
 
-        {/* Timeline Section - Mobile */}
-        <div className="lg:hidden mb-6">
-          <div className="space-y-3">
+        {/* Mobile Horizontal Timeline (Scrollable) */}
+        <div className="lg:hidden mb-6 overflow-x-auto pb-4">
+          <div className="flex space-x-4 min-w-max px-4">
             {TIMELINE_YEARS.map((item) => {
               const isActive = activeYear === item.year;
               return (
                 <button
                   key={item.year}
                   onClick={() => setActiveYear(item.year)}
-                  className={`w-full p-4 rounded-lg border transition-all text-left ${
-                    isActive 
-                      ? 'border-primary bg-primary/5' 
-                      : 'border-border/50 bg-card hover:border-primary/30'
+                  className={`flex-shrink-0 w-28 transition-all duration-300 ${
+                    isActive ? 'scale-105' : ''
                   }`}
                 >
-                  <div className="flex items-center gap-3">
-                    {/* Year Circle */}
-                    <div className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center ${
-                      isActive 
-                        ? 'bg-primary text-primary-foreground' 
-                        : 'bg-muted text-muted-foreground'
+                  <div className={`rounded-lg border p-4 text-center ${
+                    isActive 
+                      ? 'border-primary bg-primary/5 shadow-md' 
+                      : 'border-border/50 bg-card hover:border-primary/30'
+                  }`}>
+                    {/* Year */}
+                    <div className={`text-lg font-bold mb-1 ${
+                      isActive ? 'text-primary' : 'text-foreground'
                     }`}>
-                      <span className="text-sm font-bold">{item.label}</span>
+                      {item.label}
                     </div>
                     
-                    {/* Content */}
-                    <div className="flex-1">
-                      <h3 className={`font-bold ${isActive ? 'text-primary' : 'text-foreground'}`}>
-                        {item.title}
-                      </h3>
-                      <p className="text-xs text-muted-foreground mt-0.5">
-                        Nhấn để xem chi tiết
-                      </p>
+                    {/* Title */}
+                    <div className={`text-sm font-medium mb-1 ${
+                      isActive ? 'text-primary' : 'text-foreground'
+                    }`}>
+                      {item.title}
+                    </div>
+                    
+                    {/* Description */}
+                    <div className="text-xs text-muted-foreground">
+                      Nhấn để xem chi tiết
                     </div>
                   </div>
                 </button>
@@ -196,6 +201,21 @@ export default function Home() {
           {activeYear ? (
             <div className="animate-in fade-in duration-300">
               <div className="bg-card rounded-lg border border-border/30 shadow-sm overflow-hidden">
+                {/* Header with year and title */}
+                <div className="bg-gradient-to-r from-primary/5 to-primary/10 p-6 border-b border-border/30">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                      <div className="w-3 h-3 rounded-full bg-primary" />
+                      <h2 className="text-2xl font-bold text-primary">
+                        {TIMELINE_YEARS.find(item => item.year === activeYear)?.title}
+                      </h2>
+                    </div>
+                    <span className="px-4 py-2 bg-primary text-primary-foreground rounded-full text-sm font-medium">
+                      {activeYear}
+                    </span>
+                  </div>
+                </div>
+                
                 {/* Content */}
                 <div className="p-6">
                   {renderTimeline()}
