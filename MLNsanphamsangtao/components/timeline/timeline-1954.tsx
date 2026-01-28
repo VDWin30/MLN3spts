@@ -22,19 +22,19 @@ interface TimelineEvent {
 }
 
 const DATA_1954: TimelineEvent[] = [
-  {
+ {
     date: '1954 - 1957',
     title: '1. Bối cảnh lịch sử và sự xác lập con đường quá độ',
-    content: '
-      Sau chiến thắng Điện Biên Phủ "lừng lẫy năm châu, chấn động địa cầu", Hiệp định Giơnevơ năm 1954 về Đông Dương đã được ký kết, đánh dấu một bước ngoặt quyết định trong tiến trình cách mạng Việt Nam.
-  Với các điều khoản của hiệp định, nước Việt Nam tạm thời bị chia cắt thành hai miền qua vĩ tuyến 17, với hai chế độ chính trị khác nhau. Miền Bắc hoàn toàn được giải phóng, tạo điều kiện cho Đảng Lao động Việt Nam triển khai những bước đi đầu tiên của thời kỳ quá độ lên chủ nghĩa xã hội.
-      '
+    content: `Sau chiến thắng Điện Biên Phủ "lừng lẫy năm châu, chấn động địa cầu", Hiệp định Giơnevơ năm 1954 về Đông Dương đã được ký kết, đánh dấu một bước ngoặt quyết định trong tiến trình cách mạng Việt Nam.
+
+Với các điều khoản của hiệp định, nước Việt Nam tạm thời bị chia cắt thành hai miền qua vĩ tuyến 17, với hai chế độ chính trị khác nhau. Miền Bắc hoàn toàn được giải phóng, tạo điều kiện cho Đảng Lao động Việt Nam triển khai những bước đi đầu tiên của thời kỳ quá độ lên chủ nghĩa xã hội.`,
     images: [
       { type: 'image', src: 'https://file3.qdnd.vn/data/images/0/2024/05/08/upload_2072/dien%20bien%20phu%201954.jpg', caption: 'Bộ đội tiến về tiếp quản Thủ đô (10/10/1954)' },
-      { type: 'image', src: 'https://www.nxbctqg.org.vn/img_data/images/HiepdinhGionevo.jpg', caption: 'Hiệp định Gionevo' }
+      { type: 'image', src: 'https://www.nxbctqg.org.vn/img_data/images/HiepdinhGionevo.jpg', caption: 'Hiệp định Giơnevơ' }
     ],
     videos: [
-       { type: 'video', src: 'https://www.youtube.com/watch?v=rHB7aQG72po', caption: 'Phim tài liệu - Giải phóng Thủ đô 10/10/1954 [GLS số 16]' }
+       // Chỉ lấy ID video (phần sau v=)
+       { type: 'video', src: 'rHB7aQG72po', caption: 'Phim tài liệu - Giải phóng Thủ đô 10/10/1954 [GLS số 16]' }
     ],
     music: [
       { type: 'audio', src: '/music/tien-ve-ha-noi.mp3', caption: 'Tiến Về Hà Nội', author: 'Văn Cao' }
