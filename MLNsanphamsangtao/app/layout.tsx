@@ -89,38 +89,7 @@ export default function RootLayout({
         
         {/* Main Content */}
         <div className="relative z-10">
-          {/* Header */}
-          <header className="sticky top-0 z-50 backdrop-blur-lg bg-white/80 dark:bg-gray-900/80 border-b border-gray-200 dark:border-gray-800">
-            <div className="container mx-auto px-4 py-4">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <div className="w-8 h-8 bg-gradient-to-r from-red-600 to-amber-500 rounded-lg flex items-center justify-center">
-                    <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
-                    </svg>
-                  </div>
-                  <h1 className="text-lg font-bold bg-gradient-to-r from-red-600 to-amber-500 bg-clip-text text-transparent">
-                    Lịch Sử Việt Nam
-                  </h1>
-                </div>
-                <nav className="hidden md:flex space-x-6">
-                  <a href="/timeline" className="text-gray-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 transition-colors">
-                    Timeline
-                  </a>
-                  <a href="/documents" className="text-gray-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 transition-colors">
-                    Tài Liệu
-                  </a>
-                  <a href="/gallery" className="text-gray-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 transition-colors">
-                    Hình Ảnh
-                  </a>
-                  <a href="/about" className="text-gray-700 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 transition-colors">
-                    Về Chúng Tôi
-                  </a>
-                </nav>
-              </div>
-            </div>
-          </header>
-
+       
           {children}
 
           {/* Footer */}
