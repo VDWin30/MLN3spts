@@ -1,21 +1,6 @@
-/**
- * TIMELINE NĂM 1945: Cách Mạng Tháng Tám
- * 
- * CẤU TRÚC MỚI: MỖI NĂM CÓ THỂ CÓ NHIỀU MILESTONE (MỐC SỰ KIỆN)
- * 
- * HƯỚNG DẪN CHỈNH SỬA:
- * 1. Mỗi milestone là 1 phần nội dung độc lập
- * 2. Có thể thêm nhiều HÌNH ẢNH trong 1 milestone (gallery)
- * 3. Có thể thêm nhiều VIDEO YouTube trong 1 milestone
- * 4. Sử dụng LINK NHẠC từ internet (không cần upload file)
- * 
- * TÌM NHANH:
- * - Ctrl+F "[EDIT MILESTONE]" → Thêm/sửa milestone
- * - Ctrl+F "[EDIT IMAGE]" → Thêm/sửa hình ảnh
- * - Ctrl+F "[EDIT VIDEO]" → Thêm/sửa video YouTube
- * - Ctrl+F "[EDIT MUSIC]" → Thêm/sửa nhạc
- */
+import React, { useState } from 'react';
 
+// [GIỮ NGUYÊN INTERFACE VÀ DỮ LIỆU MILESTONES_1945 CỦA BẠN]
 interface Milestone {
   date: string;
   title: string;
@@ -27,132 +12,132 @@ interface Milestone {
 
 const MILESTONES_1945: Milestone[] = [
   {
-    // [EDIT MILESTONE] - MILESTONE 1: THÁNG 8
     date: '19/8/1945',
     title: 'Cách Mạng Tháng Tám Bắt Đầu',
     description: 'Cách Mạng Tháng Tám bùng nổ trên toàn quốc dưới sự lãnh đạo của Đảng Cộng sản Việt Nam. Nhân dân từ Bắc vào Nam đứng lên giành chính quyền từ tay thực dân Pháp và phát xít Nhật.',
-    images: [
-      // [EDIT IMAGE] - Thêm/sửa các hình ảnh
-      { src: '/images/1945-canh-mang.jpg', alt: 'Cách Mạng Tháng Tám 1945' },
-      // { src: 'https://example.com/image2.jpg', alt: 'Hình ảnh thứ 2' },
-    ],
-    videos: [
-      // [EDIT VIDEO] - Thêm/sửa video YouTube (thay VIDEO_ID)
-      { id: 'dQw4w9WgXcQ', title: 'Phim tư liệu Cách Mạng Tháng Tám' },
-    ],
-    music: {
-      // [EDIT MUSIC] - Thay link nhạc từ internet
-      name: 'Tiến Quân Ca',
-      artist: 'Văn Cao',
-      url: 'https://example.com/tien-quan-ca.mp3',
-    },
+    images: [{ src: '/images/1945-canh-mang.jpg', alt: 'Cách Mạng Tháng Tám 1945' }],
+    videos: [{ id: 'dQw4w9WgXcQ', title: 'Phim tư liệu Cách Mạng Tháng Tám' }],
+    music: { name: 'Tiến Quân Ca', artist: 'Văn Cao', url: 'https://example.com/tien-quan-ca.mp3' },
   },
   {
-    // [EDIT MILESTONE] - MILESTONE 2: 2/9
     date: '2/9/1945',
     title: 'Tuyên Bố Độc Lập',
     description: 'Tại Quảng Trường Ba Đình, Hà Nội, Chủ tịch Hồ Chí Minh chính thức tuyên bố độc lập của Việt Nam. Việt Nam Dân chủ Cộng hòa chính thức thành lập.',
-    images: [
-      { src: '/images/1945-canh-mang.jpg', alt: 'Lễ tuyên bố độc lập Ba Đình' },
-    ],
-    videos: [
-      { id: 'dQw4w9WgXcQ', title: 'Lễ tuyên bố độc lập' },
-    ],
-    music: {
-      name: 'Quốc Ca Việt Nam',
-      artist: 'Văn Cao',
-      url: 'https://example.com/quoc-ca.mp3',
-    },
+    images: [{ src: '/images/1945-ba-dinh.jpg', alt: 'Lễ tuyên bố độc lập' }],
+    videos: [{ id: 'dQw4w9WgXcQ', title: 'Lễ tuyên bố độc lập' }],
+    music: { name: 'Quốc Ca Việt Nam', artist: 'Văn Cao', url: 'https://example.com/quoc-ca.mp3' },
   },
 ];
 
 export function Timeline1945() {
   return (
-    <div className="space-y-8">
-      {/* Tiêu đề năm */}
-      <div className="border-b border-border pb-4">
-        <h2 className="text-3xl font-bold text-primary">1945</h2>
-        <p className="text-muted-foreground mt-1">Cách Mạng Tháng Tám - Thành Lập Việt Nam Dân Chủ Cộng Hòa</p>
+    <div className="max-w-4xl mx-auto p-6 space-y-12">
+      <div className="border-b border-border pb-6">
+        <h2 className="text-4xl font-black text-primary uppercase tracking-tight">1945</h2>
+        <p className="text-xl text-muted-foreground mt-2 font-medium">
+          Cách Mạng Tháng Tám - Thành Lập Việt Nam Dân Chủ Cộng Hòa
+        </p>
       </div>
 
-      {/* Danh sách các milestone */}
-      <div className="space-y-8">
-        {MILESTONES_1945.map((milestone, idx) => (
-          <div key={idx} className="border-l-2 border-primary pl-6 pb-8 relative">
-            {/* Dot trên timeline */}
-            <div className="absolute -left-3 top-0 w-4 h-4 bg-primary rounded-full" />
+      <div className="relative">
+        {/* Đường line dọc xuyên suốt */}
+        <div className="absolute left-4 top-0 bottom-0 w-0.5 bg-muted" />
 
-            {/* Milestone header */}
-            <div className="mb-4">
-              <p className="text-sm font-semibold text-primary">{milestone.date}</p>
-              <h3 className="text-xl font-bold text-foreground mt-1">{milestone.title}</h3>
-            </div>
-
-            {/* Milestone description */}
-            <p className="text-sm text-muted-foreground leading-relaxed mb-6">
-              {milestone.description}
-            </p>
-
-            {/* Images gallery - Có thể có nhiều ảnh */}
-            {milestone.images.length > 0 && (
-              <div className="mb-6">
-                <p className="text-sm font-semibold text-foreground mb-3">Hình Ảnh</p>
-                <div className={`grid gap-4 ${milestone.images.length === 1 ? 'grid-cols-1' : 'grid-cols-2'}`}>
-                  {milestone.images.map((img, imgIdx) => (
-                    <div key={imgIdx} className="bg-muted rounded-lg overflow-hidden h-48">
-                      <img
-                        src={img.src || "/placeholder.svg"}
-                        alt={img.alt}
-                        className="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-                        onError={(e) => {
-                          e.currentTarget.src = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect fill='%23e5e7eb' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' fontSize='16' fill='%236b7280' textAnchor='middle' dominantBaseline='middle'%3EHình ảnh%3C/text%3E%3C/svg%3E`;
-                        }}
-                      />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Videos - Có thể có nhiều video */}
-            {milestone.videos.length > 0 && (
-              <div className="mb-6">
-                <p className="text-sm font-semibold text-foreground mb-3">Videos Tư Liệu</p>
-                <div className="space-y-4">
-                  {milestone.videos.map((video, vidIdx) => (
-                    <div key={vidIdx} className="bg-muted rounded-lg overflow-hidden aspect-video">
-                      <iframe
-                        width="100%"
-                        height="100%"
-                        src={`https://www.youtube.com/embed/${video.id}`}
-                        title={video.title}
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                        className="w-full h-full"
-                      />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Music - Link nhạc từ internet */}
-            {milestone.music && (
-              <div className="bg-muted rounded-lg p-4">
-                <p className="text-sm font-semibold text-foreground mb-1">Bài Hát</p>
-                <p className="text-xs text-muted-foreground mb-3">
-                  {milestone.music.name} - {milestone.music.artist}
-                </p>
-                <audio controls className="w-full">
-                  <source src={milestone.music.url} type="audio/mpeg" />
-                  Trình duyệt không hỗ trợ audio
-                </audio>
-              </div>
-            )}
-          </div>
-        ))}
+        <div className="space-y-12">
+          {MILESTONES_1945.map((milestone, idx) => (
+            <MilestoneItem key={idx} milestone={milestone} />
+          ))}
+        </div>
       </div>
     </div>
+  );
+}
+
+// Component con để quản lý trạng thái nút bấm cho từng mốc sự kiện
+function MilestoneItem({ milestone }: { milestone: Milestone }) {
+  // Trạng thái tab đang chọn: 'info' | 'media' | 'video' | 'music'
+  const [activeTab, setActiveTab] = useState('info');
+
+  return (
+    <div className="relative pl-12">
+      {/* Nút chấm đỏ trên timeline */}
+      <div className="absolute left-2.5 top-1.5 w-3.5 h-3.5 bg-primary rounded-full ring-4 ring-background" />
+
+      <div className="mb-4">
+        <span className="text-sm font-bold text-primary px-2 py-1 bg-primary/10 rounded">{milestone.date}</span>
+        <h3 className="text-2xl font-bold mt-2">{milestone.title}</h3>
+      </div>
+
+      {/* HỆ THỐNG NÚT BẤM (TABS) */}
+      <div className="flex flex-wrap gap-2 mb-6">
+        <TabButton active={activeTab === 'info'} onClick={() => setActiveTab('info')} label="Thông tin" icon="📄" />
+        <TabButton active={activeTab === 'media'} onClick={() => setActiveTab('media')} label="Hình ảnh" icon="🖼️" />
+        <TabButton active={activeTab === 'video'} onClick={() => setActiveTab('video')} label="Video" icon="🎬" />
+        {milestone.music && (
+          <TabButton active={activeTab === 'music'} onClick={() => setActiveTab('music')} label="Nhạc" icon="🎵" />
+        )}
+      </div>
+
+      {/* NỘI DUNG HIỂN THỊ THAY ĐỔI THEO TAB */}
+      <div className="bg-card border rounded-xl p-5 shadow-sm min-h-[200px] transition-all">
+        {activeTab === 'info' && (
+          <p className="text-muted-foreground leading-relaxed animate-in fade-in duration-500">
+            {milestone.description}
+          </p>
+        )}
+
+        {activeTab === 'media' && (
+          <div className="grid gap-4 grid-cols-1 md:grid-cols-2 animate-in zoom-in-95 duration-300">
+            {milestone.images.map((img, i) => (
+              <img key={i} src={img.src} alt={img.alt} className="rounded-lg object-cover w-full h-48 border" />
+            ))}
+          </div>
+        )}
+
+        {activeTab === 'video' && (
+          <div className="space-y-4 animate-in slide-in-from-bottom-2 duration-300">
+            {milestone.videos.map((vid, i) => (
+              <div key={i} className="aspect-video rounded-lg overflow-hidden border">
+                <iframe
+                  width="100%" height="100%"
+                  src={`https://www.youtube.com/embed/${vid.id}`}
+                  title={vid.title}
+                  allowFullScreen
+                />
+              </div>
+            ))}
+          </div>
+        )}
+
+        {activeTab === 'music' && milestone.music && (
+          <div className="flex flex-col items-center justify-center py-8 space-y-4 animate-in fade-in">
+            <div className="text-center">
+              <p className="font-bold text-lg">{milestone.music.name}</p>
+              <p className="text-sm text-muted-foreground">Sáng tác: {milestone.music.artist}</p>
+            </div>
+            <audio controls className="w-full max-w-md">
+              <source src={milestone.music.url} type="audio/mpeg" />
+            </audio>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// Component nút bấm bổ trợ
+function TabButton({ active, onClick, label, icon }: { active: boolean; onClick: () => void; label: string; icon: string }) {
+  return (
+    <button
+      onClick={onClick}
+      className={`px-4 py-2 rounded-full text-sm font-medium transition-all flex items-center gap-2 border ${
+        active 
+          ? 'bg-primary text-primary-foreground border-primary shadow-md' 
+          : 'bg-background hover:bg-muted text-muted-foreground border-border'
+      }`}
+    >
+      <span>{icon}</span>
+      {label}
+    </button>
   );
 }
