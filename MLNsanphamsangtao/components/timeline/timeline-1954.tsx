@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { FileText, Film, Music, Calendar } from 'lucide-react';
 
-// --- 1. CẤU TRÚC DỮ LIỆU 1954 ---
+// --- 1. CẤU TRÚC DỮ LIỆU ---
 interface MediaItem {
   type: 'image' | 'video' | 'audio';
   src: string;
@@ -25,7 +25,6 @@ const DATA_1954: TimelineEvent[] = [
   {
     date: '1954 - 1955',
     title: '1. Bối cảnh lịch sử và sự xác lập con đường quá độ',
-    // Giữ nguyên văn đoạn 1
     content: 'Sau chiến thắng Điện Biên Phủ "lừng lẫy năm châu, chấn động địa cầu", Hiệp định Giơnevơ năm 1954 về Đông Dương đã được ký kết, đánh dấu một bước ngoặt quyết định trong tiến trình cách mạng Việt Nam.\n\nVới các điều khoản của hiệp định, nước Việt Nam tạm thời bị chia cắt thành hai miền qua vĩ tuyến 17, với hai chế độ chính trị khác nhau. Miền Bắc hoàn toàn được giải phóng, tạo điều kiện cho Đảng Lao động Việt Nam triển khai những bước đi đầu tiên của thời kỳ quá độ lên chủ nghĩa xã hội.\n\nSự kiện ngày 10-10-1954, khi bộ đội Việt Nam tiến vào tiếp quản Thủ đô Hà Nội trong không khí hào hùng, đã mở đầu cho công cuộc xây dựng cuộc sống mới. Quá trình này hoàn tất khi toán lính Pháp cuối cùng rút khỏi đảo Cát Bà vào ngày 16-5-1955, đánh dấu việc miền Bắc sạch bóng quân xâm lược. Ngay sau đó, nhiệm vụ chính trị cấp thiết là củng cố chính quyền và ổn định đời sống nhân dân.\n\nVề mặt tổ chức bộ máy, Nhà nước đã thực hiện những điều chỉnh lớn để phù hợp với yêu cầu quản lý kinh tế và xã hội trong thời kỳ mới. Tại kỳ họp thứ 5 Quốc hội khóa I (tháng 9-1955), hệ thống lãnh đạo cấp cao được kiện toàn với việc bầu Cụ Tôn Đức Thắng làm Trưởng ban Thường trực Quốc hội, ông Phạm Văn Đồng giữ chức Thủ tướng, và các ông Phan Kế Toại, Võ Nguyên Giáp giữ chức Phó Thủ tướng.',
     images: [
       { type: 'image', src: 'https://upload.wikimedia.org/wikipedia/commons/e/e3/Hanoi_1954_liberation.jpg', caption: 'Bộ đội tiến về tiếp quản Thủ đô (10/10/1954)' },
@@ -41,7 +40,6 @@ const DATA_1954: TimelineEvent[] = [
   {
     date: '1954 - 1957',
     title: '1.2 Cải cách ruộng đất & 1.3 Khôi phục kinh tế',
-    // Giữ nguyên văn đoạn 1.2 và 1.3
     content: 'Nhiệm vụ trọng tâm và triệt để nhất trong giai đoạn 1954 – 1956 là hoàn thành cải cách ruộng đất để thực hiện mục tiêu "Người cày có ruộng", xóa bỏ tàn dư phong kiến đã tồn tại hàng thế kỷ.\n\nBên cạnh cải cách ruộng đất, Chính phủ đã ban hành "Tám chính sách khuyến khích sản xuất nông nghiệp" và triển khai các đợt phát động thi đua tiết kiệm để khôi phục các cơ sở hạ tầng bị tàn phá trong chiến tranh. Việc ban hành các chính sách về dân tộc (thành lập Khu tự trị Thái - Mèo năm 1955) và tôn giáo (bảo đảm tự do tín ngưỡng) đã góp phần tạo ra một môi trường chính trị ổn định, thu hút sự đóng góp của mọi tầng lớp nhân dân vào công cuộc kiến thiết.',
     images: [
       { type: 'image', src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Cai_cach_ruong_dat.jpg/800px-Cai_cach_ruong_dat.jpg', caption: 'Nông dân được chia ruộng' }
@@ -54,7 +52,6 @@ const DATA_1954: TimelineEvent[] = [
   {
     date: '1958 - 1960',
     title: '2. Chuyển dịch sang mô hình XHCN (Kế hoạch 3 năm)',
-    // Giữ nguyên văn đoạn 2 và 2.1
     content: 'Mục tiêu cốt lõi của giai đoạn này là đưa nông dân vào các hợp tác xã, cải tạo các thành phần kinh tế tư nhân và thiết lập sự thống trị của thành phần kinh tế quốc doanh.\n\nViệc xây dựng các hợp tác xã (HTX) được coi là con đường tất yếu để đưa nông nghiệp từ sản xuất nhỏ, lạc hậu lên sản xuất lớn xã hội chủ nghĩa. Tính đến năm 1960, phần lớn hộ nông dân ở miền Bắc đã tham gia vào các HTX nông nghiệp bậc thấp. Đồng thời, Nhà nước thực hiện cải tạo đối với thủ công nghiệp và công thương nghiệp tư bản tư doanh bằng hình thức công tư hợp doanh, đưa các nhà tư sản vào guồng máy sản xuất chung dưới sự quản lý của Nhà nước.',
     images: [
       { type: 'image', src: 'https://upload.wikimedia.org/wikipedia/commons/2/23/Hop_tac_xa_nong_nghiep_1960.jpg', caption: 'Nông dân lao động trên cánh đồng Hợp tác xã' }
@@ -67,7 +64,6 @@ const DATA_1954: TimelineEvent[] = [
   {
     date: '1961 - 1965',
     title: '3. Đại hội III và Kế hoạch 5 năm lần thứ nhất',
-    // Giữ nguyên văn đoạn 3 và 3.1
     content: 'Tháng 9-1960, Đại hội đại biểu toàn quốc lần thứ III của Đảng Lao động Việt Nam đã họp tại Hà Nội, xác lập một chiến lược cách mạng song song: xây dựng chủ nghĩa xã hội ở miền Bắc và đấu tranh giải phóng dân tộc ở miền Nam. Đại hội khẳng định miền Bắc là "hậu phương lớn", có vai trò quyết định nhất đối với sự nghiệp thống nhất đất nước.\n\nKế hoạch 5 năm lần thứ nhất (1961 - 1965) đặt trọng tâm vào việc xây dựng nền tảng vật chất - kỹ thuật cho chủ nghĩa xã hội.\n\nKhu gang thép Thái Nguyên: Được thành lập theo Quyết định ngày 04-6-1959, đây là công trình trọng điểm nhằm thực hiện Nghị quyết Trung ương 14 khóa II, biểu tượng cho "ngọn lửa thép gang" của miền Bắc xã hội chủ nghĩa. Sự hình thành các khu công nghiệp lớn tại Hà Nội, Hải Phòng, Việt Trì và Thái Nguyên đã tạo ra một diện mạo mới cho nền kinh tế, cung cấp tư liệu sản xuất cho nông nghiệp và vật chất cho tiền tuyến.',
     images: [
        { type: 'image', src: 'https://thainguyentv.vn/upload/2019/12/12/gangthep.jpg', caption: 'Khu Gang thép Thái Nguyên' },
@@ -81,7 +77,6 @@ const DATA_1954: TimelineEvent[] = [
   {
     date: '1961 - 1965',
     title: '3.2 Các phong trào thi đua biểu tượng',
-    // Giữ nguyên văn đoạn 3.2
     content: 'Điểm đặc biệt của giai đoạn 1954 – 1965 là sự bùng nổ của các phong trào thi đua yêu nước, tạo nên sức mạnh tinh thần to lớn để bù đắp cho sự thiếu hụt về vật chất.\n\nGió Đại Phong (Nông nghiệp): Xuất phát từ Hợp tác xã Đại Phong tại Quảng Bình dưới sự chỉ đạo của Đại tướng Nguyễn Chí Thanh. Với điều kiện đất chiêm trũng, nhiễm mặn thường xuyên, HTX Đại Phong đã vươn lên nhờ cải tiến quản lý và kỹ thuật, trở thành lá cờ đầu với mục tiêu tăng năng suất và số ngày công lao động.\n\nSóng Duyên Hải (Công nghiệp): Bắt đầu từ Nhà máy Cơ khí Duyên Hải (Hải Phòng) vào năm 1960. Phong trào tập trung vào phát huy sáng kiến, phá vỡ các định mức lao động cũ để tăng năng suất từ 50% đến hơn 600%.\n\nCờ Ba Nhất (Quân đội): Khởi nguồn từ Trung đoàn Pháo binh 68 thuộc Sư đoàn 304, được tuyên dương với ba tiêu chí: "Bắn giỏi nhất, nhiều người tham gia nhất, thành tích đều nhất" trong huấn luyện và sẵn sàng chiến đấu.\n\nTiếng Trống Bắc Lý (Giáo dục): Từ trường THCS Bắc Lý (Hà Nam), phong trào "Dạy thật tốt, học thật tốt" đã lan tỏa triết lý giáo dục gắn liền với lao động sản xuất và thực tiễn đời sống.\n\nNhững phong trào này không chỉ là những điển hình tiên tiến mà còn là biểu tượng của sự đoàn kết Công-Nông-Binh dưới sự lãnh đạo của Đảng, được Chủ tịch Hồ Chí Minh biểu dương như những tấm gương sáng của thời đại.',
     images: [
       { type: 'image', src: 'https://baohanam.com.vn/Uploads/2020/11/20/22/bacly.jpg', caption: 'Tiếng trống Bắc Lý' },
@@ -108,9 +103,9 @@ export function Timeline1954() {
       {/* --- HEADER --- */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-border/40 pb-4">
         <div>
-          <h2 className="text-4xl font-black text-primary tracking-tight">1954</h2>
+          <h2 className="text-4xl font-black text-primary tracking-tight">1954 - 1965</h2>
           <p className="text-lg text-muted-foreground font-medium">
-Miền Bắc bắt đầu quá độ lên chủ nghĩa xã hội       
+            Miền Bắc bắt đầu quá độ lên chủ nghĩa xã hội        
           </p>
         </div>
 
@@ -150,14 +145,17 @@ Miền Bắc bắt đầu quá độ lên chủ nghĩa xã hội
                 
                 {/* Date Badge */}
                 <div className="mb-2">
-                   <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-xs font-bold bg-primary/10 text-primary">
-                     <Calendar className="w-3 h-3" /> {event.date}
-                   </span>
+                    <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-xs font-bold bg-primary/10 text-primary">
+                      <Calendar className="w-3 h-3" /> {event.date}
+                    </span>
                 </div>
 
                 {/* Content */}
                 <h3 className="text-xl font-bold text-foreground mb-2">{event.title}</h3>
-                <p className="text-muted-foreground leading-relaxed mb-4">{event.content}</p>
+                {/* QUAN TRỌNG: Thêm whitespace-pre-line để hiển thị xuống dòng */}
+                <p className="text-muted-foreground leading-relaxed mb-4 whitespace-pre-line">
+                    {event.content}
+                </p>
 
                 {/* Image Gallery */}
                 {event.images.length > 0 && (
@@ -241,7 +239,7 @@ Miền Bắc bắt đầu quá độ lên chủ nghĩa xã hội
   );
 }
 
-// --- SUB COMPONENTS (Copy để component chạy độc lập) ---
+// --- SUB COMPONENTS ---
 
 function TabBtn({ isActive, onClick, label, icon }: { isActive: boolean, onClick: () => void, label: string, icon: React.ReactNode }) {
   return (
