@@ -1,118 +1,229 @@
-interface Milestone {
-  date: string;
-  title: string;
-  description: string;
-  images: Array<{ src: string; alt: string }>;
-  videos: Array<{ id: string; title: string }>;
-  music?: { name: string; artist: string; url: string };
+'use client';
+
+import React, { useState } from 'react';
+import { FileText, Film, Music, Calendar } from 'lucide-react';
+
+// --- 1. CẤU TRÚC DỮ LIỆU 1986 ---
+interface MediaItem {
+  type: 'image' | 'video' | 'audio';
+  src: string;
+  thumbnail?: string;
+  caption: string;
+  author?: string;
 }
 
-const MILESTONES_1986: Milestone[] = [
+interface TimelineEvent {
+  date: string;
+  title: string;
+  content: string;
+  images: MediaItem[];
+  videos: MediaItem[];
+  music: MediaItem[];
+}
+
+const DATA_1986: TimelineEvent[] = [
   {
-    date: '12/1986',
-    title: 'Đại Hội VI - Khởi Động Chính Sách Đổi Mới',
-    description: 'Đảng Cộng sản Việt Nam khởi động chính sách Đổi Mới - bước ngoặt lớn trong lịch sử phát triển kinh tế-xã hội. Chính sách mở cửa, phát triển kinh tế thị trường định hướng xã hội chủ nghĩa.',
+    date: '15/12/1986',
+    title: 'Đại Hội VI - Khởi Xướng Công Cuộc "Đổi Mới"',
+    content: 'Đại hội Đại biểu toàn quốc lần thứ VI của Đảng diễn ra tại Hà Nội với tinh thần "nhìn thẳng vào sự thật, đánh giá đúng sự thật, nói rõ sự thật". Đại hội đã đề ra đường lối Đổi mới toàn diện, xóa bỏ cơ chế tập trung quan liêu bao cấp, chuyển sang nền kinh tế hàng hóa nhiều thành phần.',
     images: [
-      { src: '/images/1986-doi-moi.jpg', alt: 'Chính sách Đổi Mới 1986' },
+      { type: 'image', src: '/images/1986-dai-hoi-vi.jpg', caption: 'Quang cảnh Đại hội Đảng lần thứ VI (1986)' },
+      { type: 'image', src: '/images/1986-tem-phieu.jpg', caption: 'Cảnh xếp hàng thời bao cấp trước Đổi Mới' },
     ],
     videos: [
-      { id: 'dQw4w9WgXcQ', title: 'Phim tư liệu Đổi Mới' },
+      { type: 'video', src: 'dQw4w9WgXcQ', caption: 'Phim tài liệu: Đêm trước Đổi Mới' }
     ],
-    music: {
-      name: 'Việt Nam Của Chúng Ta',
-      artist: 'Ca khúc thời kỳ Đổi Mới',
-      url: 'https://example.com/doi-moi.mp3',
-    },
+    music: [
+      { type: 'audio', src: 'https://example.com/mua-xuan-ben-cua-so.mp3', caption: 'Mùa Xuân Bên Cửa Sổ', author: 'Xuân Hồng' },
+      { type: 'audio', src: 'https://example.com/tri-an-am-vang.mp3', caption: 'Trị An Âm Vang Mùa Xuân', author: 'Tôn Thất Lập' } // Bài hát tiêu biểu thời kỳ xây dựng các công trình lớn
+    ]
   },
+  {
+    date: '1987', // Sự kiện hệ quả ngay sau 1986
+    title: 'Những Việc Cần Làm Ngay',
+    content: 'Hưởng ứng tinh thần Đổi Mới, Tổng Bí thư Nguyễn Văn Linh với bút danh N.V.L đã khởi xướng loạt bài viết "Những việc cần làm ngay" trên báo Nhân Dân, tạo luồng gió mới về dân chủ hóa đời sống xã hội và chống tiêu cực.',
+    images: [
+      { type: 'image', src: '/images/1987-nvl.jpg', caption: 'Báo Nhân Dân đăng bài "Những việc cần làm ngay"' }
+    ],
+    videos: [],
+    music: [
+      { type: 'audio', src: 'https://example.com/khat-vong.mp3', caption: 'Khát Vọng', author: 'Phạm Minh Tuấn' }
+    ]
+  }
 ];
 
+// --- 2. COMPONENT CHÍNH ---
 export function Timeline1986() {
+  const [activeTab, setActiveTab] = useState<'info' | 'video' | 'music'>('info');
+
+  // Helper: Gom tất cả media
+  const allVideos = DATA_1986.flatMap(event => event.videos.map(v => ({ ...v, eventDate: event.date })));
+  const allMusic = DATA_1986.flatMap(event => event.music.map(m => ({ ...m, eventDate: event.date })));
+
   return (
-    <div className="space-y-8">
-      <div className="border-b border-border pb-4">
-        <h2 className="text-3xl font-bold text-primary">1986</h2>
-        <p className="text-muted-foreground mt-1">Đổi Mới - Bước Ngoặt Kinh Tế</p>
+    <div className="space-y-6">
+      
+      {/* --- HEADER --- */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-border/40 pb-4">
+        <div>
+          <h2 className="text-4xl font-black text-primary tracking-tight">1986</h2>
+          <p className="text-lg text-muted-foreground font-medium">
+            Đổi Mới - Bước Ngoặt Lịch Sử
+          </p>
+        </div>
+
+        {/* Tab Switcher */}
+        <div className="flex p-1 bg-muted/50 rounded-lg self-start md:self-auto">
+          <TabBtn 
+            isActive={activeTab === 'info'} 
+            onClick={() => setActiveTab('info')} 
+            label="Thông tin" 
+            icon={<FileText className="w-4 h-4" />} 
+          />
+          <TabBtn 
+            isActive={activeTab === 'video'} 
+            onClick={() => setActiveTab('video')} 
+            label="Video" 
+            icon={<Film className="w-4 h-4" />} 
+          />
+          <TabBtn 
+            isActive={activeTab === 'music'} 
+            onClick={() => setActiveTab('music')} 
+            label="Âm nhạc" 
+            icon={<Music className="w-4 h-4" />} 
+          />
+        </div>
       </div>
 
-      <div className="space-y-8">
-        {MILESTONES_1986.map((milestone, idx) => (
-          <div key={idx} className="border-l-2 border-primary pl-6 pb-8 relative">
-            <div className="bg-card rounded-lg p-6 border border-border">
-              <p className="text-base leading-relaxed text-foreground mb-4">
-                Năm 1986, Đảng Cộng sản Việt Nam triệu tập Hội Nghị Đại Hội VI, 
-                đồng ý thực hiện chính sách Đổi Mới - một bước ngoặt lớn trong lịch sử 
-                phát triển kinh tế-xã hội của đất nước. Chính sách này nhằm phát triển 
-                kinh tế, thành lập nền kinh tế thị trường định hướng xã hội chủ nghĩa. 
-                Đó là sự cải cách sâu sắc, mở ra một thời kỳ phát triển mới - từ một 
-                nước bị cô lập, khó khăn chuyển sang khai mở, hội nhập với thế giới.
-              </p>
+      {/* --- CONTENT AREA --- */}
+      <div className="min-h-[400px] animate-in fade-in slide-in-from-bottom-2 duration-500">
+        
+        {/* 1. TAB THÔNG TIN */}
+        {activeTab === 'info' && (
+          <div className="space-y-8 pl-2">
+            {DATA_1986.map((event, idx) => (
+              <div key={idx} className="relative pl-8 border-l-2 border-primary/20 last:border-0 pb-10 last:pb-0">
+                {/* Dot */}
+                <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-primary border-4 border-background" />
+                
+                {/* Date Badge */}
+                <div className="mb-2">
+                   <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-xs font-bold bg-primary/10 text-primary">
+                     <Calendar className="w-3 h-3" /> {event.date}
+                   </span>
+                </div>
 
-              {/* Hình ảnh */}
-              <div className="mb-6 bg-muted rounded-lg overflow-hidden h-64">
-                <img 
-                  src="/images/1986-doi-moi.jpg" 
-                  alt="Đổi Mới 1986"
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    e.currentTarget.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect fill='%23e5e7eb' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' fontSize='20' fill='%236b7280' textAnchor='middle' dominantBaseline='middle'%3EHình ảnh 1986%3C/text%3E%3C/svg%3E";
-                  }}
-                />
+                {/* Content */}
+                <h3 className="text-xl font-bold text-foreground mb-2">{event.title}</h3>
+                <p className="text-muted-foreground leading-relaxed mb-4">{event.content}</p>
+
+                {/* Image Gallery */}
+                {event.images.length > 0 && (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+                    {event.images.map((img, imgIdx) => (
+                      <div key={imgIdx} className="group relative rounded-xl overflow-hidden border bg-muted aspect-[4/3]">
+                        <img 
+                          src={img.src} 
+                          alt={img.caption}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                          onError={(e) => {
+                            e.currentTarget.src = "https://placehold.co/600x400?text=No+Image";
+                          }}
+                        />
+                        <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white p-2 text-xs backdrop-blur-sm transform translate-y-full group-hover:translate-y-0 transition-transform">
+                          {img.caption}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
+            ))}
+          </div>
+        )}
 
-              {/* Video tư liệu */}
-              <div className="mb-6">
-                <h4 className="font-semibold text-lg mb-3 text-primary">Phim Tư Liệu:</h4>
-                <div className="bg-muted rounded-lg overflow-hidden aspect-video">
-                  <iframe 
-                    width="100%" 
-                    height="100%" 
-                    src={`https://www.youtube.com/embed/${milestone.videos[0].id}`} 
-                    title={milestone.videos[0].title}
-                    frameBorder="0" 
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+        {/* 2. TAB VIDEO */}
+        {activeTab === 'video' && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {allVideos.length > 0 ? allVideos.map((vid, idx) => (
+              <div key={idx} className="bg-card border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div className="aspect-video bg-black relative">
+                  <iframe
+                    width="100%" height="100%"
+                    src={`https://www.youtube.com/embed/${vid.src}`}
+                    title={vid.caption}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
-                    className="w-full h-full"
+                    className="absolute inset-0"
                   />
                 </div>
-                <p className="text-sm text-muted-foreground mt-2">
-                  *Thay VIDEO_ID bằng ID của YouTube video
-                </p>
-              </div>
-
-              {/* Bài hát */}
-              <div className="mb-4">
-                <h4 className="font-semibold text-lg mb-3 text-primary">Bài Hát Tiêu Biểu:</h4>
-                <div className="bg-muted rounded-lg p-4">
-                  <p className="font-semibold mb-2">{milestone.music?.name}</p>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    Bài hát về tinh thần Đổi Mới và xây dựng đất nước
-                  </p>
-                  <audio 
-                    controls 
-                    className="w-full"
-                  >
-                    <source src={milestone.music?.url} type="audio/mpeg" />
-                    Trình duyệt của bạn không hỗ trợ audio.
-                  </audio>
-                  <p className="text-sm text-muted-foreground mt-2">
-                    *Thêm link audio
-                  </p>
+                <div className="p-4">
+                  <h4 className="font-bold text-foreground line-clamp-1">{vid.caption}</h4>
+                  <p className="text-xs text-muted-foreground mt-1">Sự kiện: {vid.eventDate}</p>
                 </div>
               </div>
-
-              <div className="mt-6 p-4 bg-accent/10 border border-accent rounded-lg">
-                <p className="text-sm font-semibold text-accent mb-2">💡 Sự Kiện Chính:</p>
-                <ul className="text-sm space-y-1 text-foreground">
-                  <li>• Hội Nghị Đại Hội VI của Đảng Cộng sản Việt Nam</li>
-                  <li>• Chính sách Đổi Mới được triển khai</li>
-                  <li>• Mở cửa nền kinh tế, thực hiện cơ chế thị trường</li>
-                  <li>• Bắt đầu quá trình hội nhập quốc tế</li>
-                </ul>
-              </div>
-            </div>
+            )) : (
+              <EmptyState message="Chưa có video tư liệu nào." />
+            )}
           </div>
-        ))}
+        )}
+
+        {/* 3. TAB BÀI HÁT */}
+        {activeTab === 'music' && (
+          <div className="space-y-3">
+             {allMusic.length > 0 ? allMusic.map((song, idx) => (
+              <div key={idx} className="flex items-center gap-4 p-4 rounded-xl border bg-card hover:bg-accent/5 transition-colors group">
+                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 text-primary group-hover:scale-110 transition-transform">
+                  <Music className="w-6 h-6" />
+                </div>
+                
+                <div className="flex-1 min-w-0">
+                  <h4 className="font-bold text-foreground truncate">{song.caption}</h4>
+                  <p className="text-sm text-muted-foreground">Sáng tác: {song.author}</p>
+                </div>
+
+                <div className="w-full max-w-[200px] md:max-w-[300px]">
+                  <audio controls className="w-full h-8">
+                    <source src={song.src} type="audio/mpeg" />
+                  </audio>
+                </div>
+              </div>
+            )) : (
+              <EmptyState message="Chưa có bài hát nào." />
+            )}
+          </div>
+        )}
+
       </div>
+    </div>
+  );
+}
+
+// --- SUB COMPONENTS ---
+
+function TabBtn({ isActive, onClick, label, icon }: { isActive: boolean, onClick: () => void, label: string, icon: React.ReactNode }) {
+  return (
+    <button
+      onClick={onClick}
+      className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-semibold transition-all duration-200 ${
+        isActive 
+          ? 'bg-background text-primary shadow-sm ring-1 ring-border' 
+          : 'text-muted-foreground hover:text-foreground hover:bg-background/50'
+      }`}
+    >
+      {icon}
+      <span className="hidden sm:inline">{label}</span>
+    </button>
+  );
+}
+
+function EmptyState({ message }: { message: string }) {
+  return (
+    <div className="flex flex-col items-center justify-center py-12 text-muted-foreground bg-muted/20 rounded-xl border border-dashed">
+      <div className="w-12 h-12 mb-3 opacity-20">
+        <FileText className="w-full h-full" />
+      </div>
+      <p>{message}</p>
     </div>
   );
 }
