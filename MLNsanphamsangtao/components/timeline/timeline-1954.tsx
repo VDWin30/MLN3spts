@@ -110,7 +110,7 @@ export function Timeline1954() {
         <div>
           <h2 className="text-4xl font-black text-primary tracking-tight">1954</h2>
           <p className="text-lg text-muted-foreground font-medium">
-            Chiến Thắng Điện Biên Phủ - Hiệp Định Genève
+Miền Bắc bắt đầu quá độ lên chủ nghĩa xã hội       
           </p>
         </div>
 
