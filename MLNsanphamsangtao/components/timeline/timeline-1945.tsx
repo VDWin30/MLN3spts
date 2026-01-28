@@ -48,7 +48,7 @@ const DATA_1945: TimelineEvent[] = [
       { type: 'video', src: 'dQw4w9WgXcQ', caption: 'Toàn cảnh Lễ Tuyên ngôn Độc lập' }
     ],
     music: [
-      { type: 'audio', src: 'https://nhac.vn/bai-hat/tien-quan-ca-various-artists-so0lo8d', caption: 'Tiến Quân Ca (Quốc Ca)', author: 'Văn Cao' },
+      { type: 'audio', src: 'https://soundcloud.com/user-665366008/tien-quan-ca?si=530e6cd9bd8c49719ff192268bba1269&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing', caption: 'Tiến Quân Ca (Quốc Ca)', author: 'Văn Cao' },
       { type: 'audio', src: 'https://example.com/ba-dinh-nang.mp3', caption: 'Ba Đình Nắng', author: 'Bùi Công Kỳ' }
     ]
   }
