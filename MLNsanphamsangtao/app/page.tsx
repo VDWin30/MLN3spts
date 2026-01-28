@@ -14,7 +14,7 @@ const TIMELINE_YEARS = [
     year: 1945, 
     label: '1945', 
     title: 'Cách Mạng Tháng Tám',
-    position: 'left' // 'left' hoặc 'right'
+    position: 'left'
   },
   { 
     year: 1954, 
@@ -50,6 +50,7 @@ const TIMELINE_YEARS = [
 
 export default function Home() {
   const [activeYear, setActiveYear] = useState(1945);
+  const [showDetail, setShowDetail] = useState(false);
 
   const renderTimeline = () => {
     switch (activeYear) {
@@ -69,6 +70,13 @@ export default function Home() {
         return <Timeline1945 />;
     }
   };
+
+  const handleTimelineClick = (year: number) => {
+    setActiveYear(year);
+    setShowDetail(true);
+  };
+
+  const currentTimeline = TIMELINE_YEARS.find(item => item.year === activeYear);
 
   return (
     <main className="min-h-screen bg-background">
@@ -91,7 +99,7 @@ export default function Home() {
             {TIMELINE_YEARS.map((item) => (
               <button
                 key={item.year}
-                onClick={() => setActiveYear(item.year)}
+                onClick={() => handleTimelineClick(item.year)}
                 className={`px-4 py-2 rounded-full font-medium text-sm whitespace-nowrap transition-all ${
                   activeYear === item.year
                     ? 'bg-primary text-primary-foreground'
@@ -112,7 +120,7 @@ export default function Home() {
 
             {/* Timeline items */}
             <div className="space-y-24">
-              {TIMELINE_YEARS.map((item, index) => {
+              {TIMELINE_YEARS.map((item) => {
                 const isActive = activeYear === item.year;
                 const isLeft = item.position === 'left';
                 
@@ -126,7 +134,7 @@ export default function Home() {
                       className={`w-5/12 ${isLeft ? 'pr-8 text-right' : 'pl-8 text-left'} cursor-pointer transition-all duration-300 ${
                         isActive ? 'scale-105' : 'opacity-70 hover:opacity-100 hover:scale-[1.02]'
                       }`}
-                      onClick={() => setActiveYear(item.year)}
+                      onClick={() => handleTimelineClick(item.year)}
                     >
                       <div className="bg-card rounded-lg border border-border/30 p-6 shadow-sm hover:shadow-md transition-shadow">
                         <div className={`inline-block px-3 py-1 rounded-full text-xs font-semibold mb-3 ${
@@ -137,9 +145,11 @@ export default function Home() {
                         <h3 className={`text-xl font-bold mb-2 ${isActive ? 'text-primary' : 'text-foreground'}`}>
                           {item.title}
                         </h3>
-                        <p className="text-sm text-muted-foreground">
-                          Nhấn để xem chi tiết
-                        </p>
+                        {!showDetail && (
+                          <p className="text-sm text-muted-foreground">
+                            Nhấn để xem chi tiết
+                          </p>
+                        )}
                       </div>
                     </div>
 
@@ -157,24 +167,43 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Content area (for mobile and active year display) */}
-          <div className="mt-8 lg:mt-16">
-            <div className="bg-card rounded-lg border border-border/30 p-8 shadow-sm">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-3 h-3 rounded-full bg-primary" />
-                <h2 className="text-2xl font-bold text-primary">
-                  {TIMELINE_YEARS.find(item => item.year === activeYear)?.title}
-                </h2>
-                <span className="ml-auto px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium">
-                  {activeYear}
-                </span>
-              </div>
-              
-              <div className="animate-in fade-in duration-300">
-                {renderTimeline()}
+          {/* Content area - chỉ hiển thị khi có mốc được chọn */}
+          {showDetail && (
+            <div className="mt-8 lg:mt-16 animate-in fade-in duration-300">
+              <div className="bg-card rounded-lg border border-border/30 shadow-sm overflow-hidden">
+                {/* Header */}
+                <div className="bg-gradient-to-r from-primary/5 to-primary/10 p-6 border-b border-border/30">
+                  <div className="flex items-center gap-3">
+                    <div className="w-3 h-3 rounded-full bg-primary" />
+                    <h2 className="text-2xl font-bold text-primary">
+                      {currentTimeline?.title}
+                    </h2>
+                    <span className="ml-auto px-3 py-1 bg-primary/10 text-primary rounded-full text-sm font-medium">
+                      {activeYear}
+                    </span>
+                  </div>
+                </div>
+                
+                {/* Content */}
+                <div className="p-8">
+                  {renderTimeline()}
+                </div>
               </div>
             </div>
-          </div>
+          )}
+
+          {/* Placeholder khi chưa chọn mốc nào (chỉ desktop) */}
+          {!showDetail && (
+            <div className="hidden lg:block mt-16 text-center py-12 text-muted-foreground">
+              <div className="bg-card rounded-lg border border-dashed border-border/30 p-12">
+                <svg className="w-12 h-12 mx-auto mb-4 text-muted-foreground/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <h3 className="text-lg font-medium mb-2">Chọn một mốc thời gian để xem chi tiết</h3>
+                <p className="text-sm">Nhấn vào bất kỳ mốc nào trên timeline để xem thông tin chi tiết</p>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </main>
