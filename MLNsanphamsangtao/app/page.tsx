@@ -17,7 +17,7 @@ const TIMELINE_YEARS = [
   { 
     year: 1954, 
     label: '1954', 
-    title: 'Điện Biên Phủ'
+    title: 'Miền Bắc bắt đầu quá độ lên CNXH'
   },
   { 
     year: 1975, 
