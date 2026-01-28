@@ -38,11 +38,11 @@ const DATA_2011: TimelineEvent[] = [
     ]
   },
   {
-    date: '2011 - Giai đoạn Hội Nhập',
-    title: 'Việt Nam Ơi - Tinh Thần Thế Hệ Trẻ',
-    content: 'Đây là giai đoạn Việt Nam hội nhập sâu rộng, kinh tế số bắt đầu bùng nổ. Thế hệ trẻ Việt Nam tràn đầy năng lượng, sáng tạo và khát vọng cống hiến, được thể hiện qua văn hóa, âm nhạc và các phong trào khởi nghiệp.',
+    date: '2011 - Nay',
+    title: 'Hội Nhập Sâu Rộng & Khát Vọng Hùng Cường',
+    content: 'Đây là giai đoạn Việt Nam hội nhập quốc tế mạnh mẽ (gia nhập WTO trước đó, tham gia các hiệp định FTA thế hệ mới). Kinh tế số bùng nổ, tinh thần khởi nghiệp (Start-up) lên cao. Thế hệ trẻ Việt Nam tràn đầy năng lượng, sáng tạo và khát vọng cống hiến.',
     images: [
-      { type: 'image', src: '/images/2011-tuoi-tre.jpg', caption: 'Thanh niên Việt Nam trong thời đại mới' }
+      { type: 'image', src: '/images/2011-tuoi-tre.jpg', caption: 'Thanh niên Việt Nam trong thời đại 4.0' }
     ],
     videos: [
       { type: 'video', src: 'dQw4w9WgXcQ', caption: 'MV Việt Nam Ơi - Niềm tự hào dân tộc' }
@@ -68,9 +68,9 @@ export function Timeline2011() {
       {/* --- HEADER --- */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-border/40 pb-4">
         <div>
-          <h2 className="text-4xl font-black text-primary tracking-tight">2011</h2>
+          <h2 className="text-4xl font-black text-primary tracking-tight">2011 - Nay</h2>
           <p className="text-lg text-muted-foreground font-medium">
-            Phát Triển Bền Vững - Hội Nhập Sâu Rộng
+            Phát Triển Bền Vững - Hội Nhập Toàn Cầu
           </p>
         </div>
 
@@ -178,3 +178,54 @@ export function Timeline2011() {
                 <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 text-primary group-hover:scale-110 transition-transform">
                   <Music className="w-6 h-6" />
                 </div>
+                
+                <div className="flex-1 min-w-0">
+                  <h4 className="font-bold text-foreground truncate">{song.caption}</h4>
+                  <p className="text-sm text-muted-foreground">Sáng tác: {song.author}</p>
+                </div>
+
+                <div className="w-full max-w-[200px] md:max-w-[300px]">
+                  <audio controls className="w-full h-8">
+                    <source src={song.src} type="audio/mpeg" />
+                  </audio>
+                </div>
+              </div>
+            )) : (
+              <EmptyState message="Chưa có bài hát nào." />
+            )}
+          </div>
+        )}
+
+      </div>
+    </div>
+  );
+}
+
+// --- SUB COMPONENTS ---
+
+function TabBtn({ isActive, onClick, label, icon }: { isActive: boolean, onClick: () => void, label: string, icon: React.ReactNode }) {
+  return (
+    <button
+      onClick={onClick}
+      className={`flex items-center gap-2 px-4 py-2 rounded-md text-sm font-semibold transition-all duration-200 ${
+        isActive 
+          ? 'bg-background text-primary shadow-sm ring-1 ring-border' 
+          : 'text-muted-foreground hover:text-foreground hover:bg-background/50'
+      }`}
+    >
+      {icon}
+      <span className="hidden sm:inline">{label}</span>
+    </button>
+  );
+}
+
+function EmptyState({ message }: { message: string }) {
+  return (
+    <div className="flex flex-col items-center justify-center py-12 text-muted-foreground bg-muted/20 rounded-xl border border-dashed">
+      <div className="w-12 h-12 mb-3 opacity-20">
+        <FileText className="w-full h-full" />
+      </div>
+      <p>{message}</p>
+    </div>
+  );
+}
