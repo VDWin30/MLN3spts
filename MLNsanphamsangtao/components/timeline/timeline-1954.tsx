@@ -23,43 +23,73 @@ interface TimelineEvent {
 
 const DATA_1954: TimelineEvent[] = [
   {
-    date: '07/05/1954',
-    title: 'Chiến Thắng Điện Biên Phủ "Lừng lẫy năm châu, chấn động địa cầu"',
-    content: 'Sau 56 ngày đêm khoét núi, ngủ hầm, mưa dầm, cơm vắt, quân và dân ta dưới sự chỉ huy của Đại tướng Võ Nguyên Giáp đã tiêu diệt hoàn toàn tập đoàn cứ điểm Điện Biên Phủ, bắt sống tướng De Castries.',
+    date: '1954 - 1955',
+    title: '1. Bối cảnh lịch sử và sự xác lập con đường quá độ',
+    // Giữ nguyên văn đoạn 1
+    content: 'Sau chiến thắng Điện Biên Phủ "lừng lẫy năm châu, chấn động địa cầu", Hiệp định Giơnevơ năm 1954 về Đông Dương đã được ký kết, đánh dấu một bước ngoặt quyết định trong tiến trình cách mạng Việt Nam.\n\nVới các điều khoản của hiệp định, nước Việt Nam tạm thời bị chia cắt thành hai miền qua vĩ tuyến 17, với hai chế độ chính trị khác nhau. Miền Bắc hoàn toàn được giải phóng, tạo điều kiện cho Đảng Lao động Việt Nam triển khai những bước đi đầu tiên của thời kỳ quá độ lên chủ nghĩa xã hội.\n\nSự kiện ngày 10-10-1954, khi bộ đội Việt Nam tiến vào tiếp quản Thủ đô Hà Nội trong không khí hào hùng, đã mở đầu cho công cuộc xây dựng cuộc sống mới. Quá trình này hoàn tất khi toán lính Pháp cuối cùng rút khỏi đảo Cát Bà vào ngày 16-5-1955, đánh dấu việc miền Bắc sạch bóng quân xâm lược. Ngay sau đó, nhiệm vụ chính trị cấp thiết là củng cố chính quyền và ổn định đời sống nhân dân.\n\nVề mặt tổ chức bộ máy, Nhà nước đã thực hiện những điều chỉnh lớn để phù hợp với yêu cầu quản lý kinh tế và xã hội trong thời kỳ mới. Tại kỳ họp thứ 5 Quốc hội khóa I (tháng 9-1955), hệ thống lãnh đạo cấp cao được kiện toàn với việc bầu Cụ Tôn Đức Thắng làm Trưởng ban Thường trực Quốc hội, ông Phạm Văn Đồng giữ chức Thủ tướng, và các ông Phan Kế Toại, Võ Nguyên Giáp giữ chức Phó Thủ tướng.',
     images: [
-      { type: 'image', src: '/images/1954-co-chien-thang.jpg', caption: 'Lá cờ Quyết chiến Quyết thắng tung bay trên hầm De Castries' },
-      { type: 'image', src: '/images/1954-keo-phao.jpg', caption: 'Bộ đội ta kéo pháo vào trận địa' },
+      { type: 'image', src: 'https://upload.wikimedia.org/wikipedia/commons/e/e3/Hanoi_1954_liberation.jpg', caption: 'Bộ đội tiến về tiếp quản Thủ đô (10/10/1954)' },
+      { type: 'image', src: 'https://file1.dangcongsan.vn/data/0/images/2021/08/20/upload/671/ton-duc-thang-1.jpg', caption: 'Chủ tịch Tôn Đức Thắng và Hồ Chủ tịch' }
     ],
     videos: [
-      { type: 'video', src: 'dQw4w9WgXcQ', caption: 'Phim tư liệu: Chiến thắng Điện Biên Phủ' }
+       { type: 'video', src: 'J-6d7x8gXkY', caption: 'Phim tư liệu: Hà Nội ngày tiếp quản' }
     ],
     music: [
-      { type: 'audio', src: 'https://example.com/giai-phong-dien-bien.mp3', caption: 'Giải Phóng Điện Biên', author: 'Đỗ Nhuận' },
-      { type: 'audio', src: 'https://example.com/ho-keo-phao.mp3', caption: 'Hò Kéo Pháo', author: 'Hoàng Vân' }
+      { type: 'audio', src: '/music/tien-ve-ha-noi.mp3', caption: 'Tiến Về Hà Nội', author: 'Văn Cao' }
     ]
   },
   {
-    date: '21/07/1954',
-    title: 'Ký Kết Hiệp Định Genève',
-    content: 'Hiệp định Genève về chấm dứt chiến tranh, lập lại hòa bình ở Đông Dương được ký kết. Các nước tham gia hội nghị cam kết tôn trọng độc lập, chủ quyền, thống nhất và toàn vẹn lãnh thổ của Việt Nam.',
+    date: '1954 - 1957',
+    title: '1.2 Cải cách ruộng đất & 1.3 Khôi phục kinh tế',
+    // Giữ nguyên văn đoạn 1.2 và 1.3
+    content: 'Nhiệm vụ trọng tâm và triệt để nhất trong giai đoạn 1954 – 1956 là hoàn thành cải cách ruộng đất để thực hiện mục tiêu "Người cày có ruộng", xóa bỏ tàn dư phong kiến đã tồn tại hàng thế kỷ.\n\nBên cạnh cải cách ruộng đất, Chính phủ đã ban hành "Tám chính sách khuyến khích sản xuất nông nghiệp" và triển khai các đợt phát động thi đua tiết kiệm để khôi phục các cơ sở hạ tầng bị tàn phá trong chiến tranh. Việc ban hành các chính sách về dân tộc (thành lập Khu tự trị Thái - Mèo năm 1955) và tôn giáo (bảo đảm tự do tín ngưỡng) đã góp phần tạo ra một môi trường chính trị ổn định, thu hút sự đóng góp của mọi tầng lớp nhân dân vào công cuộc kiến thiết.',
     images: [
-      { type: 'image', src: '/images/1954-geneve.jpg', caption: 'Quang cảnh hội nghị Genève 1954' }
-    ],
-    videos: [
-      { type: 'video', src: 'dQw4w9WgXcQ', caption: 'Lễ ký kết Hiệp định Genève' }
-    ],
-    music: [] // Không có nhạc thì để mảng rỗng
-  },
-  {
-    date: '10/10/1954',
-    title: 'Giải Phóng Thủ Đô',
-    content: 'Các đơn vị Quân đội Nhân dân Việt Nam tiến vào tiếp quản Hà Nội từ tay quân đội Pháp. Hàng vạn người dân Hà Nội đổ ra đường chào đón đoàn quân chiến thắng trở về.',
-    images: [
-      { type: 'image', src: '/images/1954-giai-phong-thu-do.jpg', caption: 'Đoàn quân tiến về Hà Nội' }
+      { type: 'image', src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Cai_cach_ruong_dat.jpg/800px-Cai_cach_ruong_dat.jpg', caption: 'Nông dân được chia ruộng' }
     ],
     videos: [],
     music: [
-      { type: 'audio', src: 'https://example.com/tien-ve-ha-noi.mp3', caption: 'Tiến Về Hà Nội', author: 'Văn Cao' }
+      { type: 'audio', src: '/music/bai-ca-lua.mp3', caption: 'Bài Ca Lúa', author: 'Dân ca' }
+    ]
+  },
+  {
+    date: '1958 - 1960',
+    title: '2. Chuyển dịch sang mô hình XHCN (Kế hoạch 3 năm)',
+    // Giữ nguyên văn đoạn 2 và 2.1
+    content: 'Mục tiêu cốt lõi của giai đoạn này là đưa nông dân vào các hợp tác xã, cải tạo các thành phần kinh tế tư nhân và thiết lập sự thống trị của thành phần kinh tế quốc doanh.\n\nViệc xây dựng các hợp tác xã (HTX) được coi là con đường tất yếu để đưa nông nghiệp từ sản xuất nhỏ, lạc hậu lên sản xuất lớn xã hội chủ nghĩa. Tính đến năm 1960, phần lớn hộ nông dân ở miền Bắc đã tham gia vào các HTX nông nghiệp bậc thấp. Đồng thời, Nhà nước thực hiện cải tạo đối với thủ công nghiệp và công thương nghiệp tư bản tư doanh bằng hình thức công tư hợp doanh, đưa các nhà tư sản vào guồng máy sản xuất chung dưới sự quản lý của Nhà nước.',
+    images: [
+      { type: 'image', src: 'https://upload.wikimedia.org/wikipedia/commons/2/23/Hop_tac_xa_nong_nghiep_1960.jpg', caption: 'Nông dân lao động trên cánh đồng Hợp tác xã' }
+    ],
+    videos: [],
+    music: [
+      { type: 'audio', src: '/music/tinh-ca-tay-bac.mp3', caption: 'Tình Ca Tây Bắc', author: 'Bùi Đức Hạnh' }
+    ]
+  },
+  {
+    date: '1961 - 1965',
+    title: '3. Đại hội III và Kế hoạch 5 năm lần thứ nhất',
+    // Giữ nguyên văn đoạn 3 và 3.1
+    content: 'Tháng 9-1960, Đại hội đại biểu toàn quốc lần thứ III của Đảng Lao động Việt Nam đã họp tại Hà Nội, xác lập một chiến lược cách mạng song song: xây dựng chủ nghĩa xã hội ở miền Bắc và đấu tranh giải phóng dân tộc ở miền Nam. Đại hội khẳng định miền Bắc là "hậu phương lớn", có vai trò quyết định nhất đối với sự nghiệp thống nhất đất nước.\n\nKế hoạch 5 năm lần thứ nhất (1961 - 1965) đặt trọng tâm vào việc xây dựng nền tảng vật chất - kỹ thuật cho chủ nghĩa xã hội.\n\nKhu gang thép Thái Nguyên: Được thành lập theo Quyết định ngày 04-6-1959, đây là công trình trọng điểm nhằm thực hiện Nghị quyết Trung ương 14 khóa II, biểu tượng cho "ngọn lửa thép gang" của miền Bắc xã hội chủ nghĩa. Sự hình thành các khu công nghiệp lớn tại Hà Nội, Hải Phòng, Việt Trì và Thái Nguyên đã tạo ra một diện mạo mới cho nền kinh tế, cung cấp tư liệu sản xuất cho nông nghiệp và vật chất cho tiền tuyến.',
+    images: [
+       { type: 'image', src: 'https://thainguyentv.vn/upload/2019/12/12/gangthep.jpg', caption: 'Khu Gang thép Thái Nguyên' },
+       { type: 'image', src: 'https://upload.wikimedia.org/wikipedia/vi/6/60/Dai_hoi_Dang_III.jpg', caption: 'Đại hội Đại biểu toàn quốc lần thứ III' }
+    ],
+    videos: [],
+    music: [
+      { type: 'audio', src: '/music/bai-ca-xay-dung.mp3', caption: 'Bài Ca Xây Dựng', author: 'Hoàng Vân' }
+    ]
+  },
+  {
+    date: '1961 - 1965',
+    title: '3.2 Các phong trào thi đua biểu tượng',
+    // Giữ nguyên văn đoạn 3.2
+    content: 'Điểm đặc biệt của giai đoạn 1954 – 1965 là sự bùng nổ của các phong trào thi đua yêu nước, tạo nên sức mạnh tinh thần to lớn để bù đắp cho sự thiếu hụt về vật chất.\n\nGió Đại Phong (Nông nghiệp): Xuất phát từ Hợp tác xã Đại Phong tại Quảng Bình dưới sự chỉ đạo của Đại tướng Nguyễn Chí Thanh. Với điều kiện đất chiêm trũng, nhiễm mặn thường xuyên, HTX Đại Phong đã vươn lên nhờ cải tiến quản lý và kỹ thuật, trở thành lá cờ đầu với mục tiêu tăng năng suất và số ngày công lao động.\n\nSóng Duyên Hải (Công nghiệp): Bắt đầu từ Nhà máy Cơ khí Duyên Hải (Hải Phòng) vào năm 1960. Phong trào tập trung vào phát huy sáng kiến, phá vỡ các định mức lao động cũ để tăng năng suất từ 50% đến hơn 600%.\n\nCờ Ba Nhất (Quân đội): Khởi nguồn từ Trung đoàn Pháo binh 68 thuộc Sư đoàn 304, được tuyên dương với ba tiêu chí: "Bắn giỏi nhất, nhiều người tham gia nhất, thành tích đều nhất" trong huấn luyện và sẵn sàng chiến đấu.\n\nTiếng Trống Bắc Lý (Giáo dục): Từ trường THCS Bắc Lý (Hà Nam), phong trào "Dạy thật tốt, học thật tốt" đã lan tỏa triết lý giáo dục gắn liền với lao động sản xuất và thực tiễn đời sống.\n\nNhững phong trào này không chỉ là những điển hình tiên tiến mà còn là biểu tượng của sự đoàn kết Công-Nông-Binh dưới sự lãnh đạo của Đảng, được Chủ tịch Hồ Chí Minh biểu dương như những tấm gương sáng của thời đại.',
+    images: [
+      { type: 'image', src: 'https://baohanam.com.vn/Uploads/2020/11/20/22/bacly.jpg', caption: 'Tiếng trống Bắc Lý' },
+      { type: 'image', src: 'https://image.bnews.vn/MediaUpload/Org/2020/05/18/nha-may-co-khi-duyen-hai.jpg', caption: 'Nhà máy cơ khí Duyên Hải' }
+    ],
+    videos: [],
+    music: [
+      { type: 'audio', src: '/music/quang-binh-que-ta-oi.mp3', caption: 'Quảng Bình Quê Ta Ơi', author: 'Hoàng Vân' }
     ]
   }
 ];
