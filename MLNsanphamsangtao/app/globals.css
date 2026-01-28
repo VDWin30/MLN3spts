@@ -1,180 +1,181 @@
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode
-}>) {
-  return (
-    <html lang="vi" className={`${geistSans.variable} ${geistMono.variable} scroll-smooth`}>
-      <head>
-        <link rel="preconnect" href="https://images.unsplash.com" />
-        <link rel="dns-prefetch" href="https://images.unsplash.com" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-        <meta name="robots" content="index, follow" />
-      </head>
-      <body className={`
-        font-sans antialiased min-h-screen
-        bg-gradient-to-br from-background via-background/95 to-primary/5
-        noise-texture
-        relative overflow-x-hidden
-      `}>
-        {/* Animated Background Elements */}
-        <div className="fixed inset-0 overflow-hidden pointer-events-none">
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-primary rounded-full blur-3xl opacity-10 animate-float" />
-          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gradient-secondary rounded-full blur-3xl opacity-10 animate-float" style={{ animationDelay: '2s' }} />
-          
-          {/* Animated Grid Pattern */}
-          <div className="absolute inset-0 pattern-grid opacity-5 animate-wave" />
-          
-          {/* Floating Particles */}
-          {[...Array(20)].map((_, i) => (
-            <div
-              key={i}
-              className="absolute w-1 h-1 bg-primary rounded-full animate-pulse"
-              style={{
-                top: `${Math.random() * 100}%`,
-                left: `${Math.random() * 100}%`,
-                animationDelay: `${Math.random() * 5}s`,
-                opacity: Math.random() * 0.3 + 0.1,
-              }}
-            />
-          ))}
-        </div>
+@import 'tailwindcss';
+@import 'tw-animate-css';
 
-        {/* Main Content */}
-        <div className="relative z-10">
-          {/* Glass Header */}
-          <header className="sticky top-0 z-50 glass border-b backdrop-blur-xl">
-            <div className="container mx-auto px-4 py-4">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-3 group cursor-pointer">
-                  <div className="w-10 h-10 vietnam-star flex items-center justify-center relative">
-                    <div className="vietnam-star animate-pulse-glow" />
-                    <div className="absolute inset-0 vietnam-star opacity-30 blur-md" />
-                  </div>
-                  <div>
-                    <h1 className="text-xl font-bold text-gradient-primary group-hover:scale-105 transition-transform">
-                      Lịch Sử Việt Nam
-                    </h1>
-                    <p className="text-xs text-muted-foreground font-mono">
-                      Timeline 1945-2011
-                    </p>
-                  </div>
-                </div>
-                
-                <nav className="hidden md:flex items-center space-x-1">
-                  {['Timeline', 'Tài Liệu', 'Hình Ảnh', 'Về Chúng Tôi'].map((item, i) => (
-                    <a
-                      key={item}
-                      href={`/${item.toLowerCase().replace(/\s+/g, '-')}`}
-                      className="relative px-4 py-2 rounded-lg text-sm font-medium text-foreground/80 hover:text-foreground transition-colors group"
-                    >
-                      <span className="relative z-10">{item}</span>
-                      <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 rounded-lg transition-opacity duration-300" />
-                      <div className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-primary group-hover:w-3/4 group-hover:left-1/4 transition-all duration-300" />
-                    </a>
-                  ))}
-                  <button className="ml-4 px-6 py-2 bg-gradient-primary text-primary-foreground rounded-lg font-medium hover:scale-105 transition-all duration-300">
-                    Khám Phá
-                  </button>
-                </nav>
-              </div>
-            </div>
-          </header>
+@custom-variant dark (&:is(.dark *));
 
-          {children}
+:root {
+  --background: oklch(98% 0.01 95);
+  --foreground: oklch(15% 0.05 260);
+  --card: oklch(99% 0.005 95);
+  --card-foreground: oklch(15% 0.05 260);
+  --popover: oklch(99% 0.005 95);
+  --popover-foreground: oklch(15% 0.05 260);
+  --primary: oklch(70% 0.18 30);
+  --primary-foreground: oklch(98% 0.01 95);
+  --secondary: oklch(85% 0.12 120);
+  --secondary-foreground: oklch(15% 0.05 260);
+  --muted: oklch(92% 0.03 240);
+  --muted-foreground: oklch(45% 0.02 240);
+  --accent: oklch(65% 0.15 45);
+  --accent-foreground: oklch(98% 0.01 95);
+  --destructive: oklch(65% 0.2 25);
+  --destructive-foreground: oklch(98% 0.01 95);
+  --border: oklch(88% 0.05 95);
+  --input: oklch(95% 0.02 95);
+  --ring: oklch(70% 0.18 30);
+  --radius: 1rem;
+}
 
-          {/* Enhanced Footer */}
-          <footer className="mt-20 border-t glass-card backdrop-blur-lg">
-            <div className="container mx-auto px-4 py-12">
-              <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-                <div className="space-y-4">
-                  <div className="flex items-center space-x-2">
-                    <div className="w-8 h-8 vietnam-star" />
-                    <span className="text-lg font-bold text-gradient-primary">VN History</span>
-                  </div>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    Tôn vinh và bảo tồn di sản lịch sử Chủ nghĩa Xã hội Việt Nam qua từng giai đoạn phát triển.
-                  </p>
-                  <div className="flex space-x-4">
-                    {[...Array(4)].map((_, i) => (
-                      <div
-                        key={i}
-                        className="w-10 h-10 rounded-full bg-gradient-card flex items-center justify-center hover:scale-110 transition-all duration-300 cursor-pointer border border-border/50"
-                      >
-                        <div className="w-4 h-4 bg-gradient-primary rounded-sm" />
-                      </div>
-                    ))}
-                  </div>
-                </div>
+.dark {
+  --background: oklch(12% 0.02 260);
+  --foreground: oklch(98% 0.01 95);
+  --card: oklch(15% 0.03 260);
+  --card-foreground: oklch(98% 0.01 95);
+  --popover: oklch(15% 0.03 260);
+  --popover-foreground: oklch(98% 0.01 95);
+  --primary: oklch(75% 0.2 30);
+  --primary-foreground: oklch(15% 0.03 260);
+  --secondary: oklch(75% 0.15 120);
+  --secondary-foreground: oklch(15% 0.03 260);
+  --muted: oklch(25% 0.02 260);
+  --muted-foreground: oklch(75% 0.01 95);
+  --accent: oklch(70% 0.18 45);
+  --accent-foreground: oklch(15% 0.03 260);
+  --destructive: oklch(70% 0.22 25);
+  --destructive-foreground: oklch(15% 0.03 260);
+  --border: oklch(30% 0.02 260);
+  --input: oklch(25% 0.02 260);
+  --ring: oklch(75% 0.2 30);
+}
 
-                {[
-                  {
-                    title: 'Mốc Lịch Sử',
-                    links: ['1945 - Độc Lập', '1954 - Chiến Thắng', '1975 - Thống Nhất', '1986 - Đổi Mới']
-                  },
-                  {
-                    title: 'Tài Nguyên',
-                    links: ['Tài liệu gốc', 'Ảnh lưu trữ', 'Video tư liệu', 'Bài nghiên cứu']
-                  },
-                  {
-                    title: 'Liên Hệ',
-                    links: ['Đóng góp ý kiến', 'Hợp tác nghiên cứu', 'Thông tin giáo dục', 'Chính sách bảo mật']
-                  }
-                ].map((section, idx) => (
-                  <div key={idx} className="space-y-4">
-                    <h4 className="font-semibold text-lg text-foreground relative inline-block">
-                      {section.title}
-                      <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-primary" />
-                    </h4>
-                    <ul className="space-y-3">
-                      {section.links.map((link) => (
-                        <li key={link}>
-                          <a
-                            href="#"
-                            className="text-sm text-muted-foreground hover:text-foreground hover:pl-2 transition-all duration-300 flex items-center group"
-                          >
-                            <div className="w-1 h-1 bg-primary rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity" />
-                            {link}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
+@theme inline {
+  --font-sans: 'Geist', 'Geist Fallback';
+  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 0.75rem);
+  --radius-md: calc(var(--radius) - 0.5rem);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 0.5rem);
+}
 
-              <div className="mt-12 pt-8 border-t border-border/50">
-                <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-                  <p className="text-sm text-muted-foreground text-center md:text-left">
-                    © {new Date().getFullYear()} Lịch Sử Việt Nam. Mọi quyền được bảo lưu.
-                  </p>
-                  <div className="flex items-center space-x-6 text-sm text-muted-foreground">
-                    <a href="#" className="hover:text-foreground transition-colors">
-                      Điều khoản sử dụng
-                    </a>
-                    <a href="#" className="hover:text-foreground transition-colors">
-                      Chính sách bảo mật
-                    </a>
-                    <a href="#" className="hover:text-foreground transition-colors">
-                      Liên hệ
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </footer>
-        </div>
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  
+  ::selection {
+    @apply bg-primary/30 text-primary-foreground;
+  }
+  
+  ::-moz-selection {
+    @apply bg-primary/30 text-primary-foreground;
+  }
+}
 
-        {/* Back to Top Button */}
-        <button
-          className="fixed bottom-8 right-8 w-12 h-12 bg-gradient-primary rounded-full flex items-center justify-center text-primary-foreground shadow-lg hover:scale-110 transition-all duration-300 z-40"
-          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        >
-          ↑
-        </button>
+@layer utilities {
+  /* Using native Tailwind gradients */
+  .bg-gradient-vietnam {
+    @apply bg-gradient-to-br from-primary via-accent to-secondary;
+  }
+  
+  .text-gradient-vietnam {
+    @apply bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent;
+  }
+  
+  .glass-effect {
+    @apply backdrop-blur-lg bg-white/10 dark:bg-black/10 border border-white/20 dark:border-white/10;
+  }
+  
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .animate-pulse-glow {
+    animation: pulse-glow 3s ease-in-out infinite;
+  }
+  
+  .animate-wave {
+    animation: wave 20s linear infinite;
+  }
+}
 
-        <Analytics />
-      </body>
-    </html>
-  )
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes pulse-glow {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 40px color-mix(in oklch, var(--primary) 30%, transparent);
+  }
+  50% {
+    opacity: 0.7;
+    box-shadow: 0 0 20px color-mix(in oklch, var(--primary) 20%, transparent);
+  }
+}
+
+@keyframes wave {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Star shape for Vietnam theme */
+.vietnam-star {
+  background: radial-gradient(
+    circle at center,
+    var(--accent) 0%,
+    var(--primary) 100%
+  );
+  clip-path: polygon(
+    50% 0%, 61% 35%, 98% 35%, 68% 57%, 
+    79% 91%, 50% 70%, 21% 91%, 32% 57%, 
+    2% 35%, 39% 35%
+  );
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-muted/50;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-gradient-to-b from-primary to-accent rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply from-primary/80 to-accent/80;
 }
