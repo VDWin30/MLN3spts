@@ -79,97 +79,104 @@ export default function Home() {
 
       {/* Main Content */}
       <div className="max-w-6xl mx-auto px-6 py-8">
-        {/* Desktop Horizontal Timeline - ĐƠN GIẢN HÓA */}
+        {/* Desktop Horizontal Timeline */}
         <div className="hidden lg:block mb-8">
-          <div className="flex justify-between items-start relative">
+          <div className="relative">
             {/* Connecting line */}
-            <div className="absolute left-16 right-16 top-8 h-0.5 bg-primary/30" />
+            <div className="absolute left-0 right-0 top-8 h-0.5 bg-primary/30" />
             
-            {/* Timeline Items */}
-            {TIMELINE_YEARS.map((item, index) => {
-              const isActive = activeYear === item.year;
-              
-              return (
-                <div key={item.year} className="flex flex-col items-center relative">
-                  {/* Circle */}
-                  <div className="relative z-10 mb-4">
-                    <div className={`w-4 h-4 rounded-full border-2 border-background ${
-                      isActive ? 'bg-primary scale-125' : 'bg-primary/40'
-                    }`} />
-                  </div>
+            {/* Timeline Items - SỬ DỤNG GRID ĐỀU NHAU */}
+            <div className="grid grid-cols-6 gap-0 relative">
+              {TIMELINE_YEARS.map((item, index) => {
+                const isActive = activeYear === item.year;
+                
+                return (
+                  <div key={item.year} className="flex flex-col items-center px-2">
+                    {/* Circle */}
+                    <div className="relative z-10 mb-4">
+                      <div className={`w-4 h-4 rounded-full border-2 border-background ${
+                        isActive ? 'bg-primary scale-125' : 'bg-primary/40'
+                      }`} />
+                    </div>
 
-                  {/* Content */}
+                    {/* Content Card - CÙNG KÍCH THƯỚC */}
+                    <button
+                      onClick={() => setActiveYear(item.year)}
+                      className={`w-full transition-all duration-300 ${isActive ? 'scale-105' : 'hover:scale-[1.02]'}`}
+                    >
+                      <div className={`rounded-lg border p-4 text-center min-h-[120px] flex flex-col justify-center ${
+                        isActive 
+                          ? 'border-primary bg-primary/5 shadow-md' 
+                          : 'border-border/50 bg-card hover:border-primary/30'
+                      }`}>
+                        {/* Year */}
+                        <div className={`text-lg font-bold mb-1 ${
+                          isActive ? 'text-primary' : 'text-foreground'
+                        }`}>
+                          {item.label}
+                        </div>
+                        
+                        {/* Title - CÙNG SỐ DÒNG */}
+                        <div className={`text-sm font-medium mb-1 h-10 flex items-center justify-center ${
+                          isActive ? 'text-primary' : 'text-foreground'
+                        }`}>
+                          <span className="line-clamp-2 leading-tight">
+                            {item.title}
+                          </span>
+                        </div>
+                        
+                        {/* Description */}
+                        <div className="text-xs text-muted-foreground mt-1">
+                          Nhấn để xem chi tiết
+                        </div>
+                      </div>
+                    </button>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Horizontal Timeline */}
+        <div className="lg:hidden mb-6">
+          <div className="flex space-x-3 overflow-x-auto pb-4 px-1">
+            {TIMELINE_YEARS.map((item) => {
+              const isActive = activeYear === item.year;
+              return (
+                <div key={item.year} className="flex-shrink-0">
                   <button
                     onClick={() => setActiveYear(item.year)}
-                    className={`w-32 transition-all duration-300 ${isActive ? 'scale-105' : 'hover:scale-[1.02]'}`}
+                    className={`w-28 transition-all ${isActive ? 'scale-105' : ''}`}
                   >
-                    <div className={`rounded-lg border p-4 text-center ${
+                    <div className={`rounded-lg border p-3 text-center min-h-[100px] flex flex-col justify-center ${
                       isActive 
                         ? 'border-primary bg-primary/5' 
                         : 'border-border/50 bg-card hover:border-primary/30'
                     }`}>
                       {/* Year */}
-                      <div className={`text-lg font-bold mb-1 ${
+                      <div className={`text-base font-bold mb-1 ${
                         isActive ? 'text-primary' : 'text-foreground'
                       }`}>
                         {item.label}
                       </div>
                       
                       {/* Title */}
-                      <div className={`text-sm font-medium mb-1 line-clamp-2 h-10 flex items-center justify-center ${
+                      <div className={`text-xs font-medium mb-1 h-8 flex items-center justify-center ${
                         isActive ? 'text-primary' : 'text-foreground'
                       }`}>
-                        {item.title}
+                        <span className="line-clamp-2 leading-tight">
+                          {item.title}
+                        </span>
                       </div>
                       
                       {/* Description */}
-                      <div className="text-xs text-muted-foreground">
+                      <div className="text-[10px] text-muted-foreground">
                         Nhấn để xem chi tiết
                       </div>
                     </div>
                   </button>
                 </div>
-              );
-            })}
-          </div>
-        </div>
-
-        {/* Mobile Horizontal Timeline */}
-        <div className="lg:hidden mb-6">
-          <div className="flex space-x-4 overflow-x-auto pb-4">
-            {TIMELINE_YEARS.map((item) => {
-              const isActive = activeYear === item.year;
-              return (
-                <button
-                  key={item.year}
-                  onClick={() => setActiveYear(item.year)}
-                  className={`flex-shrink-0 w-28 transition-all ${isActive ? 'scale-105' : ''}`}
-                >
-                  <div className={`rounded-lg border p-4 text-center h-full ${
-                    isActive 
-                      ? 'border-primary bg-primary/5' 
-                      : 'border-border/50 bg-card hover:border-primary/30'
-                  }`}>
-                    {/* Year */}
-                    <div className={`text-base font-bold mb-1 ${
-                      isActive ? 'text-primary' : 'text-foreground'
-                    }`}>
-                      {item.label}
-                    </div>
-                    
-                    {/* Title */}
-                    <div className={`text-xs font-medium mb-1 line-clamp-2 h-8 flex items-center justify-center ${
-                      isActive ? 'text-primary' : 'text-foreground'
-                    }`}>
-                      {item.title}
-                    </div>
-                    
-                    {/* Description */}
-                    <div className="text-[10px] text-muted-foreground">
-                      Nhấn để xem chi tiết
-                    </div>
-                  </div>
-                </button>
               );
             })}
           </div>
