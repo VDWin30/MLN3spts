@@ -22,6 +22,24 @@ interface TimelineEvent {
 }
 
 const DATA_1954: TimelineEvent[] = [
+{
+    date: '1954 - 1957',
+    title: '1. Bối cảnh lịch sử và sự xác lập con đường quá độ',
+    content: `Sau chiến thắng Điện Biên Phủ "lừng lẫy năm châu, chấn động địa cầu", Hiệp định Giơnevơ năm 1954 về Đông Dương đã được ký kết, đánh dấu một bước ngoặt quyết định trong tiến trình cách mạng Việt Nam.
+
+Với các điều khoản của hiệp định, nước Việt Nam tạm thời bị chia cắt thành hai miền qua vĩ tuyến 17, với hai chế độ chính trị khác nhau. Miền Bắc hoàn toàn được giải phóng, tạo điều kiện cho Đảng Lao động Việt Nam triển khai những bước đi đầu tiên của thời kỳ quá độ lên chủ nghĩa xã hội.`,
+    images: [
+      { type: 'image', src: 'https://file3.qdnd.vn/data/images/0/2024/05/08/upload_2072/dien%20bien%20phu%201954.jpg', caption: 'Bộ đội tiến về tiếp quản Thủ đô (10/10/1954)' },
+      { type: 'image', src: 'https://www.nxbctqg.org.vn/img_data/images/HiepdinhGionevo.jpg', caption: 'Hiệp định Giơnevơ' }
+    ],
+    videos: [
+       // Chỉ lấy ID video (phần sau v=)
+       { type: 'video', src: 'rHB7aQG72po', caption: 'Phim tài liệu - Giải phóng Thủ đô 10/10/1954 [GLS số 16]' }
+    ],
+    music: [
+      { type: 'audio', src: '/music/tien-ve-ha-noi.mp3', caption: 'Tiến Về Hà Nội', author: 'Văn Cao' }
+    ]
+  },
   {
     date: '10-10-1954',
     title: '1.1. Tiếp quản Thủ đô và củng cố chính quyền cách mạng',
@@ -34,12 +52,8 @@ Về mặt tổ chức bộ máy, Nhà nước đã thực hiện những điề
       { type: 'image', src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Phan_K%E1%BA%BF_To%E1%BA%A1i%2C_Souverains_et_notabilites_d%27Indochine_%28cropped%29.jpg/330px-Phan_K%E1%BA%BF_To%E1%BA%A1i%2C_Souverains_et_notabilites_d%27Indochine_%28cropped%29.jpg', caption: 'Ông Phan Kế Toại' },
       { type: 'image', src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/Mr._Vo_Nguyen_Giap.jpg/500px-Mr._Vo_Nguyen_Giap.jpg', caption: 'Ông Võ Nguyên Giáp' }
     ],
-    videos: [
-       { type: 'video', src: 'rHB7aQG72po', caption: 'Phim tài liệu - Giải phóng Thủ đô 10/10/1954' }
-    ],
-    music: [
-       { type: 'audio', src: '/music/tien-ve-ha-noi.mp3', caption: 'Tiến Về Hà Nội', author: 'Văn Cao' }
-    ]
+    videos: [],
+    music: []
   },
   {
     date: '7-1954',
@@ -94,7 +108,10 @@ Khu gang thép Thái Nguyên. Được thành lập theo Quyết định ngày 0
     images: [
        { type: 'image', src: 'https://thainguyen.dcs.vn/uploads/hoat-dong-cua-cac-dang-bo/2024_06/image-20240604134132-2.png', caption: 'Khu công nghiệp Gang thép Thái Nguyên - Những người đầu tiên góp phần xây nên Khu Gang thép đầu tiên của đất nước' }
     ],
-    videos: [],
+    videos: [ 
+      { type: 'video', src: 'LabfX3in-UY', caption: 'ĐẠI HỘI ĐẢNG LẦN THỨ III' },
+       { type: 'video', src: '80YzScAW3Cw', caption: 'Những người đầu tiên góp phần xây nên Khu Gang thép đầu tiên của đất nước' }
+            ],
     music: [
       { type: 'audio', src: '/music/bai-ca-xay-dung.mp3', caption: 'Bài Ca Xây Dựng', author: 'Hoàng Vân' }
     ]
@@ -119,7 +136,10 @@ Những phong trào này không chỉ là những điển hình tiên tiến mà
       { type: 'image', src: 'https://media.vov.vn/sites/default/files/styles/large/public/2025-04/quan_va_dan_tp_hai_phong_chuan_bi_chien_dau_chong_cuoc_tap_kich_duong_khong_cua_de_quoc_my_cuoi_nam_1972_anh_tu_lieu.jpg', caption: 'Quân và dân TP Hải Phòng (Quê hương Sóng Duyên Hải)' },
       { type: 'image', src: 'https://media.vietnamplus.vn/images/7255a701687d11cb8c6bbc58a6c80785100c961dd66b3261bcca1b5c657b6240393be9827672d40f22c951d39e7aa076/kien_an.jpg', caption: 'Tiếng trống Bắc Lý - Thông điệp lịch sử' }
     ],
-    videos: [],
+    videos: [
+       { type: 'video', src: 'e25QJiVJq6c', caption: 'Gió Đại Phong: Động lực hùng mạnh thúc đẩy nông nghiệp Việt | Đảng với Dân' },
+       { type: 'video', src: 'fgOchEORDgM', caption: 'Thông điệp lịch sử. Tiếng trống Bắc Lý - VNEWS' }
+    ],
     music: [
       { type: 'audio', src: '/music/quang-binh-que-ta-oi.mp3', caption: 'Quảng Bình Quê Ta Ơi', author: 'Hoàng Vân' }
     ]
