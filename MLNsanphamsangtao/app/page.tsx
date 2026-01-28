@@ -12,7 +12,7 @@ const TIMELINE_YEARS = [
   { 
     year: 1945, 
     label: '1945', 
-    title: 'Cách Mạng Tháng Tám'
+    title: 'Việt Nam giành độc lập'
   },
   { 
     year: 1954, 
