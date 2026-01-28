@@ -1,84 +1,180 @@
+'use client';
+
+import React, { useState } from 'react';
+import { FileText, Film, Music, Calendar } from 'lucide-react';
+
+// --- 1. CẤU TRÚC DỮ LIỆU 2011 ---
+interface MediaItem {
+  type: 'image' | 'video' | 'audio';
+  src: string;
+  thumbnail?: string;
+  caption: string;
+  author?: string;
+}
+
+interface TimelineEvent {
+  date: string;
+  title: string;
+  content: string;
+  images: MediaItem[];
+  videos: MediaItem[];
+  music: MediaItem[];
+}
+
+const DATA_2011: TimelineEvent[] = [
+  {
+    date: '12/01/2011',
+    title: 'Đại Hội XI - Tầm Nhìn Chiến Lược Mới',
+    content: 'Đại hội XI đã thông qua "Cương lĩnh xây dựng đất nước trong thời kỳ quá độ lên chủ nghĩa xã hội (bổ sung, phát triển năm 2011)". Đại hội xác định mục tiêu phấn đấu đến năm 2020 nước ta cơ bản trở thành nước công nghiệp theo hướng hiện đại.',
+    images: [
+      { type: 'image', src: '/images/2011-dai-hoi-xi.jpg', caption: 'Khai mạc Đại hội Đảng lần thứ XI' },
+      { type: 'image', src: '/images/2011-cau-rong.jpg', caption: 'Sự phát triển hạ tầng (Cầu Rồng - Đà Nẵng khánh thành giai đoạn này)' },
+    ],
+    videos: [
+      { type: 'video', src: 'dQw4w9WgXcQ', caption: 'Phim tài liệu: Dấu ấn nhiệm kỳ Đại hội XI' }
+    ],
+    music: [
+      { type: 'audio', src: 'https://example.com/duong-den-ngay-vinh-quang.mp3', caption: 'Đường Đến Ngày Vinh Quang', author: 'Bức Tường' }
+    ]
+  },
+  {
+    date: '2011 - Giai đoạn Hội Nhập',
+    title: 'Việt Nam Ơi - Tinh Thần Thế Hệ Trẻ',
+    content: 'Đây là giai đoạn Việt Nam hội nhập sâu rộng, kinh tế số bắt đầu bùng nổ. Thế hệ trẻ Việt Nam tràn đầy năng lượng, sáng tạo và khát vọng cống hiến, được thể hiện qua văn hóa, âm nhạc và các phong trào khởi nghiệp.',
+    images: [
+      { type: 'image', src: '/images/2011-tuoi-tre.jpg', caption: 'Thanh niên Việt Nam trong thời đại mới' }
+    ],
+    videos: [
+      { type: 'video', src: 'dQw4w9WgXcQ', caption: 'MV Việt Nam Ơi - Niềm tự hào dân tộc' }
+    ],
+    music: [
+      { type: 'audio', src: 'https://example.com/viet-nam-oi.mp3', caption: 'Việt Nam Ơi', author: 'Minh Beta' },
+      { type: 'audio', src: 'https://example.com/khat-vong-tuoi-tre.mp3', caption: 'Khát Vọng Tuổi Trẻ', author: 'Vũ Hoàng' }
+    ]
+  }
+];
+
+// --- 2. COMPONENT CHÍNH ---
 export function Timeline2011() {
+  const [activeTab, setActiveTab] = useState<'info' | 'video' | 'music'>('info');
+
+  // Helper: Gom tất cả media
+  const allVideos = DATA_2011.flatMap(event => event.videos.map(v => ({ ...v, eventDate: event.date })));
+  const allMusic = DATA_2011.flatMap(event => event.music.map(m => ({ ...m, eventDate: event.date })));
+
   return (
-    <div className="space-y-8">
-      <div className="prose prose-sm max-w-none">
-        <h3 className="text-2xl font-bold text-primary mb-4">2011: Hội Nghị Đại Hội XI - Xây Dựng Thế Hệ Tương Lai</h3>
-        
-        <div className="bg-card rounded-lg p-6 border border-border">
-          <p className="text-base leading-relaxed text-foreground mb-4">
-            Năm 2011, Hội Nghị Đại Hội XI của Đảng Cộng sản Việt Nam diễn ra, 
-            xác định các mục tiêu xây dựng đất nước giàu mạnh, dân chủ, công bằng 
-            và văn minh. Tại Hội Nghị này, Việt Nam đã khẳng định cam kết đối với 
-            việc phát triển bền vững, bảo vệ môi trường, và nâng cao chất lượng 
-            cuộc sống của nhân dân. Đây là giai đoạn chuyển tiếp, nơi Việt Nam 
-            tiếp tục cải cách sâu sắc, hội nhập quốc tế sâu rộng hơn.
+    <div className="space-y-6">
+      
+      {/* --- HEADER --- */}
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-border/40 pb-4">
+        <div>
+          <h2 className="text-4xl font-black text-primary tracking-tight">2011</h2>
+          <p className="text-lg text-muted-foreground font-medium">
+            Phát Triển Bền Vững - Hội Nhập Sâu Rộng
           </p>
+        </div>
 
-          {/* Hình ảnh */}
-          <div className="mb-6 bg-muted rounded-lg overflow-hidden h-64">
-            <img 
-              src="/images/2011-dai-hoi-xi.jpg" 
-              alt="Đại Hội XI 2011"
-              className="w-full h-full object-cover"
-              onError={(e) => {
-                e.currentTarget.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300'%3E%3Crect fill='%23e5e7eb' width='400' height='300'/%3E%3Ctext x='50%25' y='50%25' fontSize='20' fill='%236b7280' textAnchor='middle' dominantBaseline='middle'%3EHình ảnh 2011%3C/text%3E%3C/svg%3E"
-              }}
-            />
-          </div>
-
-          {/* Video tư liệu */}
-          <div className="mb-6">
-            <h4 className="font-semibold text-lg mb-3 text-primary">Phim Tư Liệu:</h4>
-            <div className="bg-muted rounded-lg overflow-hidden aspect-video">
-              <iframe 
-                width="100%" 
-                height="100%" 
-                src="https://www.youtube.com/embed/VIDEO_ID" 
-                title="Phim tư liệu 2011"
-                frameBorder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowFullScreen
-                className="w-full h-full"
-              />
-            </div>
-            <p className="text-sm text-muted-foreground mt-2">
-              *Thay VIDEO_ID bằng ID của YouTube video
-            </p>
-          </div>
-
-          {/* Bài hát */}
-          <div className="mb-4">
-            <h4 className="font-semibold text-lg mb-3 text-primary">Bài Hát Tiêu Biểu:</h4>
-            <div className="bg-muted rounded-lg p-4">
-              <p className="font-semibold mb-2">Việt Nam Ơi</p>
-              <p className="text-sm text-muted-foreground mb-4">
-                Ca khúc tôn vinh quốc gia và sự phát triển của dân tộc
-              </p>
-              <audio 
-                controls 
-                className="w-full"
-              >
-                <source src="/audio/viet-nam-oi.mp3" type="audio/mpeg" />
-                Trình duyệt của bạn không hỗ trợ audio.
-              </audio>
-              <p className="text-sm text-muted-foreground mt-2">
-                *Thêm link audio
-              </p>
-            </div>
-          </div>
-
-          <div className="mt-6 p-4 bg-accent/10 border border-accent rounded-lg">
-            <p className="text-sm font-semibold text-accent mb-2">💡 Sự Kiện Chính:</p>
-            <ul className="text-sm space-y-1 text-foreground">
-              <li>• Hội Nghị Đại Hội XI của Đảng Cộng sản Việt Nam</li>
-              <li>• Xác định mục tiêu phát triển quốc gia</li>
-              <li>• Tiếp tục cải cách kinh tế và chính trị</li>
-              <li>• Nâng cao chất lượng cuộc sống và bảo vệ môi trường</li>
-              <li>• Hội nhập sâu rộng vào cộng đồng quốc tế</li>
-            </ul>
-          </div>
+        {/* Tab Switcher */}
+        <div className="flex p-1 bg-muted/50 rounded-lg self-start md:self-auto">
+          <TabBtn 
+            isActive={activeTab === 'info'} 
+            onClick={() => setActiveTab('info')} 
+            label="Thông tin" 
+            icon={<FileText className="w-4 h-4" />} 
+          />
+          <TabBtn 
+            isActive={activeTab === 'video'} 
+            onClick={() => setActiveTab('video')} 
+            label="Video" 
+            icon={<Film className="w-4 h-4" />} 
+          />
+          <TabBtn 
+            isActive={activeTab === 'music'} 
+            onClick={() => setActiveTab('music')} 
+            label="Âm nhạc" 
+            icon={<Music className="w-4 h-4" />} 
+          />
         </div>
       </div>
-    </div>
-  );
-}
+
+      {/* --- CONTENT AREA --- */}
+      <div className="min-h-[400px] animate-in fade-in slide-in-from-bottom-2 duration-500">
+        
+        {/* 1. TAB THÔNG TIN */}
+        {activeTab === 'info' && (
+          <div className="space-y-8 pl-2">
+            {DATA_2011.map((event, idx) => (
+              <div key={idx} className="relative pl-8 border-l-2 border-primary/20 last:border-0 pb-10 last:pb-0">
+                {/* Dot */}
+                <div className="absolute -left-[9px] top-0 w-4 h-4 rounded-full bg-primary border-4 border-background" />
+                
+                {/* Date Badge */}
+                <div className="mb-2">
+                   <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded text-xs font-bold bg-primary/10 text-primary">
+                     <Calendar className="w-3 h-3" /> {event.date}
+                   </span>
+                </div>
+
+                {/* Content */}
+                <h3 className="text-xl font-bold text-foreground mb-2">{event.title}</h3>
+                <p className="text-muted-foreground leading-relaxed mb-4">{event.content}</p>
+
+                {/* Image Gallery */}
+                {event.images.length > 0 && (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+                    {event.images.map((img, imgIdx) => (
+                      <div key={imgIdx} className="group relative rounded-xl overflow-hidden border bg-muted aspect-[4/3]">
+                        <img 
+                          src={img.src} 
+                          alt={img.caption}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                          onError={(e) => {
+                            e.currentTarget.src = "https://placehold.co/600x400?text=No+Image";
+                          }}
+                        />
+                        <div className="absolute bottom-0 left-0 right-0 bg-black/60 text-white p-2 text-xs backdrop-blur-sm transform translate-y-full group-hover:translate-y-0 transition-transform">
+                          {img.caption}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        )}
+
+        {/* 2. TAB VIDEO */}
+        {activeTab === 'video' && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {allVideos.length > 0 ? allVideos.map((vid, idx) => (
+              <div key={idx} className="bg-card border rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+                <div className="aspect-video bg-black relative">
+                  <iframe
+                    width="100%" height="100%"
+                    src={`https://www.youtube.com/embed/${vid.src}`}
+                    title={vid.caption}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    className="absolute inset-0"
+                  />
+                </div>
+                <div className="p-4">
+                  <h4 className="font-bold text-foreground line-clamp-1">{vid.caption}</h4>
+                  <p className="text-xs text-muted-foreground mt-1">Sự kiện: {vid.eventDate}</p>
+                </div>
+              </div>
+            )) : (
+              <EmptyState message="Chưa có video tư liệu nào." />
+            )}
+          </div>
+        )}
+
+        {/* 3. TAB BÀI HÁT */}
+        {activeTab === 'music' && (
+          <div className="space-y-3">
+             {allMusic.length > 0 ? allMusic.map((song, idx) => (
+              <div key={idx} className="flex items-center gap-4 p-4 rounded-xl border bg-card hover:bg-accent/5 transition-colors group">
+                <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0 text-primary group-hover:scale-110 transition-transform">
+                  <Music className="w-6 h-6" />
+                </div>
