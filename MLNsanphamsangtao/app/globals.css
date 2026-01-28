@@ -1,421 +1,180 @@
-@import 'tailwindcss';
-@import 'tw-animate-css';
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode
+}>) {
+  return (
+    <html lang="vi" className={`${geistSans.variable} ${geistMono.variable} scroll-smooth`}>
+      <head>
+        <link rel="preconnect" href="https://images.unsplash.com" />
+        <link rel="dns-prefetch" href="https://images.unsplash.com" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+        <meta name="robots" content="index, follow" />
+      </head>
+      <body className={`
+        font-sans antialiased min-h-screen
+        bg-gradient-to-br from-background via-background/95 to-primary/5
+        noise-texture
+        relative overflow-x-hidden
+      `}>
+        {/* Animated Background Elements */}
+        <div className="fixed inset-0 overflow-hidden pointer-events-none">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-primary rounded-full blur-3xl opacity-10 animate-float" />
+          <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-gradient-secondary rounded-full blur-3xl opacity-10 animate-float" style={{ animationDelay: '2s' }} />
+          
+          {/* Animated Grid Pattern */}
+          <div className="absolute inset-0 pattern-grid opacity-5 animate-wave" />
+          
+          {/* Floating Particles */}
+          {[...Array(20)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute w-1 h-1 bg-primary rounded-full animate-pulse"
+              style={{
+                top: `${Math.random() * 100}%`,
+                left: `${Math.random() * 100}%`,
+                animationDelay: `${Math.random() * 5}s`,
+                opacity: Math.random() * 0.3 + 0.1,
+              }}
+            />
+          ))}
+        </div>
 
-@custom-variant dark (&:is(.dark *));
+        {/* Main Content */}
+        <div className="relative z-10">
+          {/* Glass Header */}
+          <header className="sticky top-0 z-50 glass border-b backdrop-blur-xl">
+            <div className="container mx-auto px-4 py-4">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center space-x-3 group cursor-pointer">
+                  <div className="w-10 h-10 vietnam-star flex items-center justify-center relative">
+                    <div className="vietnam-star animate-pulse-glow" />
+                    <div className="absolute inset-0 vietnam-star opacity-30 blur-md" />
+                  </div>
+                  <div>
+                    <h1 className="text-xl font-bold text-gradient-primary group-hover:scale-105 transition-transform">
+                      Lịch Sử Việt Nam
+                    </h1>
+                    <p className="text-xs text-muted-foreground font-mono">
+                      Timeline 1945-2011
+                    </p>
+                  </div>
+                </div>
+                
+                <nav className="hidden md:flex items-center space-x-1">
+                  {['Timeline', 'Tài Liệu', 'Hình Ảnh', 'Về Chúng Tôi'].map((item, i) => (
+                    <a
+                      key={item}
+                      href={`/${item.toLowerCase().replace(/\s+/g, '-')}`}
+                      className="relative px-4 py-2 rounded-lg text-sm font-medium text-foreground/80 hover:text-foreground transition-colors group"
+                    >
+                      <span className="relative z-10">{item}</span>
+                      <div className="absolute inset-0 bg-primary/10 opacity-0 group-hover:opacity-100 rounded-lg transition-opacity duration-300" />
+                      <div className="absolute bottom-0 left-1/2 w-0 h-0.5 bg-gradient-primary group-hover:w-3/4 group-hover:left-1/4 transition-all duration-300" />
+                    </a>
+                  ))}
+                  <button className="ml-4 px-6 py-2 bg-gradient-primary text-primary-foreground rounded-lg font-medium hover:scale-105 transition-all duration-300">
+                    Khám Phá
+                  </button>
+                </nav>
+              </div>
+            </div>
+          </header>
 
-:root {
-  /* Vietnam-inspired color palette - Using simpler syntax */
-  --background: oklch(98% 0.01 95);
-  --foreground: oklch(15% 0.05 260);
-  --card: oklch(99% 0.005 95);
-  --card-foreground: oklch(15% 0.05 260);
-  --popover: oklch(99% 0.005 95);
-  --popover-foreground: oklch(15% 0.05 260);
-  --primary: oklch(70% 0.18 30);
-  --primary-foreground: oklch(98% 0.01 95);
-  --secondary: oklch(85% 0.12 120);
-  --secondary-foreground: oklch(15% 0.05 260);
-  --muted: oklch(92% 0.03 240);
-  --muted-foreground: oklch(45% 0.02 240);
-  --accent: oklch(65% 0.15 45);
-  --accent-foreground: oklch(98% 0.01 95);
-  --destructive: oklch(65% 0.2 25);
-  --destructive-foreground: oklch(98% 0.01 95);
-  --border: oklch(88% 0.05 95);
-  --input: oklch(95% 0.02 95);
-  --ring: oklch(70% 0.18 30);
-  
-  /* Chart colors */
-  --chart-1: oklch(70% 0.18 30);
-  --chart-2: oklch(85% 0.12 120);
-  --chart-3: oklch(65% 0.15 45);
-  --chart-4: oklch(60% 0.1 200);
-  --chart-5: oklch(75% 0.08 90);
-  
-  --radius: 1rem;
-  --sidebar: oklch(96% 0.01 95);
-  --sidebar-foreground: oklch(20% 0.05 260);
-  --sidebar-primary: oklch(70% 0.18 30);
-  --sidebar-primary-foreground: oklch(98% 0.01 95);
-  --sidebar-accent: oklch(90% 0.05 95);
-  --sidebar-accent-foreground: oklch(20% 0.05 260);
-  --sidebar-border: oklch(85% 0.05 95);
-  --sidebar-ring: oklch(70% 0.18 30);
-}
+          {children}
 
-.dark {
-  --background: oklch(12% 0.02 260);
-  --foreground: oklch(98% 0.01 95);
-  --card: oklch(15% 0.03 260);
-  --card-foreground: oklch(98% 0.01 95);
-  --popover: oklch(15% 0.03 260);
-  --popover-foreground: oklch(98% 0.01 95);
-  --primary: oklch(75% 0.2 30);
-  --primary-foreground: oklch(15% 0.03 260);
-  --secondary: oklch(75% 0.15 120);
-  --secondary-foreground: oklch(15% 0.03 260);
-  --muted: oklch(25% 0.02 260);
-  --muted-foreground: oklch(75% 0.01 95);
-  --accent: oklch(70% 0.18 45);
-  --accent-foreground: oklch(15% 0.03 260);
-  --destructive: oklch(70% 0.22 25);
-  --destructive-foreground: oklch(15% 0.03 260);
-  --border: oklch(30% 0.02 260);
-  --input: oklch(25% 0.02 260);
-  --ring: oklch(75% 0.2 30);
-  
-  --chart-1: oklch(75% 0.2 30);
-  --chart-2: oklch(75% 0.15 120);
-  --chart-3: oklch(70% 0.18 45);
-  --chart-4: oklch(65% 0.12 200);
-  --chart-5: oklch(70% 0.1 90);
-}
+          {/* Enhanced Footer */}
+          <footer className="mt-20 border-t glass-card backdrop-blur-lg">
+            <div className="container mx-auto px-4 py-12">
+              <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div className="space-y-4">
+                  <div className="flex items-center space-x-2">
+                    <div className="w-8 h-8 vietnam-star" />
+                    <span className="text-lg font-bold text-gradient-primary">VN History</span>
+                  </div>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    Tôn vinh và bảo tồn di sản lịch sử Chủ nghĩa Xã hội Việt Nam qua từng giai đoạn phát triển.
+                  </p>
+                  <div className="flex space-x-4">
+                    {[...Array(4)].map((_, i) => (
+                      <div
+                        key={i}
+                        className="w-10 h-10 rounded-full bg-gradient-card flex items-center justify-center hover:scale-110 transition-all duration-300 cursor-pointer border border-border/50"
+                      >
+                        <div className="w-4 h-4 bg-gradient-primary rounded-sm" />
+                      </div>
+                    ))}
+                  </div>
+                </div>
 
-@theme inline {
-  --font-sans: 'Geist', 'Geist Fallback';
-  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
-  
-  /* Colors */
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
-  --color-chart-1: var(--chart-1);
-  --color-chart-2: var(--chart-2);
-  --color-chart-3: var(--chart-3);
-  --color-chart-4: var(--chart-4);
-  --color-chart-5: var(--chart-5);
-  
-  /* Border radius */
-  --radius-sm: calc(var(--radius) - 0.75rem);
-  --radius-md: calc(var(--radius) - 0.5rem);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 0.5rem);
-  --radius-2xl: calc(var(--radius) + 1rem);
-  
-  /* Sidebar */
-  --color-sidebar: var(--sidebar);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-ring: var(--sidebar-ring);
-}
+                {[
+                  {
+                    title: 'Mốc Lịch Sử',
+                    links: ['1945 - Độc Lập', '1954 - Chiến Thắng', '1975 - Thống Nhất', '1986 - Đổi Mới']
+                  },
+                  {
+                    title: 'Tài Nguyên',
+                    links: ['Tài liệu gốc', 'Ảnh lưu trữ', 'Video tư liệu', 'Bài nghiên cứu']
+                  },
+                  {
+                    title: 'Liên Hệ',
+                    links: ['Đóng góp ý kiến', 'Hợp tác nghiên cứu', 'Thông tin giáo dục', 'Chính sách bảo mật']
+                  }
+                ].map((section, idx) => (
+                  <div key={idx} className="space-y-4">
+                    <h4 className="font-semibold text-lg text-foreground relative inline-block">
+                      {section.title}
+                      <div className="absolute -bottom-1 left-0 w-full h-0.5 bg-gradient-primary" />
+                    </h4>
+                    <ul className="space-y-3">
+                      {section.links.map((link) => (
+                        <li key={link}>
+                          <a
+                            href="#"
+                            className="text-sm text-muted-foreground hover:text-foreground hover:pl-2 transition-all duration-300 flex items-center group"
+                          >
+                            <div className="w-1 h-1 bg-primary rounded-full mr-2 opacity-0 group-hover:opacity-100 transition-opacity" />
+                            {link}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
 
-@layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-    background-image: 
-      radial-gradient(circle at 10% 20%, color-mix(in oklch, var(--primary) 30%, transparent 70%) 0%, transparent 20%),
-      radial-gradient(circle at 90% 80%, color-mix(in oklch, var(--secondary) 30%, transparent 70%) 0%, transparent 20%);
-    background-attachment: fixed;
-  }
-  
-  /* Smooth transitions */
-  * {
-    @apply transition-colors duration-300;
-  }
-  
-  /* Selection styling */
-  ::selection {
-    background-color: color-mix(in oklch, var(--primary) 30%, transparent);
-    color: var(--primary-foreground);
-  }
-  
-  ::-moz-selection {
-    background-color: color-mix(in oklch, var(--primary) 30%, transparent);
-    color: var(--primary-foreground);
-  }
-  
-  /* Custom scrollbar */
-  ::-webkit-scrollbar {
-    width: 12px;
-  }
-  
-  ::-webkit-scrollbar-track {
-    @apply bg-muted/50 rounded-lg;
-  }
-  
-  ::-webkit-scrollbar-thumb {
-    background: linear-gradient(
-      to bottom,
-      var(--primary),
-      var(--accent)
-    );
-    border-radius: 0.5rem;
-    border: 2px solid transparent;
-    background-clip: padding-box;
-  }
-  
-  ::-webkit-scrollbar-thumb:hover {
-    background: linear-gradient(
-      to bottom,
-      color-mix(in oklch, var(--primary) 80%, transparent),
-      color-mix(in oklch, var(--accent) 80%, transparent)
-    );
-  }
-}
+              <div className="mt-12 pt-8 border-t border-border/50">
+                <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+                  <p className="text-sm text-muted-foreground text-center md:text-left">
+                    © {new Date().getFullYear()} Lịch Sử Việt Nam. Mọi quyền được bảo lưu.
+                  </p>
+                  <div className="flex items-center space-x-6 text-sm text-muted-foreground">
+                    <a href="#" className="hover:text-foreground transition-colors">
+                      Điều khoản sử dụng
+                    </a>
+                    <a href="#" className="hover:text-foreground transition-colors">
+                      Chính sách bảo mật
+                    </a>
+                    <a href="#" className="hover:text-foreground transition-colors">
+                      Liên hệ
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </footer>
+        </div>
 
-@layer utilities {
-  /* Text gradients */
-  .text-gradient-primary {
-    background: linear-gradient(135deg, var(--primary), var(--accent));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-  
-  .text-gradient-secondary {
-    background: linear-gradient(135deg, var(--secondary), color-mix(in oklch, var(--secondary) 80%, var(--accent) 20%));
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-  
-  /* Background gradients */
-  .bg-gradient-primary {
-    background: linear-gradient(135deg, var(--primary), var(--accent));
-  }
-  
-  .bg-gradient-secondary {
-    background: linear-gradient(135deg, var(--secondary), color-mix(in oklch, var(--secondary) 80%, var(--chart-4) 20%));
-  }
-  
-  .bg-gradient-card {
-    background: linear-gradient(135deg, var(--card), color-mix(in oklch, var(--card) 95%, var(--background) 5%));
-  }
-  
-  /* Glass morphism effects */
-  .glass {
-    background-color: color-mix(in oklch, var(--background) 10%, transparent);
-    backdrop-filter: blur(20px);
-    border: 1px solid color-mix(in oklch, var(--foreground) 20%, transparent);
-  }
-  
-  .glass-card {
-    background-color: color-mix(in oklch, var(--background) 5%, transparent);
-    backdrop-filter: blur(16px);
-    border: 1px solid color-mix(in oklch, var(--foreground) 10%, transparent);
-  }
-  
-  /* Glow effects */
-  .glow-primary {
-    box-shadow: 0 0 40px color-mix(in oklch, var(--primary) 30%, transparent);
-  }
-  
-  .glow-secondary {
-    box-shadow: 0 0 40px color-mix(in oklch, var(--secondary) 30%, transparent);
-  }
-  
-  .glow-on-hover:hover {
-    box-shadow: 0 0 40px color-mix(in oklch, var(--primary) 30%, transparent);
-  }
-  
-  /* Animated gradients */
-  .animate-gradient {
-    background-size: 200% 200%;
-    animation: gradient 8s ease infinite;
-  }
-  
-  @keyframes gradient {
-    0%, 100% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
-  }
-  
-  /* Floating animation */
-  .animate-float {
-    animation: float 6s ease-in-out infinite;
-  }
-  
-  @keyframes float {
-    0%, 100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
-  }
-  
-  /* Wave animation */
-  .animate-wave {
-    animation: wave 20s linear infinite;
-  }
-  
-  @keyframes wave {
-    0% {
-      background-position: 0% 50%;
-    }
-    100% {
-      background-position: 100% 50%;
-    }
-  }
-  
-  /* Pulse glow */
-  .animate-pulse-glow {
-    animation: pulse-glow 3s ease-in-out infinite;
-  }
-  
-  @keyframes pulse-glow {
-    0%, 100% {
-      opacity: 1;
-      box-shadow: 0 0 40px color-mix(in oklch, var(--primary) 30%, transparent);
-    }
-    50% {
-      opacity: 0.7;
-      box-shadow: 0 0 20px color-mix(in oklch, var(--primary) 20%, transparent);
-    }
-  }
-  
-  /* Typewriter effect */
-  .typewriter {
-    overflow: hidden;
-    border-right: 2px solid var(--primary);
-    white-space: nowrap;
-    animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
-  }
-  
-  @keyframes typing {
-    from { width: 0 }
-    to { width: 100% }
-  }
-  
-  @keyframes blink-caret {
-    from, to { border-color: transparent }
-    50% { border-color: var(--primary) }
-  }
-  
-  /* Shimmer effect */
-  .shimmer {
-    position: relative;
-    overflow: hidden;
-  }
-  
-  .shimmer::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      color-mix(in oklch, var(--background) 20%, transparent),
-      transparent
-    );
-    animation: shimmer 2s infinite;
-  }
-  
-  @keyframes shimmer {
-    100% {
-      left: 100%;
-    }
-  }
-  
-  /* Card hover effects */
-  .card-hover {
-    transition: all 0.5s ease;
-  }
-  
-  .card-hover:hover {
-    box-shadow: 0 30px 80px -40px color-mix(in oklch, var(--foreground) 20%, transparent);
-    transform: translateY(-4px) scale(1.02);
-  }
-  
-  /* Text shadow effects */
-  .text-shadow-primary {
-    text-shadow: 0 2px 10px color-mix(in oklch, var(--primary) 30%, transparent);
-  }
-  
-  .text-shadow-lg {
-    text-shadow: 0 4px 20px color-mix(in oklch, var(--foreground) 30%, transparent);
-  }
-  
-  /* Mask fade effects */
-  .mask-fade-bottom {
-    mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
-  }
-  
-  .mask-fade-top {
-    mask-image: linear-gradient(to top, black 80%, transparent 100%);
-  }
-  
-  /* Gradient borders */
-  .border-gradient {
-    position: relative;
-    background: linear-gradient(var(--background), var(--background)) padding-box,
-                linear-gradient(135deg, var(--primary), var(--accent)) border-box;
-    border: 2px solid transparent;
-  }
-  
-  /* Pattern backgrounds */
-  .pattern-dots {
-    background-image: radial-gradient(color-mix(in oklch, var(--muted-foreground) 100%, transparent) 1px, transparent 1px);
-    background-size: 20px 20px;
-  }
-  
-  .pattern-grid {
-    background-image: 
-      linear-gradient(color-mix(in oklch, var(--border) 100%, transparent) 1px, transparent 1px),
-      linear-gradient(90deg, color-mix(in oklch, var(--border) 100%, transparent) 1px, transparent 1px);
-    background-size: 20px 20px;
-  }
-  
-  /* Noise texture */
-  .noise-texture {
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.1'/%3E%3C/svg%3E");
-  }
-}
+        {/* Back to Top Button */}
+        <button
+          className="fixed bottom-8 right-8 w-12 h-12 bg-gradient-primary rounded-full flex items-center justify-center text-primary-foreground shadow-lg hover:scale-110 transition-all duration-300 z-40"
+          onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+        >
+          ↑
+        </button>
 
-/* Custom utility classes for Vietnam theme */
-.vietnam-flag-gradient {
-  background: linear-gradient(135deg, 
-    var(--primary) 0%,
-    var(--secondary) 50%,
-    var(--accent) 100%
-  );
-}
-
-.vietnam-star {
-  background: radial-gradient(
-    circle at center,
-    var(--accent) 0%,
-    var(--primary) 100%
-  );
-  clip-path: polygon(
-    50% 0%, 61% 35%, 98% 35%, 68% 57%, 
-    79% 91%, 50% 70%, 21% 91%, 32% 57%, 
-    2% 35%, 39% 35%
-  );
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  :root {
-    --radius: 0.75rem;
-  }
+        <Analytics />
+      </body>
+    </html>
+  )
 }
