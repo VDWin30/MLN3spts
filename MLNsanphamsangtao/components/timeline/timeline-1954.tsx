@@ -137,7 +137,7 @@ export function Timeline1954() {
   return (
     <div className="space-y-6">
       
-      {/* --- HEADER --- */}
+      {/* --- HEADER NĂM & TAB NAVIGATION --- */}
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-border/40 pb-4">
         <div>
           <h2 className="text-4xl font-black text-primary tracking-tight">1954 - 1965</h2>
