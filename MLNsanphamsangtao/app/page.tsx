@@ -36,7 +36,7 @@ const TIMELINE_YEARS = [
   },
   { 
     year: 2011, 
-    label: '2011', 
+    label: '2011 - Đến nay', 
     title: 'Đại Hội XI'
   },
 ];
