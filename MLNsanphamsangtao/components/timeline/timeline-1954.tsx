@@ -34,7 +34,7 @@ const DATA_1954: TimelineEvent[] = [
       { type: 'image', src: 'https://www.nxbctqg.org.vn/img_data/images/HiepdinhGionevo.jpg', caption: 'Hiệp định Gionevo' }
     ],
     videos: [
-       { type: 'video', src: 'J-6d7x8gXkY', caption: 'Phim tư liệu: Hà Nội ngày tiếp quản' }
+       { type: 'video', src: 'https://www.youtube.com/watch?v=rHB7aQG72po', caption: 'Phim tài liệu - Giải phóng Thủ đô 10/10/1954 [GLS số 16]' }
     ],
     music: [
       { type: 'audio', src: '/music/tien-ve-ha-noi.mp3', caption: 'Tiến Về Hà Nội', author: 'Văn Cao' }
