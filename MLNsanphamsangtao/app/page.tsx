@@ -16,8 +16,8 @@ const TIMELINE_YEARS = [
     label: '1945', 
     title: 'ĐỘC LẬP', 
     sub: 'Khai sinh nước VNDCCH',
-    // Link ảnh Bác Hồ 1946 chuẩn từ Wikimedia
-    bgImage: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/H%E1%BB%93_Ch%C3%AD_Minh_1946.jpg/800px-H%E1%BB%93_Ch%C3%AD_Minh_1946.jpg'
+    // Link ảnh Bác Hồ 1946 chuẩn từ Wikimedia (HTTPS)
+    bgImage: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/H%E1%BB%93_Ch%C3%AD_Minh_1946.jpg/1280px-H%E1%BB%93_Ch%C3%AD_Minh_1946.jpg'
   },
   { 
     year: 1954, 
@@ -83,25 +83,20 @@ export default function Home() {
         
         {/* --- Background Image Layer (Bên trái - Rõ nét) --- */}
         <div className="absolute inset-0 z-0 overflow-hidden">
-           {/* Ảnh nền */}
+           {/* Ảnh nền: Đã xóa mix-blend-overlay để ảnh hiện rõ trên nền đen */}
            <div 
              key={activeYear}
-             className="absolute inset-0 bg-cover bg-center transition-all duration-1000 ease-in-out scale-105"
+             className="absolute inset-0 bg-cover bg-center transition-all duration-1000 ease-in-out scale-105 opacity-50"
              style={{ backgroundImage: `url('${currentInfo.bgImage}')` }} 
            />
            
-           {/* LỚP PHỦ (OVERLAY) ĐÃ ĐƯỢC LÀM SÁNG HƠN */}
-           {/* 1. Lớp đen mờ nhẹ toàn bộ để chữ dễ đọc nhưng không che mất ảnh */}
-           <div className="absolute inset-0 bg-black/30" />
-           
-           {/* 2. Gradient đen ở dưới chân để làm nền cho menu */}
-           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
-           
-           {/* 3. Gradient đen bên trái để làm nổi bật tiêu đề */}
-           <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-transparent to-transparent" />
+           {/* Các lớp phủ gradient để text nổi bật */}
+           <div className="absolute inset-0 bg-black/20" />
+           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent" />
+           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-transparent to-transparent" />
            
            {/* Texture hạt nhiễu */}
-           <div className="absolute inset-0 opacity-20 pointer-events-none mix-blend-overlay" style={{backgroundImage: 'url("https://www.transparenttextures.com/patterns/stardust.png")'}}></div>
+           <div className="absolute inset-0 opacity-20 pointer-events-none" style={{backgroundImage: 'url("https://www.transparenttextures.com/patterns/stardust.png")'}}></div>
         </div>
 
         {/* --- Nội dung bên trái --- */}
