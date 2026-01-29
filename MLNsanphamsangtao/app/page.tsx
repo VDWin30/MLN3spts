@@ -16,7 +16,7 @@ const TIMELINE_YEARS = [
     label: '1945', 
     title: 'ĐỘC LẬP', 
     sub: 'Khai sinh nước VNDCCH',
-    bgImage: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/H%E1%BB%93_Ch%C3%AD_Minh_1946.jpg/800px-H%E1%BB%93_Ch%C3%AD_Minh_1946.jpg'
+    bgImage: 'http://tuyengiao.hagiang.gov.vn/upload/64711/fck/leminhtien.btgtu/Nhan%20dan%20ta%20vui%20mung%20phan%20khoi%20sau%20Cach%20mang%20Thang%208.jpg'
   },
   { 
     year: 1954, 
