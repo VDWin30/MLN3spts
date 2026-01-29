@@ -127,34 +127,67 @@ export default function Home() {
                </p>
             </div>
           </div>
-
-          <div className="w-full mt-6 lg:mt-0 hidden lg:block">
-            <p className="text-[10px] uppercase text-white/30 mb-3 tracking-widest font-bold">Chọn giai đoạn lịch sử</p>
-            
-            <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide mask-image-linear-to-r">
-              {TIMELINE_YEARS.map((item) => {
-                const isActive = activeYear === item.year;
-                return (
-                  <button
-                    key={item.year}
-                    onClick={() => setActiveYear(item.year)}
-                    className={`group relative flex-shrink-0 px-5 py-3 rounded transition-all duration-300 border backdrop-blur-sm ${
-                      isActive
-                        ? 'bg-red-900/80 border-red-500/50 text-white shadow-xl translate-y-[-2px]'
-                        : 'bg-white/5 hover:bg-white/10 text-white/50 hover:text-white border-white/5 hover:border-white/20'
-                    }`}
-                  >
-                    <span className={`text-lg font-bold font-serif block ${isActive ? 'scale-110 origin-left' : ''} transition-transform`}>
-                        {item.label}
-                    </span>
-                    {isActive && (
-                       <span className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-yellow-400 to-red-600 shadow-[0_0_8px_rgba(250,204,21,0.8)]" />
-                    )}
-                  </button>
-                )
-              })}
-            </div>
+{/* Desktop Navigation - Cải tiến */}
+<div className="w-full mt-8 lg:mt-12">
+  <p className="text-xs uppercase text-white/40 mb-4 tracking-widest font-bold flex items-center gap-2">
+    <div className="w-4 h-4 rounded-full bg-gradient-to-r from-red-600 to-amber-500"></div>
+    MỐC LỊCH SỬ QUAN TRỌNG
+  </p>
+  
+  <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+    {TIMELINE_YEARS.map((item) => {
+      const isActive = activeYear === item.year;
+      return (
+        <button
+          key={item.year}
+          onClick={() => setActiveYear(item.year)}
+          className={`timeline-year-btn relative group rounded-xl p-4 transition-all duration-500 overflow-hidden ${
+            isActive
+              ? 'bg-gradient-to-br from-red-900/90 to-amber-900/90 border-2 border-amber-500/50 scale-105 shadow-2xl'
+              : 'bg-black/30 hover:bg-black/50 border border-white/10 hover:border-amber-500/30'
+          }`}
+        >
+          {/* Background Image */}
+          <div 
+            className="absolute inset-0 bg-cover bg-center opacity-20 group-hover:opacity-30 transition-opacity duration-500"
+            style={{ backgroundImage: `url('${item.bgImage}')` }}
+          />
+          
+          {/* Gradient overlay */}
+          <div className={`absolute inset-0 transition-opacity duration-500 ${
+            isActive 
+              ? 'opacity-80 bg-gradient-to-br from-red-900/80 to-amber-900/80' 
+              : 'opacity-0 group-hover:opacity-60 bg-gradient-to-br from-red-900/40 to-amber-900/40'
+          }`} />
+          
+          <div className="relative z-10 text-left">
+            <span className={`text-2xl font-black font-serif block mb-1 ${
+              isActive 
+                ? 'text-white drop-shadow-lg' 
+                : 'text-amber-200/80 group-hover:text-white'
+            }`}>
+              {item.year}
+            </span>
+            <span className={`text-xs font-bold uppercase tracking-wider block ${
+              isActive 
+                ? 'text-amber-300' 
+                : 'text-white/60 group-hover:text-amber-200'
+            }`}>
+              {item.title}
+            </span>
+            {isActive && (
+              <div className="absolute bottom-2 right-2">
+                <div className="w-6 h-6 rounded-full bg-gradient-to-r from-amber-400 to-red-500 flex items-center justify-center">
+                  <ChevronRight className="w-4 h-4 text-white" />
+                </div>
+              </div>
+            )}
           </div>
+        </button>
+      );
+    })}
+  </div>
+</div>
         </div>
       </section>
 
