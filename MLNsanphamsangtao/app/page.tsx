@@ -178,24 +178,31 @@ export default function Home() {
          <div className="absolute inset-0 opacity-[0.04] pointer-events-none z-0" 
               style={{backgroundImage: 'url("https://www.transparenttextures.com/patterns/stardust.png")'}}></div>
 
-        {/* Mobile Navigation */}
-        <div className="lg:hidden relative z-20 p-4 bg-[#f4f1ea]/90 backdrop-blur border-b border-gray-200 overflow-x-auto whitespace-nowrap scrollbar-hide">
-            <div className="flex gap-2">
-            {TIMELINE_YEARS.map((item) => (
-                <button
-                key={item.year}
-                onClick={() => setActiveYear(item.year)}
-                className={`px-4 py-1.5 rounded-full text-sm font-bold border transition-colors ${
-                    activeYear === item.year
-                    ? 'bg-red-800 text-white border-red-800'
-                    : 'bg-transparent text-gray-600 border-gray-300'
-                }`}
-                >
-                {item.label}
-                </button>
-            ))}
-            </div>
-        </div>
+       {/* Mobile Navigation - Cải tiến */}
+<div className="lg:hidden relative z-20 p-4 bg-gradient-to-r from-red-50/80 to-amber-50/80 backdrop-blur-sm border-b border-amber-200">
+  <p className="text-xs uppercase text-red-800/60 mb-3 font-bold flex items-center gap-2">
+    <div className="w-3 h-3 rounded-full bg-gradient-to-r from-red-600 to-amber-500"></div>
+    CHỌN GIAI ĐOẠN
+  </p>
+  <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+    {TIMELINE_YEARS.map((item) => {
+      const isActive = activeYear === item.year;
+      return (
+        <button
+          key={item.year}
+          onClick={() => setActiveYear(item.year)}
+          className={`flex-shrink-0 px-4 py-2.5 rounded-lg text-sm font-bold border transition-all duration-300 whitespace-nowrap ${
+            isActive
+              ? 'bg-gradient-to-r from-red-700 to-amber-600 text-white border-transparent shadow-lg scale-105'
+              : 'bg-white/80 text-gray-700 border-gray-300 hover:bg-white hover:border-amber-400'
+          }`}
+        >
+          {item.label}
+        </button>
+      );
+    })}
+  </div>
+</div>
 
          {/* Nội dung chính */}
          <div className="h-full overflow-y-auto p-6 lg:p-16 custom-scrollbar pb-32 relative z-10">
