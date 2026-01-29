@@ -173,3 +173,97 @@
   0% { background-position: 200% 0; }
   100% { background-position: -200% 0; }
 }
+/* ========== THÊM TIẾP SAU PHẦN 4 ========== */
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+  .text-gold-gradient {
+    font-size: 4rem !important;
+  }
+  
+  .timeline-year-btn {
+    padding: 0.75rem;
+  }
+  
+  /* Cải thiện tab trên mobile */
+  .tab-responsive {
+    flex-direction: column;
+  }
+  
+  .tab-responsive button {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  /* Điều chỉnh header bên trái trên mobile */
+  section:first-child h1 {
+    font-size: 5rem !important;
+  }
+  
+  section:first-child h2 {
+    font-size: 1.75rem !important;
+  }
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none;
+  }
+  
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  
+  .timeline-content {
+    break-inside: avoid;
+  }
+  
+  /* Ẩn các phần không cần in */
+  button, .timeline-year-btn, audio, iframe {
+    display: none !important;
+  }
+}
+
+/* Hiệu ứng riêng cho audio player */
+audio::-webkit-media-controls-panel {
+  background-color: #fef3c7;
+}
+
+audio::-webkit-media-controls-play-button {
+  background-color: #dc2626;
+  border-radius: 50%;
+}
+
+audio::-webkit-media-controls-current-time-display,
+audio::-webkit-media-controls-time-remaining-display {
+  color: #dc2626;
+  font-weight: bold;
+}
+
+/* Hiệu ứng focus cho accessibility */
+button:focus-visible {
+  outline: 2px solid #dc2626;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Custom scrollbar cho toàn bộ website */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #dc2626, #ea580c);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #b91c1c, #c2410c);
+}
