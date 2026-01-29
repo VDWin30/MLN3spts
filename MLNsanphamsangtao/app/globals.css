@@ -108,7 +108,52 @@
 .custom-scrollbar:hover::-webkit-scrollbar-thumb {
   background-color: rgba(185, 28, 28, 0.5); /* Màu đỏ nhạt khi hover */
 }
+/* Hiệu ứng cho timeline years */
+.timeline-year-btn {
+  position: relative;
+  overflow: hidden;
+}
 
+.timeline-year-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%);
+  transform: translateX(-100%);
+  transition: transform 0.6s;
+}
+
+.timeline-year-btn:hover::before {
+  transform: translateX(100%);
+}
+
+/* Hiệu ứng cho card */
+.history-card {
+  background: linear-gradient(145deg, #ffffff, #f5f5f5);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.history-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(185, 28, 28, 0.15);
+}
+
+/* Gradient border */
+.gradient-border {
+  position: relative;
+  border-radius: 1.5rem;
+}
+
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(45deg, #dc2626, #ea580c, #dc2626);
+  z-index: -1;
+  opacity: 0.5;
+}
 /* 3. Hiệu ứng Gradient chữ mạ vàng */
 .text-gold-gradient {
   background: linear-gradient(to bottom, #fef3c7 0%, #facc15 50%, #b45309 100%);
