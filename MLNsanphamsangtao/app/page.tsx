@@ -79,24 +79,23 @@ export default function Home() {
       {/* =========================================
           CỘT TRÁI: HERO / TRÌNH DIỄN (45%)
           ========================================= */}
-      <section className="relative w-full lg:w-[45%] h-[40vh] lg:h-full flex flex-col justify-between shrink-0 shadow-[10px_0_30px_rgba(0,0,0,0.2)] z-20 bg-black">
+      <section className="relative w-full lg:w-[45%] h-[40vh] lg:h-full flex flex-col justify-between shrink-0 shadow-[10px_0_30px_rgba(0,0,0,0.2)] z-20">
         
         {/* --- Background Image Layer (Bên trái - Rõ nét) --- */}
         <div className="absolute inset-0 z-0 overflow-hidden">
-           {/* Ảnh nền: Đã xóa mix-blend-overlay để ảnh hiện rõ trên nền đen */}
+           {/* Ảnh nền: Đã tăng opacity và loại bỏ lớp phủ đen */}
            <div 
              key={activeYear}
-             className="absolute inset-0 bg-cover bg-center transition-all duration-1000 ease-in-out scale-105 opacity-50"
+             className="absolute inset-0 bg-cover bg-center transition-all duration-1000 ease-in-out"
              style={{ backgroundImage: `url('${currentInfo.bgImage}')` }} 
            />
            
-           {/* Các lớp phủ gradient để text nổi bật */}
-           <div className="absolute inset-0 bg-black/20" />
-           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-transparent to-transparent" />
-           <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-transparent to-transparent" />
+           {/* Các lớp phủ gradient tối để text nổi bật - Điều chỉnh nhẹ hơn */}
+           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
+           <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/20 to-transparent" />
            
            {/* Texture hạt nhiễu */}
-           <div className="absolute inset-0 opacity-20 pointer-events-none" style={{backgroundImage: 'url("https://www.transparenttextures.com/patterns/stardust.png")'}}></div>
+           <div className="absolute inset-0 opacity-10 pointer-events-none" style={{backgroundImage: 'url("https://www.transparenttextures.com/patterns/stardust.png")'}}></div>
         </div>
 
         {/* --- Nội dung bên trái --- */}
@@ -127,67 +126,68 @@ export default function Home() {
                </p>
             </div>
           </div>
-{/* Desktop Navigation - Cải tiến */}
-<div className="w-full mt-8 lg:mt-12">
-  <p className="text-xs uppercase text-white/40 mb-4 tracking-widest font-bold flex items-center gap-2">
-    <div className="w-4 h-4 rounded-full bg-gradient-to-r from-red-600 to-amber-500"></div>
-    MỐC LỊCH SỬ QUAN TRỌNG
-  </p>
-  
-  <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-    {TIMELINE_YEARS.map((item) => {
-      const isActive = activeYear === item.year;
-      return (
-        <button
-          key={item.year}
-          onClick={() => setActiveYear(item.year)}
-          className={`timeline-year-btn relative group rounded-xl p-4 transition-all duration-500 overflow-hidden ${
-            isActive
-              ? 'bg-gradient-to-br from-red-900/90 to-amber-900/90 border-2 border-amber-500/50 scale-105 shadow-2xl'
-              : 'bg-black/30 hover:bg-black/50 border border-white/10 hover:border-amber-500/30'
-          }`}
-        >
-          {/* Background Image */}
-          <div 
-            className="absolute inset-0 bg-cover bg-center opacity-20 group-hover:opacity-30 transition-opacity duration-500"
-            style={{ backgroundImage: `url('${item.bgImage}')` }}
-          />
-          
-          {/* Gradient overlay */}
-          <div className={`absolute inset-0 transition-opacity duration-500 ${
-            isActive 
-              ? 'opacity-80 bg-gradient-to-br from-red-900/80 to-amber-900/80' 
-              : 'opacity-0 group-hover:opacity-60 bg-gradient-to-br from-red-900/40 to-amber-900/40'
-          }`} />
-          
-          <div className="relative z-10 text-left">
-            <span className={`text-2xl font-black font-serif block mb-1 ${
-              isActive 
-                ? 'text-white drop-shadow-lg' 
-                : 'text-amber-200/80 group-hover:text-white'
-            }`}>
-              {item.year}
-            </span>
-            <span className={`text-xs font-bold uppercase tracking-wider block ${
-              isActive 
-                ? 'text-amber-300' 
-                : 'text-white/60 group-hover:text-amber-200'
-            }`}>
-              {item.title}
-            </span>
-            {isActive && (
-              <div className="absolute bottom-2 right-2">
-                <div className="w-6 h-6 rounded-full bg-gradient-to-r from-amber-400 to-red-500 flex items-center justify-center">
-                  <ChevronRight className="w-4 h-4 text-white" />
-                </div>
-              </div>
-            )}
+
+          {/* Desktop Navigation - Cải tiến */}
+          <div className="w-full mt-8 lg:mt-12">
+            <p className="text-xs uppercase text-white/40 mb-4 tracking-widest font-bold flex items-center gap-2">
+              <div className="w-4 h-4 rounded-full bg-gradient-to-r from-red-600 to-amber-500"></div>
+              MỐC LỊCH SỬ QUAN TRỌNG
+            </p>
+            
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+              {TIMELINE_YEARS.map((item) => {
+                const isActive = activeYear === item.year;
+                return (
+                  <button
+                    key={item.year}
+                    onClick={() => setActiveYear(item.year)}
+                    className={`timeline-year-btn relative group rounded-xl p-4 transition-all duration-500 overflow-hidden ${
+                      isActive
+                        ? 'bg-gradient-to-br from-red-900/90 to-amber-900/90 border-2 border-amber-500/50 scale-105 shadow-2xl'
+                        : 'bg-black/30 hover:bg-black/50 border border-white/10 hover:border-amber-500/30'
+                    }`}
+                  >
+                    {/* Background Image */}
+                    <div 
+                      className="absolute inset-0 bg-cover bg-center opacity-30 group-hover:opacity-40 transition-opacity duration-500"
+                      style={{ backgroundImage: `url('${item.bgImage}')` }}
+                    />
+                    
+                    {/* Gradient overlay */}
+                    <div className={`absolute inset-0 transition-opacity duration-500 ${
+                      isActive 
+                        ? 'opacity-80 bg-gradient-to-br from-red-900/80 to-amber-900/80' 
+                        : 'opacity-0 group-hover:opacity-60 bg-gradient-to-br from-red-900/40 to-amber-900/40'
+                    }`} />
+                    
+                    <div className="relative z-10 text-left">
+                      <span className={`text-2xl font-black font-serif block mb-1 ${
+                        isActive 
+                          ? 'text-white drop-shadow-lg' 
+                          : 'text-amber-200/80 group-hover:text-white'
+                      }`}>
+                        {item.year}
+                      </span>
+                      <span className={`text-xs font-bold uppercase tracking-wider block ${
+                        isActive 
+                          ? 'text-amber-300' 
+                          : 'text-white/60 group-hover:text-amber-200'
+                      }`}>
+                        {item.title}
+                      </span>
+                      {isActive && (
+                        <div className="absolute bottom-2 right-2">
+                          <div className="w-6 h-6 rounded-full bg-gradient-to-r from-amber-400 to-red-500 flex items-center justify-center">
+                            <ChevronRight className="w-4 h-4 text-white" />
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </button>
+                );
+              })}
+            </div>
           </div>
-        </button>
-      );
-    })}
-  </div>
-</div>
         </div>
       </section>
 
@@ -200,42 +200,42 @@ export default function Home() {
          <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
             <div 
                 key={activeYear} 
-                className="absolute inset-0 bg-cover bg-center transition-all duration-1000 ease-in-out opacity-20 blur-[2px] grayscale sepia-[0.3]"
+                className="absolute inset-0 bg-cover bg-center transition-all duration-1000 ease-in-out opacity-15 blur-[8px] grayscale-[0.2]"
                 style={{ backgroundImage: `url('${currentInfo.bgImage}')` }} 
             />
             {/* Lớp phủ trắng mờ */}
-            <div className="absolute inset-0 bg-[#f4f1ea]/80 mix-blend-lighten" />
+            <div className="absolute inset-0 bg-[#f4f1ea]/90 mix-blend-lighten" />
          </div>
 
          {/* Texture giấy cũ */}
-         <div className="absolute inset-0 opacity-[0.04] pointer-events-none z-0" 
+         <div className="absolute inset-0 opacity-[0.03] pointer-events-none z-0" 
               style={{backgroundImage: 'url("https://www.transparenttextures.com/patterns/stardust.png")'}}></div>
 
-       {/* Mobile Navigation - Cải tiến */}
-<div className="lg:hidden relative z-20 p-4 bg-gradient-to-r from-red-50/80 to-amber-50/80 backdrop-blur-sm border-b border-amber-200">
-  <p className="text-xs uppercase text-red-800/60 mb-3 font-bold flex items-center gap-2">
-    <div className="w-3 h-3 rounded-full bg-gradient-to-r from-red-600 to-amber-500"></div>
-    CHỌN GIAI ĐOẠN
-  </p>
-  <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
-    {TIMELINE_YEARS.map((item) => {
-      const isActive = activeYear === item.year;
-      return (
-        <button
-          key={item.year}
-          onClick={() => setActiveYear(item.year)}
-          className={`flex-shrink-0 px-4 py-2.5 rounded-lg text-sm font-bold border transition-all duration-300 whitespace-nowrap ${
-            isActive
-              ? 'bg-gradient-to-r from-red-700 to-amber-600 text-white border-transparent shadow-lg scale-105'
-              : 'bg-white/80 text-gray-700 border-gray-300 hover:bg-white hover:border-amber-400'
-          }`}
-        >
-          {item.label}
-        </button>
-      );
-    })}
-  </div>
-</div>
+         {/* Mobile Navigation - Cải tiến */}
+         <div className="lg:hidden relative z-20 p-4 bg-gradient-to-r from-red-50/80 to-amber-50/80 backdrop-blur-sm border-b border-amber-200">
+           <p className="text-xs uppercase text-red-800/60 mb-3 font-bold flex items-center gap-2">
+             <div className="w-3 h-3 rounded-full bg-gradient-to-r from-red-600 to-amber-500"></div>
+             CHỌN GIAI ĐOẠN
+           </p>
+           <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+             {TIMELINE_YEARS.map((item) => {
+               const isActive = activeYear === item.year;
+               return (
+                 <button
+                   key={item.year}
+                   onClick={() => setActiveYear(item.year)}
+                   className={`flex-shrink-0 px-4 py-2.5 rounded-lg text-sm font-bold border transition-all duration-300 whitespace-nowrap ${
+                     isActive
+                       ? 'bg-gradient-to-r from-red-700 to-amber-600 text-white border-transparent shadow-lg scale-105'
+                       : 'bg-white/80 text-gray-700 border-gray-300 hover:bg-white hover:border-amber-400'
+                   }`}
+                 >
+                   {item.label}
+                 </button>
+               );
+             })}
+           </div>
+         </div>
 
          {/* Nội dung chính */}
          <div className="h-full overflow-y-auto p-6 lg:p-16 custom-scrollbar pb-32 relative z-10">
