@@ -9,14 +9,15 @@ import { Timeline1991 } from '@/components/timeline/timeline-1991';
 import { Timeline2011 } from '@/components/timeline/timeline-2011';
 import { ChevronRight, Star, Quote, History } from 'lucide-react';
 
-// Dữ liệu timeline: Bạn có thể thay link ảnh khác vào đây, giao diện sẽ tự cập nhật cả 2 bên
+// Dữ liệu timeline: Đã cập nhật link ảnh 1945 chuẩn HTTPS
 const TIMELINE_YEARS = [
   { 
     year: 1945, 
     label: '1945', 
     title: 'ĐỘC LẬP', 
     sub: 'Khai sinh nước VNDCCH',
-    bgImage: 'http://tuyengiao.hagiang.gov.vn/upload/64711/fck/leminhtien.btgtu/Nhan%20dan%20ta%20vui%20mung%20phan%20khoi%20sau%20Cach%20mang%20Thang%208.jpg'
+    // Link ảnh Bác Hồ 1946 chuẩn từ Wikimedia
+    bgImage: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/H%E1%BB%93_Ch%C3%AD_Minh_1946.jpg/800px-H%E1%BB%93_Ch%C3%AD_Minh_1946.jpg'
   },
   { 
     year: 1954, 
@@ -82,14 +83,25 @@ export default function Home() {
         
         {/* --- Background Image Layer (Bên trái - Rõ nét) --- */}
         <div className="absolute inset-0 z-0 overflow-hidden">
+           {/* Ảnh nền */}
            <div 
              key={activeYear}
-             className="absolute inset-0 bg-cover bg-center transition-all duration-1000 ease-in-out scale-105 opacity-60 mix-blend-overlay grayscale-[30%]"
+             className="absolute inset-0 bg-cover bg-center transition-all duration-1000 ease-in-out scale-105"
              style={{ backgroundImage: `url('${currentInfo.bgImage}')` }} 
            />
-           <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/90" />
-           <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-transparent to-transparent" />
-           <div className="absolute inset-0 opacity-20 pointer-events-none" style={{backgroundImage: 'url("https://www.transparenttextures.com/patterns/stardust.png")'}}></div>
+           
+           {/* LỚP PHỦ (OVERLAY) ĐÃ ĐƯỢC LÀM SÁNG HƠN */}
+           {/* 1. Lớp đen mờ nhẹ toàn bộ để chữ dễ đọc nhưng không che mất ảnh */}
+           <div className="absolute inset-0 bg-black/30" />
+           
+           {/* 2. Gradient đen ở dưới chân để làm nền cho menu */}
+           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
+           
+           {/* 3. Gradient đen bên trái để làm nổi bật tiêu đề */}
+           <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-transparent to-transparent" />
+           
+           {/* Texture hạt nhiễu */}
+           <div className="absolute inset-0 opacity-20 pointer-events-none mix-blend-overlay" style={{backgroundImage: 'url("https://www.transparenttextures.com/patterns/stardust.png")'}}></div>
         </div>
 
         {/* --- Nội dung bên trái --- */}
@@ -156,19 +168,18 @@ export default function Home() {
           ========================================= */}
       <section className="flex-1 h-full relative overflow-hidden bg-[#f4f1ea]">
          
-         {/* --- NEW: Background Image Layer (Bên phải - Mờ ảo) --- */}
-         {/* Lớp này dùng lại chính link ảnh (currentInfo.bgImage) của bên trái */}
+         {/* --- Background Image Layer (Bên phải - Mờ ảo) --- */}
          <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
             <div 
-                key={activeYear} // Key để kích hoạt animation khi đổi năm
-                className="absolute inset-0 bg-cover bg-center transition-all duration-1000 ease-in-out opacity-10 blur-[2px] grayscale sepia-[0.3]"
+                key={activeYear} 
+                className="absolute inset-0 bg-cover bg-center transition-all duration-1000 ease-in-out opacity-20 blur-[2px] grayscale sepia-[0.3]"
                 style={{ backgroundImage: `url('${currentInfo.bgImage}')` }} 
             />
-            {/* Lớp phủ trắng mờ để ảnh không bị rối mắt với chữ */}
-            <div className="absolute inset-0 bg-[#f4f1ea]/60 mix-blend-lighten" />
+            {/* Lớp phủ trắng mờ */}
+            <div className="absolute inset-0 bg-[#f4f1ea]/80 mix-blend-lighten" />
          </div>
 
-         {/* Texture giấy cũ (Giữ nguyên) */}
+         {/* Texture giấy cũ */}
          <div className="absolute inset-0 opacity-[0.04] pointer-events-none z-0" 
               style={{backgroundImage: 'url("https://www.transparenttextures.com/patterns/stardust.png")'}}></div>
 
@@ -191,7 +202,7 @@ export default function Home() {
             </div>
         </div>
 
-         {/* Nội dung chính (Thêm z-10 để nổi lên trên ảnh nền) */}
+         {/* Nội dung chính */}
          <div className="h-full overflow-y-auto p-6 lg:p-16 custom-scrollbar pb-32 relative z-10">
             <div className="max-w-4xl mx-auto">
                 <div className="flex items-center gap-2 text-red-900/60 font-semibold mb-8 text-xs uppercase tracking-wider">
@@ -202,7 +213,6 @@ export default function Home() {
                 </div>
 
                 <div className="animate-in fade-in slide-in-from-bottom-8 duration-700 ease-out">
-                    {/* Thêm nền trắng mờ (Glass effect) cho khung nội dung để dễ đọc chữ */}
                     <div className="bg-white/40 backdrop-blur-[2px] p-1 rounded-3xl border border-stone-200 shadow-sm">
                         <div className="bg-white/70 rounded-[1.3rem] p-6 lg:p-8">
                             {renderTimelineContent()}
