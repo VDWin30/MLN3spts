@@ -7,57 +7,57 @@ import { Timeline1975 } from '@/components/timeline/timeline-1975';
 import { Timeline1986 } from '@/components/timeline/timeline-1986';
 import { Timeline1991 } from '@/components/timeline/timeline-1991';
 import { Timeline2011 } from '@/components/timeline/timeline-2011';
-import { ChevronRight, BookOpen, History } from 'lucide-react';
+import { ChevronRight, Star, Quote, History } from 'lucide-react';
 
-// Thêm ảnh nền đại diện cho từng mốc (Bạn thay link ảnh thật vào nhé)
+// Dữ liệu timeline với hình ảnh chất lượng cao và mô tả ngắn gọn
 const TIMELINE_YEARS = [
   { 
     year: 1945, 
     label: '1945', 
-    title: 'Việt Nam Độc Lập',
-    desc: 'Khai sinh nước VNDCCH',
+    title: 'ĐỘC LẬP', 
+    sub: 'Khai sinh nước VNDCCH',
     bgImage: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/H%E1%BB%93_Ch%C3%AD_Minh_1946.jpg/800px-H%E1%BB%93_Ch%C3%AD_Minh_1946.jpg'
   },
   { 
     year: 1954, 
     label: '1954', 
-    title: 'Miền Bắc Quá Độ',
-    desc: 'Chiến thắng Điện Biên Phủ',
+    title: 'ĐIỆN BIÊN', 
+    sub: 'Lừng lẫy năm châu',
     bgImage: 'https://upload.wikimedia.org/wikipedia/commons/2/22/Castries_de_h%C3%A2m.jpg'
   },
   { 
     year: 1975, 
     label: '1975', 
-    title: 'Thống Nhất Đất Nước',
-    desc: 'Giải phóng miền Nam',
+    title: 'THỐNG NHẤT', 
+    sub: 'Non sông thu về một mối',
     bgImage: 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e6/Tank_390_crashing_through_the_gates_of_the_Independence_Palace.jpg/1024px-Tank_390_crashing_through_the_gates_of_the_Independence_Palace.jpg'
   },
   { 
     year: 1986, 
     label: '1986', 
-    title: 'Đổi Mới',
-    desc: 'Kỷ nguyên hội nhập',
+    title: 'ĐỔI MỚI', 
+    sub: 'Kỷ nguyên hội nhập',
     bgImage: 'https://cafefcdn.com/2019/3/13/photo-1-15524456570391282216597.jpg'
   },
   { 
     year: 1991, 
     label: '1991', 
-    title: 'Đại Hội VII',
-    desc: 'Cương lĩnh xây dựng đất nước',
+    title: 'CƯƠNG LĨNH', 
+    sub: 'Xây dựng đất nước',
     bgImage: 'https://dangcongsan.vn/DATA/0/2015/12/28/Dangcongsan/dhoi_7_vn_s_b_w-16_01_35_812.jpg'
   },
   { 
     year: 2011, 
-    label: '2011 - Nay', 
-    title: 'Phát Triển',
-    desc: 'Công nghiệp hóa, hiện đại hóa',
+    label: '2011', 
+    title: 'PHÁT TRIỂN', 
+    sub: 'Công nghiệp hóa',
     bgImage: 'https://upload.wikimedia.org/wikipedia/commons/6/6c/Landmark_81_view_from_Saigon_Bridge_2020.jpg'
   },
 ];
 
 export default function Home() {
-  // Mặc định chọn năm đầu tiên luôn để trang đỡ trống
   const [activeYear, setActiveYear] = useState<number>(1945);
+  const currentInfo = TIMELINE_YEARS.find(i => i.year === activeYear) || TIMELINE_YEARS[0];
 
   const renderTimelineContent = () => {
     switch (activeYear) {
@@ -71,122 +71,158 @@ export default function Home() {
     }
   };
 
-  const currentInfo = TIMELINE_YEARS.find(i => i.year === activeYear) || TIMELINE_YEARS[0];
-
   return (
-    <main className="min-h-screen bg-[#fdfbf7] text-[#2c2c2c] overflow-hidden flex flex-col lg:flex-row font-sans selection:bg-red-900 selection:text-white">
+    // Layout chính: Full màn hình, flex row
+    <main className="h-screen w-full bg-[#f4f1ea] text-[#1a1a1a] overflow-hidden flex flex-col lg:flex-row font-sans selection:bg-red-900 selection:text-white">
       
-      {/* --- CỘT TRÁI: ĐIỀU HƯỚNG & HÌNH ẢNH (Sticky) --- */}
-      <aside className="lg:w-[40%] h-[50vh] lg:h-screen sticky top-0 flex flex-col relative z-10 border-r border-[#d4cfc5]">
+      {/* =========================================
+          CỘT TRÁI: HERO / TRÌNH DIỄN (45%)
+          ========================================= */}
+      <section className="relative w-full lg:w-[45%] h-[40vh] lg:h-full flex flex-col justify-between shrink-0 shadow-[10px_0_30px_rgba(0,0,0,0.2)] z-20 bg-black">
         
-        {/* Lớp nền ảnh (Background Image Layer) */}
-        <div className="absolute inset-0 z-0 overflow-hidden bg-[#2c2c2c]">
-          {/* Ảnh nền mờ thay đổi theo năm */}
-          <div 
-            key={activeYear} // Key thay đổi để kích hoạt animation
-            className="absolute inset-0 bg-cover bg-center transition-opacity duration-1000 ease-in-out opacity-40 mix-blend-overlay grayscale"
-            style={{ backgroundImage: `url('${currentInfo.bgImage}')` }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#2a2a2a]/50 to-[#1a1a1a]/90" />
-          
-          {/* Texture giấy cũ phủ lên */}
-          <div className="absolute inset-0 opacity-10 pointer-events-none" style={{backgroundImage: 'url("https://www.transparenttextures.com/patterns/aged-paper.png")'}}></div>
+        {/* --- Background Image Layer --- */}
+        <div className="absolute inset-0 z-0 overflow-hidden">
+           {/* Ảnh nền thay đổi theo năm */}
+           <div 
+             key={activeYear}
+             className="absolute inset-0 bg-cover bg-center transition-all duration-1000 ease-in-out scale-105 opacity-60 mix-blend-overlay grayscale-[30%]"
+             style={{ backgroundImage: `url('${currentInfo.bgImage}')` }}
+           />
+           {/* Lớp phủ Gradient để làm tối ảnh nền, giúp chữ nổi bật */}
+           <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/40 to-black/90" />
+           <div className="absolute inset-0 bg-gradient-to-r from-black/90 via-transparent to-transparent" />
+           
+           {/* Texture hạt nhiễu (Grain) tạo cảm giác phim nhựa */}
+           <div className="absolute inset-0 opacity-20 pointer-events-none" style={{backgroundImage: 'url("https://www.transparenttextures.com/patterns/stardust.png")'}}></div>
         </div>
 
-        {/* Nội dung bên trái */}
-        <div className="relative z-10 p-8 lg:p-12 flex flex-col h-full justify-between text-[#fdfbf7]">
+        {/* --- Nội dung bên trái --- */}
+        <div className="relative z-10 p-6 lg:p-12 h-full flex flex-col justify-between">
           
-          {/* Header nhỏ */}
-          <div className="flex items-center gap-2 opacity-80">
-            <History className="w-5 h-5 text-red-500" />
-            <span className="uppercase tracking-widest text-sm font-bold">Lịch sử Việt Nam</span>
+          {/* Top: Logo / Badge */}
+          <div className="flex items-center gap-3 text-white/80 animate-in fade-in slide-in-from-top-4 duration-700">
+            <div className="w-8 h-8 rounded-full border border-white/20 bg-white/5 flex items-center justify-center backdrop-blur-sm">
+              <Star className="w-4 h-4 text-yellow-500 fill-yellow-500" />
+            </div>
+            <span className="uppercase tracking-[0.25em] text-xs font-bold font-sans opacity-70">
+              Lịch sử hào hùng
+            </span>
           </div>
 
-          {/* Tiêu đề lớn của năm đang chọn */}
-          <div className="mt-8 lg:mt-0 animate-in slide-in-from-left duration-700">
-            <h1 className="text-7xl lg:text-9xl font-black font-serif text-transparent bg-clip-text bg-gradient-to-b from-white to-white/50 leading-none">
+          {/* Center: Typography ấn tượng */}
+          <div className="space-y-2 mt-4 lg:mt-0 animate-in slide-in-from-left-8 duration-700 fade-in fill-mode-both">
+             {/* Năm: Hiệu ứng chữ mạ vàng */}
+            <h1 className="text-gold-gradient text-[5rem] lg:text-[9rem] leading-none font-black font-serif tracking-tighter">
               {currentInfo.year}
             </h1>
-            <h2 className="text-2xl lg:text-4xl font-bold mt-2 text-red-500 font-serif">
+            
+            {/* Tiêu đề chính */}
+            <h2 className="text-3xl lg:text-5xl font-bold text-white uppercase tracking-wide drop-shadow-2xl font-sans">
               {currentInfo.title}
             </h2>
-            <p className="mt-4 text-lg lg:text-xl text-gray-300 max-w-md italic border-l-2 border-red-500 pl-4">
-              "{currentInfo.desc}"
-            </p>
-          </div>
 
-          {/* Danh sách năm (Navigation) */}
-          <div className="mt-8 hidden lg:block">
-            <div className="text-sm font-semibold uppercase opacity-50 mb-4">Dòng thời gian</div>
-            <div className="flex flex-wrap gap-2">
-              {TIMELINE_YEARS.map((item) => (
-                <button
-                  key={item.year}
-                  onClick={() => setActiveYear(item.year)}
-                  className={`px-4 py-2 rounded-full border transition-all duration-300 ${
-                    activeYear === item.year
-                      ? 'bg-red-600 border-red-600 text-white shadow-lg shadow-red-900/50 scale-105'
-                      : 'bg-transparent border-white/20 text-white/60 hover:bg-white/10 hover:border-white'
-                  }`}
-                >
-                  {item.label}
-                </button>
-              ))}
+            {/* Trích dẫn / Subtitle */}
+            <div className="mt-6 flex gap-4 max-w-md">
+               <div className="w-1 bg-red-600 shrink-0 h-full min-h-[40px] shadow-[0_0_10px_rgba(220,38,38,0.5)]" />
+               <p className="text-base lg:text-xl text-gray-200 font-serif italic leading-relaxed opacity-90">
+                 "{currentInfo.sub}"
+               </p>
             </div>
           </div>
-        </div>
-      </aside>
 
-      {/* --- CỘT PHẢI: NỘI DUNG CHI TIẾT (Scrollable) --- */}
-      <div className="lg:w-[60%] relative h-auto lg:h-screen lg:overflow-y-auto scroll-smooth bg-[#fdfbf7]">
-        
-        {/* Menu ngang cho Mobile (Chỉ hiện khi màn hình nhỏ) */}
-        <div className="lg:hidden sticky top-0 z-50 bg-[#fdfbf7]/95 backdrop-blur border-b border-[#d4cfc5] p-4 overflow-x-auto">
-           <div className="flex gap-2 min-w-max">
-              {TIMELINE_YEARS.map((item) => (
-                <button
-                  key={item.year}
-                  onClick={() => setActiveYear(item.year)}
-                  className={`px-3 py-1.5 text-sm rounded-full border whitespace-nowrap ${
-                    activeYear === item.year
-                      ? 'bg-red-800 text-white border-red-800'
-                      : 'border-gray-300 text-gray-600'
-                  }`}
-                >
-                  {item.label}
-                </button>
-              ))}
-           </div>
-        </div>
-
-        {/* Khu vực nội dung chính */}
-        <div className="p-6 lg:p-16 min-h-screen">
-          <div className="max-w-3xl mx-auto">
+          {/* Bottom: Timeline Navigation (Slider ngang) */}
+          <div className="w-full mt-6 lg:mt-0 hidden lg:block">
+            <p className="text-[10px] uppercase text-white/30 mb-3 tracking-widest font-bold">Chọn giai đoạn lịch sử</p>
             
-            {/* Breadcrumb / Label */}
-            <div className="flex items-center gap-2 mb-8 text-red-800 font-bold border-b border-red-800/20 pb-4">
-              <BookOpen className="w-5 h-5" />
-              <span>Nội dung chi tiết</span>
-              <ChevronRight className="w-4 h-4" />
-              <span>Giai đoạn {activeYear}</span>
+            <div className="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-hide mask-image-linear-to-r">
+              {TIMELINE_YEARS.map((item) => {
+                const isActive = activeYear === item.year;
+                return (
+                  <button
+                    key={item.year}
+                    onClick={() => setActiveYear(item.year)}
+                    className={`group relative flex-shrink-0 px-5 py-3 rounded transition-all duration-300 border backdrop-blur-sm ${
+                      isActive
+                        ? 'bg-red-900/80 border-red-500/50 text-white shadow-xl translate-y-[-2px]'
+                        : 'bg-white/5 hover:bg-white/10 text-white/50 hover:text-white border-white/5 hover:border-white/20'
+                    }`}
+                  >
+                    <span className={`text-lg font-bold font-serif block ${isActive ? 'scale-110 origin-left' : ''} transition-transform`}>
+                        {item.label}
+                    </span>
+                    {/* Active Indicator Line */}
+                    {isActive && (
+                       <span className="absolute bottom-0 left-0 w-full h-[2px] bg-gradient-to-r from-yellow-400 to-red-600 shadow-[0_0_8px_rgba(250,204,21,0.8)]" />
+                    )}
+                  </button>
+                )
+              })}
             </div>
-
-            {/* Render Component Content cũ của bạn ở đây */}
-            <div className="bg-white p-8 rounded-2xl shadow-xl border border-[#e5e0d8]">
-               {/* Component timeline con sẽ hiển thị ở đây */}
-               <div className="animate-in fade-in zoom-in duration-500">
-                  {renderTimelineContent()}
-               </div>
-            </div>
-
-            {/* Footer nhỏ bên phải */}
-            <div className="mt-12 text-center lg:text-left text-gray-400 text-sm">
-              <p>© 2024 Hành Trình Lịch Sử Đảng Cộng Sản Việt Nam</p>
-            </div>
-
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* =========================================
+          CỘT PHẢI: NỘI DUNG CHI TIẾT (55%)
+          ========================================= */}
+      <section className="flex-1 h-full relative overflow-hidden bg-[#f4f1ea]">
+         
+         {/* Texture giấy cũ mờ mờ cho nền phải */}
+         <div className="absolute inset-0 opacity-[0.04] pointer-events-none" 
+              style={{backgroundImage: 'url("https://www.transparenttextures.com/patterns/stardust.png")'}}></div>
+
+        {/* Mobile Navigation (Chỉ hiện trên mobile) */}
+        <div className="lg:hidden p-4 bg-[#f4f1ea] border-b border-gray-200 overflow-x-auto whitespace-nowrap scrollbar-hide">
+            <div className="flex gap-2">
+            {TIMELINE_YEARS.map((item) => (
+                <button
+                key={item.year}
+                onClick={() => setActiveYear(item.year)}
+                className={`px-4 py-1.5 rounded-full text-sm font-bold border transition-colors ${
+                    activeYear === item.year
+                    ? 'bg-red-800 text-white border-red-800'
+                    : 'bg-transparent text-gray-600 border-gray-300'
+                }`}
+                >
+                {item.label}
+                </button>
+            ))}
+            </div>
+        </div>
+
+         <div className="h-full overflow-y-auto p-6 lg:p-16 custom-scrollbar pb-32">
+            <div className="max-w-4xl mx-auto">
+                {/* Breadcrumb */}
+                <div className="flex items-center gap-2 text-red-900/60 font-semibold mb-8 text-xs uppercase tracking-wider">
+                    <History className="w-4 h-4" />
+                    <span>Nội dung chi tiết</span>
+                    <ChevronRight className="w-3 h-3" />
+                    <span className="text-red-800 border-b border-red-800">Giai đoạn {activeYear}</span>
+                </div>
+
+                {/* Content Container */}
+                {/* Lưu ý: Các component TimelineXXXX của bạn nên bỏ bớt border/shadow cứng để hòa nhập vào nền này */}
+                <div className="animate-in fade-in slide-in-from-bottom-8 duration-700 ease-out">
+                    <div className="bg-white/40 backdrop-blur-sm p-1 rounded-3xl border border-stone-200 shadow-sm">
+                        <div className="bg-white/60 rounded-[1.3rem] p-6 lg:p-8">
+                            {renderTimelineContent()}
+                        </div>
+                    </div>
+                </div>
+                
+                {/* Footer Quote */}
+                <div className="mt-16 text-center opacity-40">
+                    <Quote className="w-8 h-8 mx-auto text-stone-400 mb-2" />
+                    <p className="font-serif italic text-stone-500">
+                        "Dân ta phải biết sử ta, cho tường gốc tích nước nhà Việt Nam"
+                    </p>
+                </div>
+            </div>
+         </div>
+         
+         {/* Decorative Element góc dưới phải */}
+         <div className="hidden lg:block absolute bottom-0 right-0 w-96 h-96 bg-gradient-to-tl from-red-900/5 to-transparent rounded-tl-[100px] pointer-events-none z-0" />
+      </section>
 
     </main>
   );
