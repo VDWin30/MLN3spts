@@ -695,5 +695,8 @@ export function Timeline1945() {
   );
 }
 
-// Export mặc định
+// ... ở cuối file timeline-1945.tsx, thêm:
+
+// Export named để hỗ trợ cả 2 cách import
+export { Timeline1945 };
 export default Timeline1945;
