@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { FileText, Film, Music, Calendar, Play, Image as ImageIcon, BookOpen, Target, Users, Shield, LandPlot, GraduationCap } from 'lucide-react';
+import { FileText, Film, Music, Calendar, Play, Image as ImageIcon } from 'lucide-react';
 
 // --- 1. CẤU TRÚC DỮ LIỆU ---
 interface MediaItem {
@@ -23,53 +23,34 @@ interface TimelineEvent {
 
 const DATA_1945: TimelineEvent[] = [
   {
-    date: 'Từ 1945',
-    title: 'Nền Tảng Lý Luận: Con Đường Quá Độ Gián Tiếp Lên Chủ Nghĩa Xã Hội',
-    content: `Theo tư tưởng Hồ Chí Minh, được vận dụng sáng tạo từ chủ nghĩa Mác - Lênin vào điều kiện Việt Nam, **"quá độ gián tiếp" lên chủ nghĩa xã hội** là con đường phát triển đặc thù của nước ta:
+    date: '1945',
+    title: 'Khái Niệm "Quá Độ Gián Tiếp" Trong Tư Tưởng Hồ Chí Minh',
+    content: `Trong lý luận của chủ nghĩa Mác – Lênin và được Hồ Chí Minh vận dụng sáng tạo vào điều kiện Việt Nam, quá độ gián tiếp lên chủ nghĩa xã hội là con đường phát triển từ một nước thuộc địa, nông nghiệp lạc hậu, bỏ qua việc thiết lập chế độ tư bản chủ nghĩa hoàn chỉnh để tiến lên chủ nghĩa xã hội.
 
-**Bản chất của "quá độ gián tiếp":**
-• Xuất phát từ một nước **thuộc địa**, **nông nghiệp lạc hậu**
-• **Bỏ qua việc thiết lập chế độ tư bản chủ nghĩa hoàn chỉnh**
-• Tiến thẳng lên chủ nghĩa xã hội không qua giai đoạn tư bản chủ nghĩa
-
-**Ý nghĩa "bỏ qua chế độ tư bản chủ nghĩa":**
-• KHÔNG phủ nhận hoàn toàn những yếu tố tiến bộ của văn minh tư bản
-• KHÔNG xây dựng nhà nước tư sản
-• KHÔNG để quan hệ sản xuất tư bản chủ nghĩa giữ vai trò thống trị
-
-**Con đường thực hiện tại Việt Nam:**
-1. **Cách mạng dân tộc dân chủ nhân dân** do Đảng Cộng sản lãnh đạo
-2. **Từng bước xây dựng nền tảng chính trị**: Nhà nước dân chủ nhân dân
-3. **Từng bước xây dựng nền tảng kinh tế**: Kinh tế nhiều thành phần dưới sự lãnh đạo của kinh tế nhà nước
-4. **Từng bước xây dựng nền tảng xã hội**: Công bằng, dân chủ, văn minh
-
-**Tầm nhìn chiến lược của Chủ tịch Hồ Chí Minh:**
-_"Nước Việt Nam có quyền hưởng tự do và độc lập, và sự thật đã thành một nước tự do, độc lập. Toàn thể dân tộc Việt Nam quyết đem tất cả tinh thần và lực lượng, tính mạng và của cải để giữ vững quyền tự do, độc lập ấy và xây dựng chế độ dân chủ mới, tiến lên chủ nghĩa xã hội."_
-
-Đây chính là **cơ sở lý luận quan trọng** định hướng cho sự phát triển của Việt Nam từ sau Cách mạng Tháng Tám 1945.`,
+"Bỏ qua chế độ tư bản chủ nghĩa" không có nghĩa là phủ nhận hoàn toàn những yếu tố tiến bộ của văn minh tư bản, mà là không xây dựng một nhà nước tư sản và không để quan hệ sản xuất tư bản chủ nghĩa giữ vai trò thống trị trong xã hội. Thay vào đó, dưới sự lãnh đạo của Đảng Cộng sản, đất nước tiến hành cách mạng dân tộc dân chủ nhân dân, từng bước xây dựng nền tảng chính trị, kinh tế và xã hội để phát triển lên chủ nghĩa xã hội.`,
     images: [
       { 
         type: 'image', 
-        src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/H%E1%BB%93_Ch%C3%AD_Minh_1946.jpg/1280px-H%E1%BB%93_Ch%C3%AD_Minh_1946.jpg', 
-        caption: 'Chủ tịch Hồ Chí Minh - Kiến trúc sư của con đường phát triển Việt Nam' 
+        src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Ho_Chi_Minh_reading_declaration_of_independence_of_Vietnam_02.09.1945.jpg/800px-Ho_Chi_Minh_reading_declaration_of_independence_of_Vietnam_02.09.1945.jpg', 
+        caption: 'Chủ tịch Hồ Chí Minh đọc Tuyên ngôn Độc lập' 
       },
       { 
         type: 'image', 
-        src: 'https://media.vneconomy.vn/images/upload/2021/09/02/ho-chi-minh-doc-tuyen-ngon.jpg', 
-        caption: 'Tư tưởng Hồ Chí Minh về con đường quá độ gián tiếp' 
+        src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/H%E1%BB%93_Ch%C3%AD_Minh_1946.jpg/1280px-H%E1%BB%93_Ch%C3%AD_Minh_1946.jpg', 
+        caption: 'Chủ tịch Hồ Chí Minh năm 1946' 
       }
     ],
     videos: [
       { 
         type: 'video', 
         src: 'o7lwWGfYyAg', 
-        caption: 'Tư tưởng Hồ Chí Minh về con đường phát triển của Việt Nam' 
+        caption: 'Toàn cảnh Lễ Tuyên ngôn Độc lập 2/9/1945' 
       }
     ],
     music: [
       { 
         type: 'audio', 
-        src: 'https://www.nhaccuatui.com/mh/auto/qWZt0CjXlIfg', 
+        src: 'https://soundcloud.com/user-665366008/tien-quan-ca?si=530e6cd9bd8c49719ff192268bba1269&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing', 
         caption: 'Tiến Quân Ca (Quốc Ca)', 
         author: 'Văn Cao' 
       }
@@ -77,31 +58,20 @@ _"Nước Việt Nam có quyền hưởng tự do và độc lập, và sự th�
   },
   {
     date: '02/09/1945',
-    title: 'Tuyên Ngôn Độc Lập - Xác Lập Con Đường Phát Triển Của Dân Tộc',
-    content: `Ngày 2/9/1945, tại Quảng trường Ba Đình (Hà Nội), Chủ tịch Hồ Chí Minh đọc **Tuyên ngôn Độc lập**, tuyên bố thành lập nước Việt Nam Dân chủ Cộng hòa. Văn kiện này không chỉ khẳng định quyền tự do, độc lập của dân tộc Việt Nam mà còn thể hiện tư tưởng nhất quán của Người: **độc lập dân tộc phải gắn liền với con đường tiến lên chủ nghĩa xã hội**.
+    title: 'Tuyên Ngôn Độc Lập Và Xác Lập Con Đường Phát Triển Của Dân Tộc',
+    content: `Ngày 2/9/1945, tại Quảng trường Ba Đình (Hà Nội), Chủ tịch Hồ Chí Minh đọc Tuyên ngôn Độc lập, tuyên bố thành lập nước Việt Nam Dân chủ Cộng hòa. Văn kiện này không chỉ khẳng định quyền tự do, độc lập của dân tộc Việt Nam mà còn thể hiện tư tưởng nhất quán của Người: độc lập dân tộc phải gắn liền với con đường tiến lên chủ nghĩa xã hội.
 
-**Ý nghĩa lịch sử của Tuyên ngôn Độc lập:**
-• Chấm dứt chế độ thực dân phong kiến, mở ra kỷ nguyên độc lập dân tộc
-• Thể hiện tầm nhìn chiến lược về con đường phát triển đất nước
-• Khẳng định quyết tâm xây dựng chế độ dân chủ mới
-
-**Xác định nhiệm vụ trung tâm sau khi giành chính quyền:**
-1. Củng cố chính quyền cách mạng
-2. Bảo vệ thành quả cách mạng
-3. Xây dựng nền tảng cho một xã hội mới
-
-**Con đường phát triển được xác định:**
-Việt Nam lựa chọn con đường **quá độ lên CNXH bỏ qua chế độ tư bản chủ nghĩa** – phù hợp với đặc điểm là một nước thuộc địa, nông nghiệp lạc hậu.`,
+Ngay sau khi giành chính quyền, Hồ Chí Minh xác định nhiệm vụ trung tâm là củng cố chính quyền cách mạng, bảo vệ thành quả cách mạng và xây dựng nền tảng cho một xã hội mới. Theo tư tưởng của Người, Việt Nam lựa chọn con đường quá độ lên CNXH bỏ qua chế độ tư bản chủ nghĩa – phù hợp với đặc điểm là một nước thuộc địa, nông nghiệp lạc hậu.`,
     images: [
       { 
         type: 'image', 
-        src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Ho_Chi_Minh_reading_declaration_of_independence_of_Vietnam_02.09.1945.jpg/800px-Ho_Chi_Minh_reading_declaration_of_independence_of_Vietnam_02.09.1945.jpg', 
-        caption: 'Chủ tịch Hồ Chí Minh đọc Tuyên ngôn Độc lập tại Quảng trường Ba Đình' 
+        src: 'https://media.vneconomy.vn/images/upload/2021/09/02/ho-chi-minh-doc-tuyen-ngon.jpg', 
+        caption: 'Chủ tịch Hồ Chí Minh đọc Tuyên ngôn Độc lập tại Ba Đình' 
       },
       { 
         type: 'image', 
         src: 'https://media.vneconomy.vn/images/upload/2021/09/02/ba-dinh-1945.jpg', 
-        caption: 'Hàng vạn người dân Hà Nội tham dự Lễ Tuyên ngôn Độc lập' 
+        caption: 'Quảng trường Ba Đình ngày 2/9/1945' 
       }
     ],
     videos: [
@@ -114,12 +84,6 @@ Việt Nam lựa chọn con đường **quá độ lên CNXH bỏ qua chế đ�
     music: [
       { 
         type: 'audio', 
-        src: 'https://soundcloud.com/user-665366008/tien-quan-ca?si=530e6cd9bd8c49719ff192268bba1269&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing', 
-        caption: 'Tiến Quân Ca (Quốc Ca)', 
-        author: 'Văn Cao' 
-      },
-      { 
-        type: 'audio', 
         src: 'https://www.nhaccuatui.com/mh/auto/VEP9VglCDq6T', 
         caption: 'Ba Đình Nắng', 
         author: 'Bùi Công Kỳ' 
@@ -129,36 +93,19 @@ Việt Nam lựa chọn con đường **quá độ lên CNXH bỏ qua chế đ�
   {
     date: 'Cuối 1945',
     title: 'Giải Quyết "Giặc Đói" Và "Giặc Dốt"',
-    content: `Sau khi độc lập, đất nước rơi vào tình trạng khủng hoảng nghiêm trọng. Nạn đói năm 1945 đã làm hơn 2 triệu người chết ở miền Bắc. Trước tình hình đó, Chính phủ đã triển khai các biện pháp quyết liệt:
+    content: `Sau khi độc lập, đất nước rơi vào tình trạng khủng hoảng nghiêm trọng. Nạn đói năm 1945 đã làm hơn 2 triệu người chết ở miền Bắc. Trước tình hình đó, Chính phủ phát động phong trào "nhường cơm sẻ áo", kêu gọi mỗi người dân nhịn ăn một bữa để cứu đói đồng bào. Đồng thời, phong trào tăng gia sản xuất được triển khai rộng khắp.
 
-**Chống "giặc đói":**
-• Phát động phong trào **"nhường cơm sẻ áo"**
-• Kêu gọi mỗi người dân nhịn ăn một bữa để cứu đói đồng bào
-• Triển khai rộng khắp phong trào **tăng gia sản xuất**
-• Tổ chức phân phối lương thực công bằng
-
-**Chống "giặc dốt":**
-• Ngày 8/9/1945: Chủ tịch Hồ Chí Minh ký sắc lệnh thành lập **Nha Bình dân học vụ**
-• Mục tiêu: Xóa nạn mù chữ trên toàn quốc
-• Hàng triệu người dân tham gia học chữ trong những năm đầu của chính quyền cách mạng
-
-**Ý nghĩa chiến lược:**
-Điều này thể hiện quan điểm của Hồ Chí Minh: **xây dựng xã hội mới phải bắt đầu từ nâng cao dân trí**, phát huy vai trò làm chủ của nhân dân. Đây là bước đầu tiên trong xây dựng con người mới XHCN.`,
+Về giáo dục, ngày 8/9/1945, Chủ tịch Hồ Chí Minh ký sắc lệnh thành lập Nha Bình dân học vụ nhằm xóa nạn mù chữ. Hàng triệu người dân đã tham gia học chữ trong những năm đầu của chính quyền cách mạng. Điều này thể hiện quan điểm của Hồ Chí Minh: xây dựng xã hội mới phải bắt đầu từ nâng cao dân trí, phát huy vai trò làm chủ của nhân dân.`,
     images: [
       { 
         type: 'image', 
         src: 'https://media.vov.vn/sites/default/files/styles/large/public/2020-09/nan-doi-1945.jpg', 
-        caption: 'Nạn đói năm 1945 - Thảm họa nhân đạo sau Cách mạng Tháng Tám' 
+        caption: 'Nạn đói năm 1945' 
       },
       { 
         type: 'image', 
         src: 'https://file3.qdnd.vn/data/images/0/2020/09/07/upload_1597/binh-dan-hoc-vu.jpg', 
-        caption: 'Lớp học bình dân học vụ - Xóa nạn mù chữ sau 1945' 
-      },
-      { 
-        type: 'image', 
-        src: 'https://media.vneconomy.vn/images/upload/2020/09/08/tang-gia-san-xuat-1945.jpg', 
-        caption: 'Phong trào tăng gia sản xuất để chống đói' 
+        caption: 'Lớp học bình dân học vụ' 
       }
     ],
     videos: [
@@ -171,48 +118,28 @@ Việt Nam lựa chọn con đường **quá độ lên CNXH bỏ qua chế đ�
     music: [
       { 
         type: 'audio', 
-        src: 'https://www.nhaccuatui.com/mh/auto/W9xY2aBjEz5g', 
-        caption: 'Bài Ca Giáo Dục', 
-        author: 'Văn Ký' 
+        src: 'https://example.com/muoi-chin-thang-tam.mp3', 
+        caption: 'Mười Chín Tháng Tám', 
+        author: 'Xuân Oanh' 
       }
     ]
   },
   {
     date: '1946',
     title: 'Tổng Tuyển Cử Và Hiến Pháp Đầu Tiên',
-    content: `**Ngày 6/1/1946:** Cuộc Tổng tuyển cử đầu tiên được tổ chức với **hơn 90% cử tri đi bầu**. Quốc hội khóa I ra đời, đánh dấu bước trưởng thành của Nhà nước dân chủ nhân dân.
+    content: `Ngày 6/1/1946, cuộc Tổng tuyển cử đầu tiên được tổ chức với hơn 90% cử tri đi bầu. Quốc hội khóa I ra đời, đánh dấu bước trưởng thành của Nhà nước dân chủ nhân dân. Cuối năm 1946, Hiến pháp 1946 được thông qua – bản Hiến pháp đầu tiên trong lịch sử Việt Nam.
 
-**Thành phần Quốc hội khóa I:**
-• Đại biểu của các đảng phái chính trị
-• Đại biểu không đảng phái
-• Đại biểu của các dân tộc thiểu số
-• Đại biểu của các tôn giáo
-
-**Cuối năm 1946:** **Hiến pháp 1946** được thông qua – bản Hiến pháp đầu tiên trong lịch sử Việt Nam.
-
-**Những nguyên tắc cơ bản của Hiến pháp 1946:**
-• Khẳng định các quyền tự do dân chủ cơ bản của nhân dân
-• Nguyên tắc **quyền lực thuộc về nhân dân**
-• Xác định Việt Nam là nước dân chủ cộng hòa
-• Quy định quyền và nghĩa vụ của công dân
-
-**Ý nghĩa lịch sử:**
-Đây là bước cụ thể hóa tư tưởng Hồ Chí Minh về **một nhà nước của dân, do dân và vì dân** – nền tảng chính trị cho quá trình quá độ lên CNXH sau này.`,
+Hiến pháp 1946 khẳng định các quyền tự do dân chủ cơ bản của nhân dân và nguyên tắc quyền lực thuộc về nhân dân. Đây là bước cụ thể hóa tư tưởng Hồ Chí Minh về một nhà nước của dân, do dân và vì dân – nền tảng chính trị cho quá trình quá độ lên CNXH sau này.`,
     images: [
       { 
         type: 'image', 
         src: 'https://media.vneconomy.vn/images/upload/2021/01/06/tong-tuyen-cu-1946.jpg', 
-        caption: 'Cử tri Hà Nội đi bầu trong cuộc Tổng tuyển cử đầu tiên 6/1/1946' 
-      },
-      { 
-        type: 'image', 
-        src: 'https://file3.qdnd.vn/data/images/0/2021/01/06/upload_1594/quoc-hoi-khoa-i.jpg', 
-        caption: 'Kỳ họp đầu tiên của Quốc hội khóa I năm 1946' 
+        caption: 'Cử tri đi bầu trong tổng tuyển cử đầu tiên 6/1/1946' 
       },
       { 
         type: 'image', 
         src: 'https://media.baodautu.vn/Images/chicuong/2021/11/09/hien-phap-1946.jpg', 
-        caption: 'Hiến pháp 1946 - Bản Hiến pháp đầu tiên của nước Việt Nam độc lập' 
+        caption: 'Hiến pháp 1946' 
       }
     ],
     videos: [
@@ -225,45 +152,28 @@ Việt Nam lựa chọn con đường **quá độ lên CNXH bỏ qua chế đ�
     music: [
       { 
         type: 'audio', 
-        src: 'https://www.nhaccuatui.com/mh/auto/X0yZ3bCkFa6h', 
-        caption: 'Bài Ca Tổ Quốc', 
-        author: 'Hoàng Vân' 
+        src: 'https://example.com/ba-dinh-nang.mp3', 
+        caption: 'Ba Đình Nắng', 
+        author: 'Bùi Công Kỳ' 
       }
     ]
   },
   {
     date: '19/12/1946',
     title: 'Toàn Quốc Kháng Chiến',
-    content: `Trước dã tâm xâm lược trở lại của thực dân Pháp, ngày 19/12/1946, Chủ tịch Hồ Chí Minh ra **Lời kêu gọi Toàn quốc kháng chiến** với tinh thần: **"Chúng ta thà hy sinh tất cả chứ nhất định không chịu mất nước, nhất định không chịu làm nô lệ."**
+    content: `Trước dã tâm xâm lược trở lại của thực dân Pháp, ngày 19/12/1946, Chủ tịch Hồ Chí Minh ra Lời kêu gọi Toàn quốc kháng chiến với tinh thần: "Chúng ta thà hy sinh tất cả chứ nhất định không chịu mất nước, nhất định không chịu làm nô lệ."
 
-**Diễn biến chính:**
-• 20h ngày 19/12/1946: Cuộc kháng chiến toàn quốc bùng nổ
-• Quân và dân Hà Nội chiến đấu anh dũng trong 60 ngày đêm
-• Sau đó rút lên chiến khu Việt Bắc, chuyển sang chiến tranh du kích lâu dài
-
-**Phương châm kháng chiến của Hồ Chí Minh:**
-• **Toàn dân**: Huy động sức mạnh toàn dân tộc
-• **Toàn diện**: Đấu tranh trên mọi mặt trận
-• **Trường kỳ**: Chuẩn bị cho cuộc chiến lâu dài
-• **Tự lực cánh sinh**: Dựa vào sức mình là chính
-
-**Đặc điểm của thời kỳ quá độ:**
-Vừa chiến đấu bảo vệ độc lập, vừa xây dựng nền tảng kinh tế – xã hội mới. Đây là thử thách lớn đầu tiên của chính quyền cách mạng non trẻ.`,
+Cuộc kháng chiến chống Pháp bước vào giai đoạn toàn diện, lâu dài. Hồ Chí Minh xác định phương châm kháng chiến là "toàn dân, toàn diện, trường kỳ, tự lực cánh sinh". Đây cũng là giai đoạn thể hiện rõ đặc điểm của thời kỳ quá độ: vừa chiến đấu bảo vệ độc lập, vừa xây dựng nền tảng kinh tế – xã hội mới.`,
     images: [
       { 
         type: 'image', 
         src: 'https://media.vov.vn/sites/default/files/styles/large/public/2021-12/hanoi-1946.jpg', 
-        caption: 'Chiến sĩ tự vệ chiến đấu trên đường phố Hà Nội, đêm 19/12/1946' 
+        caption: 'Chiến sĩ tự vệ chiến đấu tại Hà Nội đêm 19/12/1946' 
       },
       { 
         type: 'image', 
         src: 'https://file3.qdnd.vn/data/images/0/2021/12/19/upload_1889/loi-keu-goi-toan-quoc-khang-chien.jpg', 
-        caption: 'Lời kêu gọi Toàn quốc kháng chiến của Chủ tịch Hồ Chí Minh' 
-      },
-      { 
-        type: 'image', 
-        src: 'https://media.vneconomy.vn/images/upload/2021/12/19/viet-bac-khang-chien.jpg', 
-        caption: 'Căn cứ địa Việt Bắc - Nơi lãnh đạo kháng chiến' 
+        caption: 'Lời kêu gọi Toàn quốc kháng chiến' 
       }
     ],
     videos: [
@@ -276,12 +186,6 @@ Vừa chiến đấu bảo vệ độc lập, vừa xây dựng nền tảng kin
     music: [
       { 
         type: 'audio', 
-        src: 'https://www.nhaccuatui.com/mh/auto/Y1aA4cDlGb7i', 
-        caption: 'Hành Quân Xa', 
-        author: 'Đỗ Nhuận' 
-      },
-      { 
-        type: 'audio', 
         src: 'https://www.nhaccuatui.com/mh/auto/Z2bB5dEmHc8j', 
         caption: 'Du Kích Sông Thao', 
         author: 'Đỗ Nhuận' 
@@ -291,38 +195,19 @@ Vừa chiến đấu bảo vệ độc lập, vừa xây dựng nền tảng kin
   {
     date: '1947–1950',
     title: 'Xây Dựng Căn Cứ Địa Và Kinh Tế Kháng Chiến',
-    content: `Sau chiến thắng Việt Bắc thu – đông 1947, căn cứ địa Việt Bắc được củng cố vững chắc. Đây là giai đoạn vừa kháng chiến vừa kiến quốc:
+    content: `Sau chiến thắng Việt Bắc thu – đông 1947, căn cứ địa Việt Bắc được củng cố vững chắc. Nhà nước tổ chức sản xuất tại các vùng tự do, phát triển nông nghiệp, thủ công nghiệp và công nghiệp quốc phòng phục vụ kháng chiến. Các xưởng quân giới được xây dựng, cung cấp vũ khí cho bộ đội.
 
-**Xây dựng căn cứ địa:**
-• Củng cố hệ thống chính quyền ở vùng tự do
-• Xây dựng hệ thống giao thông liên lạc
-• Phát triển các cơ sở sản xuất vũ khí
-
-**Phát triển kinh tế kháng chiến:**
-• Tổ chức sản xuất tại các vùng tự do
-• Phát triển nông nghiệp: Tăng diện tích canh tác, cải tiến kỹ thuật
-• Phát triển thủ công nghiệp: Sản xuất hàng tiêu dùng thiết yếu
-• Phát triển công nghiệp quốc phòng: Xưởng quân giới cung cấp vũ khí
-
-**Đặc điểm kinh tế thời kỳ này:**
-Sự tồn tại nhiều thành phần: **kinh tế nhà nước**, **kinh tế cá thể của nông dân** và một bộ phận **kinh tế tư nhân**. 
-
-Theo tư tưởng Hồ Chí Minh, đây là biểu hiện tất yếu của thời kỳ quá độ, khi chưa thể ngay lập tức xây dựng quan hệ sản xuất xã hội chủ nghĩa hoàn chỉnh.`,
+Đặc điểm kinh tế thời kỳ này là sự tồn tại nhiều thành phần: kinh tế nhà nước, kinh tế cá thể của nông dân và một bộ phận kinh tế tư nhân. Theo tư tưởng Hồ Chí Minh, đây là biểu hiện tất yếu của thời kỳ quá độ, khi chưa thể ngay lập tức xây dựng quan hệ sản xuất xã hội chủ nghĩa hoàn chỉnh.`,
     images: [
       { 
         type: 'image', 
         src: 'https://media.vov.vn/sites/default/files/styles/large/public/2022-10/xuong-quan-gioi-viet-bac.jpg', 
-        caption: 'Xưởng quân giới tại Việt Bắc - Sản xuất vũ khí phục vụ kháng chiến' 
+        caption: 'Xưởng quân giới tại Việt Bắc' 
       },
       { 
         type: 'image', 
         src: 'https://file3.qdnd.vn/data/images/0/2022/03/15/upload_1656/kinh-te-khang-chien.jpg', 
-        caption: 'Sản xuất nông nghiệp tại vùng tự do Việt Bắc' 
-      },
-      { 
-        type: 'image', 
-        src: 'https://media.vneconomy.vn/images/upload/2022/03/15/can-cu-dia-viet-bac.jpg', 
-        caption: 'Căn cứ địa Việt Bắc - Trung tâm lãnh đạo kháng chiến' 
+        caption: 'Sản xuất nông nghiệp tại vùng tự do' 
       }
     ],
     videos: [
@@ -344,42 +229,19 @@ Theo tư tưởng Hồ Chí Minh, đây là biểu hiện tất yếu của th�
   {
     date: '1950',
     title: 'Bước Ngoặt Của Kháng Chiến',
-    content: `Năm 1950 đánh dấu bước phát triển quan trọng trong cuộc kháng chiến chống Pháp:
+    content: `Năm 1950 đánh dấu bước phát triển quan trọng. Việt Nam chính thức thiết lập quan hệ ngoại giao với Trung Quốc và Liên Xô, mở rộng quan hệ quốc tế với các nước xã hội chủ nghĩa. Tháng 9–10/1950, Chiến dịch Biên giới giành thắng lợi lớn, mở thông đường liên lạc quốc tế và phá thế bao vây của địch.
 
-**Mở rộng quan hệ quốc tế:**
-• Việt Nam chính thức thiết lập quan hệ ngoại giao với **Trung Quốc** và **Liên Xô**
-• Mở rộng quan hệ với các nước xã hội chủ nghĩa
-• Phá thế bao vây, cô lập của đế quốc
-
-**Chiến dịch Biên giới (Tháng 9–10/1950):**
-• Đánh bại cuộc tấn công của quân Pháp
-• Giải phóng thị xã Cao Bằng, Thất Khê, Đông Khê
-• Mở thông đường liên lạc quốc tế
-• Phá thế bao vây của địch
-
-**Ý nghĩa chiến lược:**
-• Củng cố niềm tin của nhân dân vào thắng lợi cuối cùng
-• Nâng cao vị thế quốc tế của Việt Nam
-• Tạo điều kiện thuận lợi để tiếp tục xây dựng lực lượng
-• Chứng minh tính đúng đắn của đường lối kháng chiến toàn dân, toàn diện
-
-**Ảnh hưởng đến quá trình quá độ:**
-Thắng lợi này tạo điều kiện để đẩy mạnh xây dựng kinh tế, củng cố chính quyền, chuẩn bị cho những bước phát triển tiếp theo.`,
+Thắng lợi này củng cố niềm tin của nhân dân, nâng cao vị thế quốc tế của Việt Nam và tạo điều kiện thuận lợi để tiếp tục xây dựng lực lượng cả về quân sự và kinh tế.`,
     images: [
       { 
         type: 'image', 
         src: 'https://media.vov.vn/sites/default/files/styles/large/public/2023-09/chien-dich-bien-gioi-1950.jpg', 
-        caption: 'Chiến dịch Biên giới 1950 - Bước ngoặt của cuộc kháng chiến' 
+        caption: 'Chiến dịch Biên giới 1950' 
       },
       { 
         type: 'image', 
         src: 'https://file3.qdnd.vn/data/images/0/2023/01/30/upload_1789/quan-he-ngoai-giao-1950.jpg', 
-        caption: 'Việt Nam thiết lập quan hệ ngoại giao với các nước XHCN năm 1950' 
-      },
-      { 
-        type: 'image', 
-        src: 'https://media.vneconomy.vn/images/upload/2023/09/18/giai-phong-cao-bang.jpg', 
-        caption: 'Quân giải phóng tiến vào thị xã Cao Bằng' 
+        caption: 'Việt Nam thiết lập quan hệ ngoại giao với các nước XHCN' 
       }
     ],
     videos: [
@@ -401,41 +263,19 @@ Thắng lợi này tạo điều kiện để đẩy mạnh xây dựng kinh t�
   {
     date: '04/12/1953',
     title: 'Luật Cải Cách Ruộng Đất',
-    content: `Ngày 4/12/1953, Quốc hội thông qua **Luật Cải cách ruộng đất**. Đây là chính sách quan trọng trong quá trình xây dựng nền tảng kinh tế - xã hội mới:
+    content: `Ngày 4/12/1953, Quốc hội thông qua Luật Cải cách ruộng đất. Mục tiêu là xóa bỏ quan hệ sản xuất phong kiến ở nông thôn, thực hiện khẩu hiệu "người cày có ruộng". Chính sách này tịch thu ruộng đất của địa chủ phản động chia cho nông dân nghèo.
 
-**Mục tiêu của cải cách ruộng đất:**
-• Xóa bỏ quan hệ sản xuất phong kiến ở nông thôn
-• Thực hiện khẩu hiệu **"người cày có ruộng"**
-• Tịch thu ruộng đất của địa chủ phản động chia cho nông dân nghèo
-
-**Nội dung chính:**
-• Đánh đổ địa chủ phong kiến
-• Thực hiện giảm tô, giảm tức
-• Chia ruộng đất cho nông dân
-• Xây dựng chính quyền cơ sở vững mạnh
-
-**Ý nghĩa kinh tế - chính trị:**
-• **Kinh tế**: Giải phóng sức sản xuất ở nông thôn, tạo động lực phát triển nông nghiệp
-• **Chính trị**: Củng cố khối liên minh công – nông, tăng cường hậu phương kháng chiến
-• **Xã hội**: Xóa bỏ bất công xã hội, nâng cao đời sống nông dân
-
-**Vai trò trong quá trình quá độ:**
-Cải cách ruộng đất là bước quan trọng trong việc xây dựng quan hệ sản xuất mới, chuẩn bị điều kiện cho sự phát triển tiếp theo của cách mạng.`,
+Cải cách ruộng đất không chỉ có ý nghĩa kinh tế mà còn mang ý nghĩa chính trị sâu sắc: củng cố khối liên minh công – nông, tăng cường hậu phương kháng chiến và chuẩn bị điều kiện cho sự phát triển tiếp theo của cách mạng.`,
     images: [
       { 
         type: 'image', 
         src: 'https://media.vov.vn/sites/default/files/styles/large/public/2023-12/cai-cach-ruong-dat-1953.jpg', 
-        caption: 'Nông dân nhận ruộng trong cải cách ruộng đất năm 1953' 
+        caption: 'Nông dân nhận ruộng trong cải cách ruộng đất' 
       },
       { 
         type: 'image', 
         src: 'https://file3.qdnd.vn/data/images/0/2023/12/04/upload_1923/luat-cai-cach-ruong-dat.jpg', 
-        caption: 'Luật Cải cách ruộng đất được Quốc hội thông qua ngày 4/12/1953' 
-      },
-      { 
-        type: 'image', 
-        src: 'https://media.vneconomy.vn/images/upload/2023/12/04/chia-ruong-cho-nong-dan.jpg', 
-        caption: 'Chia ruộng cho nông dân nghèo - Thực hiện "người cày có ruộng"' 
+        caption: 'Luật Cải cách ruộng đất được Quốc hội thông qua' 
       }
     ],
     videos: [
@@ -451,41 +291,15 @@ Cải cách ruộng đất là bước quan trọng trong việc xây dựng qua
         src: 'https://www.nhaccuatui.com/mh/auto/C5eE8gHpKf1m', 
         caption: 'Bài Ca Nông Dân', 
         author: 'Trần Kiết Tường' 
-      },
-      { 
-        type: 'audio', 
-        src: 'https://www.nhaccuatui.com/mh/auto/D6fF9hIqLg2n', 
-        caption: 'Hát Về Cánh Đồng Quê', 
-        author: 'Văn Cao' 
       }
     ]
   },
   {
     date: 'Tổng Kết 1945–1953',
-    title: 'Nền Móng Cho Con Đường Quá Độ',
-    content: `**Tổng kết giai đoạn 1945–1953:**
+    title: 'Tổng Kết Giai Đoạn 1945–1953',
+    content: `Từ năm 1945 đến 1953, Việt Nam đã vượt qua muôn vàn thử thách để bảo vệ nền độc lập non trẻ. Đồng thời, dưới sự lãnh đạo của Đảng và tư tưởng Hồ Chí Minh, đất nước từng bước xây dựng nhà nước dân chủ nhân dân, phát triển kinh tế kháng chiến và cải tạo xã hội cũ.
 
-**Thành tựu chính:**
-1. **Bảo vệ nền độc lập non trẻ**: Vượt qua muôn vàn thử thách, kháng chiến chống Pháp
-2. **Xây dựng nhà nước dân chủ nhân dân**: Tổ chức tổng tuyển cử, ban hành Hiến pháp
-3. **Phát triển kinh tế kháng chiến**: Xây dựng căn cứ địa, phát triển sản xuất
-4. **Cải tạo xã hội cũ**: Chống giặc đói, giặc dốt, cải cách ruộng đất
-
-**Ý nghĩa đối với con đường quá độ:**
-• **Chính trị**: Xây dựng được nhà nước dân chủ nhân dân - nền tảng chính trị cho CNXH
-• **Kinh tế**: Bước đầu xây dựng kinh tế nhiều thành phần, giải phóng sức sản xuất
-• **Xã hội**: Nâng cao dân trí, xóa bỏ bất công, củng cố khối đại đoàn kết toàn dân
-
-**Đặc điểm của giai đoạn:**
-Giai đoạn này tuy chưa trực tiếp xây dựng chủ nghĩa xã hội, nhưng đã **đặt nền móng chính trị, kinh tế và xã hội quan trọng** cho con đường quá độ lên CNXH ở Việt Nam trong những năm sau đó.
-
-**Bài học kinh nghiệm:**
-• Kết hợp giữa chiến đấu và xây dựng
-• Phát huy sức mạnh toàn dân tộc
-• Kiên trì con đường độc lập dân tộc gắn liền với CNXH
-• Sáng tạo trong vận dụng lý luận vào thực tiễn Việt Nam
-
-Đây chính là **giai đoạn khởi đầu** của con đường quá độ gián tiếp lên chủ nghĩa xã hội ở Việt Nam.`,
+Giai đoạn này tuy chưa trực tiếp xây dựng chủ nghĩa xã hội, nhưng đã đặt nền móng chính trị, kinh tế và xã hội quan trọng cho con đường quá độ lên CNXH ở Việt Nam trong những năm sau đó.`,
     images: [
       { 
         type: 'image', 
@@ -495,12 +309,7 @@ Giai đoạn này tuy chưa trực tiếp xây dựng chủ nghĩa xã hội, nh
       { 
         type: 'image', 
         src: 'https://file3.qdnd.vn/data/images/0/2023/12/31/upload_1987/nen-mong-qua-do.jpg', 
-        caption: 'Nền móng cho con đường quá độ lên CNXH đã được xây dựng' 
-      },
-      { 
-        type: 'image', 
-        src: 'https://media.vov.vn/sites/default/files/styles/large/public/2023-12/ho-chi-minh-1953.jpg', 
-        caption: 'Chủ tịch Hồ Chí Minh - Người dẫn dắt con đường phát triển của dân tộc' 
+        caption: 'Nền móng cho con đường quá độ lên CNXH' 
       }
     ],
     videos: [
@@ -516,12 +325,6 @@ Giai đoạn này tuy chưa trực tiếp xây dựng chủ nghĩa xã hội, nh
         src: 'https://www.nhaccuatui.com/mh/auto/E7gG0iJrMh3o', 
         caption: 'Việt Nam Quê Hương Tôi', 
         author: 'Đỗ Nhuận' 
-      },
-      { 
-        type: 'audio', 
-        src: 'https://www.nhaccuatui.com/mh/auto/F8hH1jKsNi4p', 
-        caption: 'Bài Ca Tổ Quốc Quang Vinh', 
-        author: 'Lưu Hữu Phước' 
       }
     ]
   }
