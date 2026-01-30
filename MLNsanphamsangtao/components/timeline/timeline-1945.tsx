@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useState } from 'react';
-import { FileText, Film, Calendar, Play, Image as ImageIcon, Video, X, ChevronRight, ChevronLeft, Book, ZoomIn, Eye, Film as FilmIcon } from 'lucide-react';
+import { FileText, Film, Calendar, Play, Image as ImageIcon, Video, X, ChevronRight, ChevronLeft, Grid, List } from 'lucide-react';
 
-// --- 1. CẤU TRÚC DỮ LIỆU (giữ nguyên) ---
+// --- CẤU TRÚC DỮ LIỆU (giữ nguyên) ---
 interface MediaItem {
   type: 'image' | 'video';
   src: string;
@@ -60,40 +60,14 @@ Ngay sau khi giành chính quyền, Hồ Chí Minh xác định nhiệm vụ tru
         caption: 'Toàn cảnh Lễ Tuyên ngôn Độc lập 2/9/1945' 
       }
     ]
-  },
-  {
-    date: 'Cuối 1945',
-    title: 'Giải Quyết "Giặc Đói" Và "Giặc Dốt"',
-    content: `Sau khi độc lập, đất nước rơi vào tình trạng khủng hoảng nghiêm trọng. Nạn đói năm 1945 đã làm hơn 2 triệu người chết ở miền Bắc. Trước tình hình đó, Chính phủ phát động phong trào "nhường cơm sẻ áo", kêu gọi mỗi người dân nhịn ăn một bữa để cứu đói đồng bào. Đồng thời, phong trào tăng gia sản xuất được triển khai rộng khắp.
-
-Về giáo dục, ngày 8/9/1945, Chủ tịch Hồ Chí Minh ký sắc lệnh thành lập Nha Bình dân học vụ nhằm xóa nạn mù chữ. Hàng triệu người dân đã tham gia học chữ trong những năm đầu của chính quyền cách mạng. Điều này thể hiện quan điểm của Hồ Chí Minh: xây dựng xã hội mới phải bắt đầu từ nâng cao dân trí, phát huy vai trò làm chủ của nhân dân.`,
-    media: [
-      { 
-        type: 'image', 
-        src: 'https://media.vov.vn/sites/default/files/styles/large/public/2020-09/nan-doi-1945.jpg', 
-        caption: 'Nạn đói năm 1945' 
-      },
-      { 
-        type: 'image', 
-        src: 'https://file3.qdnd.vn/data/images/0/2020/09/07/upload_1597/binh-dan-hoc-vu.jpg', 
-        caption: 'Lớp học bình dân học vụ' 
-      },
-      { 
-        type: 'video', 
-        src: 'eF5g9hDq8Rc', 
-        caption: 'Chống giặc đói, giặc dốt những năm đầu độc lập' 
-      }
-    ]
   }
 ];
 
-// --- 2. COMPONENT CHÍNH VỚI BỐ CỤC MỚI ---
+// --- COMPONENT CHÍNH VỚI BỐ CỤC CUỘN CHUỘT ---
 export function Timeline1945() {
   const [activeTab, setActiveTab] = useState<'timeline' | 'gallery'>('timeline');
   const [selectedMedia, setSelectedMedia] = useState<MediaItem | null>(null);
   const [showAllMedia, setShowAllMedia] = useState<boolean>(false);
-  const [activeEventIndex, setActiveEventIndex] = useState(0);
-  const [mediaViewMode, setMediaViewMode] = useState<'featured' | 'grid' | 'list'>('featured');
 
   const allMedia = DATA_1945.flatMap(event => 
     event.media.map(m => ({ 
@@ -103,19 +77,7 @@ export function Timeline1945() {
     }))
   );
 
-  const activeEvent = DATA_1945[activeEventIndex];
-  const eventMedia = activeEvent.media;
-  const eventImages = eventMedia.filter(m => m.type === 'image');
-  const eventVideos = eventMedia.filter(m => m.type === 'video');
   const featuredMedia = allMedia.slice(0, 8);
-
-  const handleNextEvent = () => {
-    setActiveEventIndex((prev) => (prev + 1) % DATA_1945.length);
-  };
-
-  const handlePrevEvent = () => {
-    setActiveEventIndex((prev) => (prev - 1 + DATA_1945.length) % DATA_1945.length);
-  };
 
   return (
     <div className="space-y-8">
@@ -152,467 +114,262 @@ export function Timeline1945() {
         </div>
       </div>
 
-      {/* Tab Navigation với Event Navigation */}
-      <div className="flex flex-col md:flex-row gap-4">
-        {/* Tab Buttons */}
-        <div className="flex space-x-2 flex-1">
-          <button
-            onClick={() => setActiveTab('timeline')}
-            className={`flex items-center gap-3 px-6 py-4 rounded-xl text-sm font-semibold transition-all duration-300 flex-1 justify-center ${
-              activeTab === 'timeline' 
-                ? 'bg-gradient-to-r from-red-600 to-amber-600 text-white shadow-lg' 
-                : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
-            }`}
-          >
-            <FileText className="w-5 h-5" />
-            <span>Dòng thời gian</span>
-            <span className={`ml-2 px-2 py-1 rounded-full text-xs font-bold ${
-              activeTab === 'timeline' ? 'bg-white/20 text-white' : 'bg-gray-100 text-gray-700'
-            }`}>
-              {DATA_1945.length}
-            </span>
-          </button>
-          <button
-            onClick={() => setActiveTab('gallery')}
-            className={`flex items-center gap-3 px-6 py-4 rounded-xl text-sm font-semibold transition-all duration-300 flex-1 justify-center ${
-              activeTab === 'gallery' 
-                ? 'bg-gradient-to-r from-red-600 to-amber-600 text-white shadow-lg' 
-                : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
-            }`}
-          >
-            <Film className="w-5 h-5" />
-            <span>Thư viện tư liệu</span>
-            <span className={`ml-2 px-2 py-1 rounded-full text-xs font-bold ${
-              activeTab === 'gallery' ? 'bg-white/20 text-white' : 'bg-gray-100 text-gray-700'
-            }`}>
-              {allMedia.length}
-            </span>
-          </button>
-        </div>
-
-        {/* Event Navigation (chỉ hiện trong tab timeline) */}
-        {activeTab === 'timeline' && (
-          <div className="flex items-center gap-4 bg-white rounded-xl p-2 border border-gray-200">
-            <button
-              onClick={handlePrevEvent}
-              className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-            >
-              <ChevronLeft className="w-4 h-4" />
-              <span className="hidden sm:inline text-sm font-medium">Trước</span>
-            </button>
-            
-            <div className="text-center px-4">
-              <div className="text-sm text-gray-500 mb-1">Sự kiện</div>
-              <div className="flex items-center gap-2">
-                <div className="w-6 h-6 bg-red-600 text-white rounded-full flex items-center justify-center text-xs font-bold">
-                  {activeEventIndex + 1}
-                </div>
-                <span className="font-bold text-gray-900">{activeEvent.date}</span>
-              </div>
-            </div>
-            
-            <button
-              onClick={handleNextEvent}
-              className="flex items-center gap-2 px-4 py-2 text-gray-700 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-            >
-              <span className="hidden sm:inline text-sm font-medium">Tiếp</span>
-              <ChevronRight className="w-4 h-4" />
-            </button>
-          </div>
-        )}
+      {/* Tab Navigation */}
+      <div className="flex space-x-2">
+        <button
+          onClick={() => setActiveTab('timeline')}
+          className={`flex items-center gap-3 px-6 py-4 rounded-xl text-sm font-semibold transition-all duration-300 flex-1 justify-center ${
+            activeTab === 'timeline' 
+              ? 'bg-gradient-to-r from-red-600 to-amber-600 text-white shadow-lg' 
+              : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
+          }`}
+        >
+          <FileText className="w-5 h-5" />
+          <span>Dòng thời gian</span>
+          <span className={`ml-2 px-2 py-1 rounded-full text-xs font-bold ${
+            activeTab === 'timeline' ? 'bg-white/20 text-white' : 'bg-gray-100 text-gray-700'
+          }`}>
+            {DATA_1945.length}
+          </span>
+        </button>
+        <button
+          onClick={() => setActiveTab('gallery')}
+          className={`flex items-center gap-3 px-6 py-4 rounded-xl text-sm font-semibold transition-all duration-300 flex-1 justify-center ${
+            activeTab === 'gallery' 
+              ? 'bg-gradient-to-r from-red-600 to-amber-600 text-white shadow-lg' 
+              : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
+          }`}
+        >
+          <Film className="w-5 h-5" />
+          <span>Thư viện tư liệu</span>
+          <span className={`ml-2 px-2 py-1 rounded-full text-xs font-bold ${
+            activeTab === 'gallery' ? 'bg-white/20 text-white' : 'bg-gray-100 text-gray-700'
+          }`}>
+            {allMedia.length}
+          </span>
+        </button>
       </div>
 
       {/* Content Area */}
       <div className="min-h-[600px] animate-in fade-in duration-700">
         
-        {/* TAB DÒNG THỜI GIAN - BỐ CỤC MỚI */}
+        {/* TAB DÒNG THỜI GIAN - BỐ CỤC CUỘN CHUỘT */}
         {activeTab === 'timeline' && (
-          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-            {/* Event Header */}
-            <div className="bg-gradient-to-r from-red-50 via-amber-50 to-red-50 p-6 md:p-8 border-b border-gray-200">
-              <div className="flex flex-col md:flex-row md:items-start justify-between gap-6">
-                <div className="flex-1">
-                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-white rounded-full border border-red-200 mb-4">
-                    <div className="w-2 h-2 bg-red-600 rounded-full"></div>
-                    <span className="text-sm font-medium text-red-700">{activeEvent.date}</span>
-                  </div>
-                  <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">{activeEvent.title}</h2>
-                  
-                  {/* Media Stats */}
-                  <div className="flex items-center gap-6">
-                    <div className="flex items-center gap-2">
-                      <ImageIcon className="w-5 h-5 text-red-600" />
-                      <span className="font-medium">{eventImages.length} ảnh</span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Video className="w-5 h-5 text-amber-600" />
-                      <span className="font-medium">{eventVideos.length} video</span>
-                    </div>
-                  </div>
-                </div>
+          <div className="space-y-12">
+            {DATA_1945.map((event, idx) => (
+              <div key={idx} className="relative group">
+                {/* Timeline line and dot */}
+                <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-red-400 via-amber-300 to-transparent hidden md:block"></div>
+                <div className="absolute left-6 top-8 -translate-x-1/2 w-4 h-4 rounded-full bg-gradient-to-r from-red-600 to-amber-500 border-4 border-white shadow-lg hidden md:block"></div>
                 
-                {/* View Mode Toggle */}
-                <div className="flex bg-white rounded-lg p-1 border border-gray-200">
-                  <button
-                    onClick={() => setMediaViewMode('featured')}
-                    className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                      mediaViewMode === 'featured' 
-                        ? 'bg-red-50 text-red-700' 
-                        : 'text-gray-600 hover:text-red-600'
-                    }`}
-                    title="Chế độ nổi bật"
-                  >
-                    <Eye className="w-4 h-4 inline mr-2" />
-                    <span className="hidden sm:inline">Nổi bật</span>
-                  </button>
-                  <button
-                    onClick={() => setMediaViewMode('grid')}
-                    className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                      mediaViewMode === 'grid' 
-                        ? 'bg-red-50 text-red-700' 
-                        : 'text-gray-600 hover:text-red-600'
-                    }`}
-                    title="Chế độ lưới"
-                  >
-                    <FilmIcon className="w-4 h-4 inline mr-2" />
-                    <span className="hidden sm:inline">Lưới</span>
-                  </button>
-                  <button
-                    onClick={() => setMediaViewMode('list')}
-                    className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                      mediaViewMode === 'list' 
-                        ? 'bg-red-50 text-red-700' 
-                        : 'text-gray-600 hover:text-red-600'
-                    }`}
-                    title="Chế độ danh sách"
-                  >
-                    <Book className="w-4 h-4 inline mr-2" />
-                    <span className="hidden sm:inline">Danh sách</span>
-                  </button>
-                </div>
-              </div>
-            </div>
-
-            {/* Main Content Grid */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-0">
-              
-              {/* Left Column - Text Content */}
-              <div className="lg:col-span-2 p-6 md:p-8 border-r border-gray-200">
-                <div className="prose prose-lg max-w-none">
-                  <div className="text-gray-700 leading-relaxed space-y-6">
-                    {activeEvent.content.split('\n\n').map((paragraph, pIdx) => (
-                      <div key={pIdx} className="relative">
-                        <p className="text-lg pl-6 border-l-4 border-red-200 py-2">
-                          {paragraph}
-                        </p>
+                {/* Content Card */}
+                <div className="ml-0 md:ml-12 bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 overflow-hidden">
+                  {/* Date Header */}
+                  <div className="bg-gradient-to-r from-red-50 to-amber-50 p-6 border-b border-gray-100">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-red-600 to-amber-500 flex items-center justify-center shadow-md">
+                          <Calendar className="w-6 h-6 text-white" />
+                        </div>
+                        <div>
+                          <span className="inline-block px-4 py-2 bg-white rounded-full text-red-700 font-bold border border-red-200">
+                            {event.date}
+                          </span>
+                          <h3 className="text-2xl font-bold text-gray-900 mt-3 leading-tight">{event.title}</h3>
+                        </div>
                       </div>
-                    ))}
-                  </div>
-                </div>
-
-                {/* Timeline Events List (Sidebar on mobile) */}
-                <div className="mt-12 lg:hidden">
-                  <div className="bg-gray-50 rounded-xl p-6">
-                    <div className="flex items-center gap-3 mb-6">
-                      <Book className="w-5 h-5 text-gray-700" />
-                      <h3 className="font-semibold">Các sự kiện khác</h3>
+                      
+                      {/* Media Stats */}
+                      <div className="hidden md:block text-right">
+                        <div className="text-sm text-gray-600 mb-2">Tư liệu sự kiện</div>
+                        <div className="flex items-center gap-4">
+                          <div className="flex items-center gap-2">
+                            <ImageIcon className="w-4 h-4 text-red-600" />
+                            <span className="font-bold">{event.media.filter(m => m.type === 'image').length}</span>
+                          </div>
+                          <div className="flex items-center gap-2">
+                            <Video className="w-4 h-4 text-amber-600" />
+                            <span className="font-bold">{event.media.filter(m => m.type === 'video').length}</span>
+                          </div>
+                        </div>
+                      </div>
                     </div>
-                    
-                    <div className="space-y-3">
-                      {DATA_1945.map((event, idx) => (
-                        <button
-                          key={idx}
-                          onClick={() => setActiveEventIndex(idx)}
-                          className={`w-full text-left p-4 rounded-lg transition-all ${
-                            activeEventIndex === idx
-                              ? 'bg-white border-2 border-red-200 shadow-sm'
-                              : 'hover:bg-white/50'
-                          }`}
-                        >
-                          <div className="flex items-start justify-between">
-                            <div>
-                              <div className="flex items-center gap-2 mb-1">
-                                <div className={`w-2 h-2 rounded-full ${
-                                  activeEventIndex === idx ? 'bg-red-600' : 'bg-gray-300'
-                                }`}></div>
-                                <span className={`font-medium ${
-                                  activeEventIndex === idx ? 'text-red-700' : 'text-gray-700'
-                                }`}>
-                                  {event.date}
+                  </div>
+
+                  {/* Content and Media - BỐ CỤC MỚI */}
+                  <div className="p-6">
+                    <div className="flex flex-col lg:flex-row gap-8">
+                      {/* Text Content - Chiếm 70% */}
+                      <div className="lg:w-7/12">
+                        <div className="prose prose-lg max-w-none">
+                          <div className="text-gray-700 leading-relaxed space-y-4">
+                            {event.content.split('\n\n').map((paragraph, pIdx) => (
+                              <p key={pIdx} className="text-lg">
+                                {paragraph}
+                              </p>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Media Gallery - Chiếm 30% với bố cục mới */}
+                      {event.media.length > 0 && (
+                        <div className="lg:w-5/12">
+                          <div className="sticky top-6 space-y-6">
+                            {/* Media Header */}
+                            <div className="flex items-center justify-between mb-2">
+                              <h4 className="text-lg font-bold text-gray-900 flex items-center gap-2">
+                                <Film className="w-5 h-5 text-red-600" />
+                                Tư liệu sự kiện
+                              </h4>
+                              <div className="flex items-center gap-2 text-sm text-gray-600">
+                                <span className="px-2 py-1 bg-red-50 text-red-700 rounded-full font-medium">
+                                  {event.media.length} tư liệu
                                 </span>
                               </div>
-                              <p className="text-sm text-gray-600 line-clamp-1">{event.title}</p>
                             </div>
-                            {activeEventIndex === idx && (
-                              <ChevronRight className="w-4 h-4 text-red-600 flex-shrink-0" />
-                            )}
-                          </div>
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </div>
 
-              {/* Right Column - Media Display */}
-              <div className="lg:col-span-1">
-                <div className="sticky top-6">
-                  <div className="p-6 md:p-8">
-                    <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-lg bg-red-100 flex items-center justify-center">
-                        <FilmIcon className="w-5 h-5 text-red-600" />
-                      </div>
-                      Tư liệu sự kiện
-                    </h3>
-
-                    {/* FEATURED VIEW */}
-                    {mediaViewMode === 'featured' && (
-                      <div className="space-y-6">
-                        {/* Featured Video (nếu có) */}
-                        {eventVideos.length > 0 && (
-                          <div className="bg-gray-900 rounded-xl overflow-hidden">
-                            <div className="relative aspect-video">
-                              <img 
-                                src={`https://img.youtube.com/vi/${eventVideos[0].src}/maxresdefault.jpg`}
-                                alt={eventVideos[0].caption}
-                                className="w-full h-full object-cover"
-                              />
-                              <button
-                                onClick={() => setSelectedMedia(eventVideos[0])}
-                                className="absolute inset-0 flex items-center justify-center group"
-                              >
-                                <div className="w-16 h-16 bg-white/90 rounded-full flex items-center justify-center group-hover:bg-white group-hover:scale-110 transition-all duration-300">
-                                  <Play className="w-8 h-8 text-gray-900" />
-                                </div>
-                              </button>
-                              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
-                                <div className="flex items-center gap-2 mb-2">
-                                  <Play className="w-4 h-4 text-white" />
-                                  <span className="text-white text-sm font-medium">VIDEO NỔI BẬT</span>
-                                </div>
-                                <h4 className="text-white font-bold text-sm line-clamp-2">{eventVideos[0].caption}</h4>
-                              </div>
-                            </div>
-                          </div>
-                        )}
-
-                        {/* Featured Images Grid */}
-                        {eventImages.length > 0 && (
-                          <div>
-                            <h4 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                              <ImageIcon className="w-5 h-5 text-red-600" />
-                              Hình ảnh tư liệu
-                            </h4>
-                            <div className="grid grid-cols-2 gap-3">
-                              {eventImages.slice(0, 4).map((image, idx) => (
+                            {/* Phân loại và hiển thị media */}
+                            {event.media.length === 1 ? (
+                              // Nếu chỉ có 1 media item
+                              <div className="space-y-4">
                                 <div 
-                                  key={idx}
-                                  className="group relative aspect-square rounded-lg overflow-hidden border border-gray-200 hover:border-red-300 transition-all hover:shadow-md cursor-pointer"
-                                  onClick={() => setSelectedMedia(image)}
+                                  className="group relative rounded-xl overflow-hidden border border-gray-300 bg-white shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer"
+                                  onClick={() => setSelectedMedia(event.media[0])}
                                 >
-                                  <div className="w-full h-full bg-gray-100 relative overflow-hidden">
-                                    <img 
-                                      src={image.src}
-                                      alt={image.caption}
-                                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                    />
-                                    <div className="absolute inset-0 bg-gradient-to-t from-black/0 via-black/0 to-black/0 group-hover:from-black/10 group-hover:via-black/5 group-hover:to-black/0 transition-all duration-300" />
-                                  </div>
-                                  <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <div className="bg-white/90 backdrop-blur-sm rounded-full p-2">
-                                      <ZoomIn className="w-3 h-3 text-gray-900" />
-                                    </div>
-                                  </div>
-                                  <div className="absolute bottom-2 left-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <p className="text-xs text-white bg-black/70 backdrop-blur-sm px-2 py-1 rounded line-clamp-1">
-                                      {image.caption}
-                                    </p>
-                                  </div>
-                                </div>
-                              ))}
-                              
-                              {eventImages.length > 4 && (
-                                <button
-                                  onClick={() => setMediaViewMode('grid')}
-                                  className="aspect-square rounded-lg border-2 border-dashed border-gray-300 hover:border-red-300 transition-colors flex flex-col items-center justify-center text-gray-600 hover:text-red-600"
-                                >
-                                  <div className="text-2xl font-bold mb-1">+{eventImages.length - 4}</div>
-                                  <span className="text-xs">Xem thêm ảnh</span>
-                                </button>
-                              )}
-                            </div>
-                          </div>
-                        )}
-
-                        {/* Other Videos (nếu có nhiều video) */}
-                        {eventVideos.length > 1 && (
-                          <div>
-                            <h4 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                              <Video className="w-5 h-5 text-amber-600" />
-                              Video khác
-                            </h4>
-                            <div className="space-y-3">
-                              {eventVideos.slice(1).map((video, idx) => (
-                                <div 
-                                  key={idx}
-                                  className="group flex items-center gap-3 p-3 rounded-lg border border-gray-200 hover:border-amber-300 hover:bg-amber-50/30 transition-all cursor-pointer"
-                                  onClick={() => setSelectedMedia(video)}
-                                >
-                                  <div className="relative flex-shrink-0">
-                                    <div className="w-16 h-12 rounded-md overflow-hidden bg-gray-900">
+                                  <div className="aspect-video overflow-hidden bg-gray-100">
+                                    {event.media[0].type === 'image' ? (
                                       <img 
-                                        src={`https://img.youtube.com/vi/${video.src}/mqdefault.jpg`}
-                                        alt={video.caption}
-                                        className="w-full h-full object-cover"
+                                        src={event.media[0].src} 
+                                        alt={event.media[0].caption}
+                                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                                       />
-                                    </div>
-                                    <div className="absolute inset-0 flex items-center justify-center">
-                                      <div className="w-6 h-6 bg-white/90 rounded-full flex items-center justify-center group-hover:bg-white">
-                                        <Play className="w-3 h-3 text-gray-900" />
+                                    ) : (
+                                      <div className="relative w-full h-full">
+                                        <img 
+                                          src={`https://img.youtube.com/vi/${event.media[0].src}/hqdefault.jpg`}
+                                          alt={event.media[0].caption}
+                                          className="w-full h-full object-cover opacity-60"
+                                        />
+                                        <div className="absolute inset-0 bg-gradient-to-r from-red-900/50 to-amber-900/50 flex items-center justify-center">
+                                          <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                                            <Play className="w-8 h-8 text-white" />
+                                          </div>
+                                        </div>
                                       </div>
-                                    </div>
+                                    )}
                                   </div>
-                                  <div className="flex-1 min-w-0">
-                                    <p className="font-medium text-gray-900 text-sm line-clamp-2">{video.caption}</p>
-                                    <div className="flex items-center gap-2 mt-1">
-                                      <span className="text-xs px-2 py-0.5 bg-amber-100 text-amber-700 rounded-full">VIDEO</span>
+                                  <div className="p-4">
+                                    <div className="flex items-center gap-2 mb-2">
+                                      <div className={`w-3 h-3 rounded-full ${event.media[0].type === 'image' ? 'bg-red-500' : 'bg-amber-500'}`}></div>
+                                      <span className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+                                        {event.media[0].type === 'image' ? 'Ảnh tư liệu' : 'Video tư liệu'}
+                                      </span>
                                     </div>
+                                    <p className="text-sm font-medium text-gray-800 line-clamp-2">{event.media[0].caption}</p>
                                   </div>
                                 </div>
-                              ))}
-                            </div>
-                          </div>
-                        )}
-                      </div>
-                    )}
+                              </div>
+                            ) : (
+                              // Nếu có nhiều media items
+                              <div className="space-y-6">
+                                {/* Video đầu tiên (nếu có) */}
+                                {event.media.filter(m => m.type === 'video').length > 0 && (
+                                  <div className="space-y-3">
+                                    <h5 className="text-sm font-semibold text-gray-700 flex items-center gap-2">
+                                      <Video className="w-4 h-4 text-amber-600" />
+                                      Video tư liệu
+                                    </h5>
+                                    {event.media.filter(m => m.type === 'video').map((video, vIdx) => (
+                                      <div 
+                                        key={`video-${vIdx}`}
+                                        className="group relative rounded-lg overflow-hidden border border-gray-200 hover:border-amber-300 transition-all duration-300 cursor-pointer bg-gradient-to-r from-amber-50/50 to-white"
+                                        onClick={() => setSelectedMedia(video)}
+                                      >
+                                        <div className="flex">
+                                          <div className="w-24 h-16 flex-shrink-0 relative overflow-hidden">
+                                            <img 
+                                              src={`https://img.youtube.com/vi/${video.src}/mqdefault.jpg`}
+                                              alt={video.caption}
+                                              className="w-full h-full object-cover"
+                                            />
+                                            <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                                              <Play className="w-6 h-6 text-white" />
+                                            </div>
+                                          </div>
+                                          <div className="flex-1 p-3">
+                                            <div className="flex items-center gap-2 mb-1">
+                                              <div className="w-2 h-2 bg-amber-500 rounded-full"></div>
+                                              <span className="text-xs font-semibold text-amber-700">VIDEO</span>
+                                            </div>
+                                            <p className="text-sm font-medium text-gray-800 line-clamp-2">{video.caption}</p>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    ))}
+                                  </div>
+                                )}
 
-                    {/* GRID VIEW */}
-                    {mediaViewMode === 'grid' && (
-                      <div className="grid grid-cols-2 gap-3">
-                        {eventMedia.map((media, idx) => (
-                          <div 
-                            key={idx}
-                            className="group relative aspect-square rounded-lg overflow-hidden border border-gray-200 hover:shadow-md transition-all cursor-pointer"
-                            onClick={() => setSelectedMedia(media)}
-                          >
-                            <div className="w-full h-full bg-gray-100 relative overflow-hidden">
-                              {media.type === 'image' ? (
-                                <img 
-                                  src={media.src}
-                                  alt={media.caption}
-                                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                                />
-                              ) : (
-                                <>
-                                  <img 
-                                    src={`https://img.youtube.com/vi/${media.src}/hqdefault.jpg`}
-                                    alt={media.caption}
-                                    className="w-full h-full object-cover"
-                                  />
-                                  <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                                    <div className="w-8 h-8 bg-white/90 rounded-full flex items-center justify-center group-hover:bg-white">
-                                      <Play className="w-4 h-4 text-gray-900" />
+                                {/* Ảnh (nếu có) */}
+                                {event.media.filter(m => m.type === 'image').length > 0 && (
+                                  <div className="space-y-3">
+                                    <h5 className="text-sm font-semibold text-gray-700 flex items-center gap-2">
+                                      <ImageIcon className="w-4 h-4 text-red-600" />
+                                      Ảnh tư liệu
+                                    </h5>
+                                    <div className="grid grid-cols-2 gap-3">
+                                      {event.media.filter(m => m.type === 'image').map((image, iIdx) => (
+                                        <div 
+                                          key={`image-${iIdx}`}
+                                          className="group relative aspect-square rounded-lg overflow-hidden border border-gray-200 hover:border-red-300 transition-all duration-300 cursor-pointer"
+                                          onClick={() => setSelectedMedia(image)}
+                                        >
+                                          <div className="w-full h-full bg-gray-100 relative overflow-hidden">
+                                            <img 
+                                              src={image.src} 
+                                              alt={image.caption}
+                                              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                                            />
+                                            <div className="absolute inset-0 bg-gradient-to-t from-black/0 via-black/0 to-black/0 group-hover:from-black/10 group-hover:via-black/5 group-hover:to-black/0 transition-all duration-300" />
+                                          </div>
+                                          <div className="absolute top-1.5 right-1.5">
+                                            <div className="bg-white/90 backdrop-blur-sm rounded-full p-1.5">
+                                              <ImageIcon className="w-3 h-3 text-red-600" />
+                                            </div>
+                                          </div>
+                                          <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                            <p className="text-xs text-white font-medium line-clamp-1">{image.caption}</p>
+                                          </div>
+                                        </div>
+                                      ))}
                                     </div>
                                   </div>
-                                </>
-                              )}
-                            </div>
-                            <div className="absolute top-2 right-2">
-                              <div className={`px-1.5 py-0.5 rounded text-xs font-medium ${
-                                media.type === 'image' 
-                                  ? 'bg-red-600 text-white' 
-                                  : 'bg-amber-600 text-white'
-                              }`}>
-                                {media.type === 'image' ? 'ẢNH' : 'VIDEO'}
-                              </div>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-
-                    {/* LIST VIEW */}
-                    {mediaViewMode === 'list' && (
-                      <div className="space-y-3">
-                        {eventMedia.map((media, idx) => (
-                          <div 
-                            key={idx}
-                            className="group flex items-center gap-3 p-3 rounded-lg border border-gray-200 hover:shadow-sm transition-all cursor-pointer"
-                            onClick={() => setSelectedMedia(media)}
-                          >
-                            <div className="relative flex-shrink-0">
-                              <div className="w-12 h-12 rounded-md overflow-hidden bg-gray-100">
-                                {media.type === 'image' ? (
-                                  <img 
-                                    src={media.src}
-                                    alt={media.caption}
-                                    className="w-full h-full object-cover"
-                                  />
-                                ) : (
-                                  <img 
-                                    src={`https://img.youtube.com/vi/${media.src}/mqdefault.jpg`}
-                                    alt={media.caption}
-                                    className="w-full h-full object-cover"
-                                  />
                                 )}
                               </div>
-                              {media.type === 'video' && (
-                                <div className="absolute inset-0 flex items-center justify-center">
-                                  <div className="w-4 h-4 bg-white/90 rounded-full flex items-center justify-center">
-                                    <Play className="w-2 h-2 text-gray-900" />
-                                  </div>
-                                </div>
-                              )}
-                            </div>
-                            <div className="flex-1 min-w-0">
-                              <div className="flex items-center gap-2 mb-1">
-                                <span className={`text-xs px-2 py-1 rounded-full ${
-                                  media.type === 'image' 
-                                    ? 'bg-red-100 text-red-700' 
-                                    : 'bg-amber-100 text-amber-700'
-                                }`}>
-                                  {media.type === 'image' ? 'ẢNH' : 'VIDEO'}
-                                </span>
-                              </div>
-                              <p className="text-sm font-medium text-gray-900 line-clamp-2">{media.caption}</p>
-                            </div>
-                            <div className="opacity-0 group-hover:opacity-100 transition-opacity">
-                              <ZoomIn className="w-4 h-4 text-gray-400" />
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
+                            )}
 
-                  {/* Timeline Events List (Desktop Sidebar) */}
-                  <div className="hidden lg:block border-t border-gray-200 p-6">
-                    <h4 className="font-semibold text-gray-900 mb-4">Dòng thời gian</h4>
-                    <div className="space-y-2">
-                      {DATA_1945.map((event, idx) => (
-                        <button
-                          key={idx}
-                          onClick={() => setActiveEventIndex(idx)}
-                          className={`w-full text-left p-3 rounded-lg transition-all text-sm ${
-                            activeEventIndex === idx
-                              ? 'bg-red-50 text-red-700 font-medium'
-                              : 'text-gray-600 hover:bg-gray-50'
-                          }`}
-                        >
-                          <div className="flex items-center justify-between">
-                            <span className="font-medium">{event.date}</span>
-                            {activeEventIndex === idx && (
-                              <ChevronRight className="w-4 h-4" />
+                            {/* View All Button (nếu có nhiều media) */}
+                            {event.media.length > 3 && (
+                              <div className="pt-4 border-t border-gray-100">
+                                <button
+                                  onClick={() => {
+                                    setActiveTab('gallery');
+                                    setShowAllMedia(true);
+                                  }}
+                                  className="w-full text-center py-2 text-sm text-red-600 hover:text-red-800 font-medium hover:bg-red-50 rounded-lg transition-colors"
+                                >
+                                  Xem tất cả {event.media.length} tư liệu
+                                </button>
+                              </div>
                             )}
                           </div>
-                          <p className="text-xs mt-1 line-clamp-1">{event.title}</p>
-                        </button>
-                      ))}
+                        </div>
+                      )}
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
+            ))}
           </div>
         )}
 
