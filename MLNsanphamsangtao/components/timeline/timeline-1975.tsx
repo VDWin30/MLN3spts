@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { FileText, Film, Music, Calendar, Play, Image as ImageIcon } from 'lucide-react';
 
-// --- 1. CẤU TRÚC DỮ LIỆU 1975 ---
+// --- 1. CẤU TRÚC DỮ LIỆU 1975 HOÀN CHỈNH ---
 interface MediaItem {
   type: 'image' | 'video' | 'audio';
   src: string;
@@ -23,11 +23,108 @@ interface TimelineEvent {
 
 const DATA_1975: TimelineEvent[] = [
   {
+    date: '10/03/1975',
+    title: 'Chiến dịch Tây Nguyên - Mở màn đại thắng',
+    content: `Cuộc tấn công vào Buôn Ma Thuột mở màn Chiến dịch Tây Nguyên, tạo bước ngoặt chiến lược. Việc chọn Tây Nguyên làm điểm đột phá cho thấy tư duy nhạy bén của Đảng trong việc đánh vào "yết hầu" của chế độ cũ. Chỉ sau 4 ngày, toàn bộ Tây Nguyên được giải phóng.
+
+Sự tan rã của Quân đoàn 2 chính quyền Sài Gòn tại đây đã tạo ra hiệu ứng dây chuyền, buộc đối phương phải rút khỏi Kon Tum, Pleiku theo "lộ trình máu" tỉnh lộ 7. Đây là minh chứng rõ nét cho quy luật tích lũy về Lượng dẫn đến sự thay đổi về Chất sau hơn hai năm xây dựng hậu phương miền Bắc XHCN.`,
+    images: [
+      { 
+        type: 'image', 
+        src: 'https://media.vov.vn/uploaded/gnnlexby/2024_03_08/bmt1_icwo.jpg', 
+        caption: 'Bộ đội tiến vào giải phóng Buôn Ma Thuột' 
+      },
+      { 
+        type: 'image', 
+        src: 'https://media.vov.vn/uploaded/gnnlexby/2024_03_08/bmt2_znwm.jpg', 
+        caption: 'Nhân dân chào đón bộ đội giải phóng' 
+      }
+    ],
+    videos: [
+      { 
+        type: 'video', 
+        src: 'VIDEO_ID_TÂY_NGUYÊN', 
+        caption: 'Chiến dịch Tây Nguyên - Bước ngoặt lịch sử' 
+      }
+    ],
+    music: [
+      { 
+        type: 'audio', 
+        src: 'https://www.nhaccuatui.com/mh/auto/xxx', 
+        caption: 'Bài Ca Tây Nguyên', 
+        author: 'Nhạc sĩ' 
+      }
+    ]
+  },
+  {
+    date: 'Tháng 3-4/1975',
+    title: 'Cuộc tổng tiến công thần tốc - Huế, Đà Nẵng giải phóng',
+    content: `Sau Tây Nguyên, quân ta tiếp tục tiến công giải phóng các thành phố lớn:
+• 26/3: Giải phóng Huế - cố đô của dân tộc
+• 29/3: Giải phóng Đà Nẵng - thành phố lớn thứ hai miền Nam
+
+Miền Bắc lúc này vận hành như một thực thể thống nhất với tinh thần "Tất cả cho tiền tuyến". Người dân dù sống trong chế độ tem phiếu nhưng vẫn dồn toàn lực cho chiến trường. Ngược lại, miền Nam chìm trong hoảng loạn, các đô thị lớn rơi vào tình trạng bất an, giá cả leo thang, đồng tiền sụt giá.`,
+    images: [
+      { 
+        type: 'image', 
+        src: 'https://media.vov.vn/uploaded/gnnlexby/2024_03_26/hue_giaiphong_ykqu.jpg', 
+        caption: 'Cờ giải phóng tung bay trên Kỳ Đài Huế' 
+      },
+      { 
+        type: 'image', 
+        src: 'https://media.vov.vn/uploaded/gnnlexby/2024_03_29/danang_oyag.jpg', 
+        caption: 'Bộ đội tiến vào Đà Nẵng' 
+      }
+    ],
+    videos: [
+      { 
+        type: 'video', 
+        src: 'VIDEO_ID_HUẾ_ĐÀ_NẴNG', 
+        caption: 'Giải phóng Huế - Đà Nẵng' 
+      }
+    ],
+    music: [
+      { 
+        type: 'audio', 
+        src: 'https://www.nhaccuatui.com/mh/auto/xxx', 
+        caption: 'Giải phóng Đà Nẵng', 
+        author: 'Nhạc sĩ' 
+      }
+    ]
+  },
+  {
+    date: '21/04/1975',
+    title: 'Tổng thống Nguyễn Văn Thiệu từ chức',
+    content: `Trước sức ép của cuộc tổng tiến công, Tổng thống Nguyễn Văn Thiệu từ chức, giao quyền cho Phó t�ng thống Trần Văn Hương. Sự kiện này không chỉ là thay đổi nhân sự mà đánh dấu sự sụp đổ về mặt tinh thần của toàn bộ Kiến trúc thượng tầng chế độ cũ.
+
+Hệ thống hành chính vốn dựa vào viện trợ và cố vấn nước ngoài mất điểm tựa, các mệnh lệnh từ trung ương trở nên vô hiệu trước sức ép của 5 cánh quân giải phóng.`,
+    images: [
+      { 
+        type: 'image', 
+        src: 'https://baotanglichsu.vn/uploads/news/2020_04/nguyen-van-thieu-tu-chuc-ngay-21-4-1975-1.jpg', 
+        caption: 'Tổng thống Nguyễn Văn Thiệu tuyên bố từ chức' 
+      }
+    ],
+    videos: [
+      { 
+        type: 'video', 
+        src: 'VIDEO_ID_THIỆU_TỪ_CHỨC', 
+        caption: 'Sự kiện Nguyễn Văn Thiệu từ chức' 
+      }
+    ],
+    music: []
+  },
+  {
     date: '30/04/1975',
     title: 'Giải Phóng Miền Nam - Thống Nhất Đất Nước',
-    content: `Vào lúc 11h30, xe tăng của Quân Giải phóng húc đổ cổng Dinh Độc Lập. Tổng thống Dương Văn Minh tuyên bố đầu hàng vô điều kiện. Cờ Mặt trận Dân tộc Giải phóng tung bay, đánh dấu sự thắng lợi hoàn toàn của chiến dịch Hồ Chí Minh lịch sử.
+    content: `11h30 ngày 30/4/1975: Xe tăng 843 (thực tế là xe 390) húc đổ cổng Dinh Độc Lập. Tổng thống Dương Văn Minh tuyên bố đầu hàng vô điều kiện.
 
-Đây là thời khắc lịch sử trọng đại, kết thúc 30 năm chiến tranh, chấm dứt sự chia cắt đất nước, mở ra kỷ nguyên mới - kỷ nguyên độc lập, thống nhất và cả nước đi lên chủ nghĩa xã hội.`,
+Sự kiện này:
+• Kết thúc 30 năm chiến tranh
+• Chấm dứt sự chia cắt đất nước
+• Mở ra kỷ nguyên mới: độc lập, thống nhất, cả nước đi lên CNXH
+
+Ngay sau đó, các Ủy ban Quân quản được thành lập để thay thế bộ máy cũ, duy trì an ninh trật tự, ổn định đời sống nhân dân.`,
     images: [
       { 
         type: 'image', 
@@ -38,11 +135,6 @@ const DATA_1975: TimelineEvent[] = [
         type: 'image', 
         src: 'https://media.vov.vn/sites/default/files/styles/large/public/2024-04/30.4.1975.jpg', 
         caption: 'Cờ giải phóng tung bay trên nóc Dinh Độc Lập' 
-      },
-      { 
-        type: 'image', 
-        src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Surrender_of_South_Vietnam.jpg/800px-Surrender_of_South_Vietnam.jpg', 
-        caption: 'Tổng thống Dương Văn Minh tuyên bố đầu hàng' 
       }
     ],
     videos: [
@@ -50,11 +142,6 @@ const DATA_1975: TimelineEvent[] = [
         type: 'video', 
         src: 'c4IRIvwmGL8', 
         caption: 'Phim tư liệu: Thời khắc lịch sử 30/4/1975' 
-      },
-      { 
-        type: 'video', 
-        src: 'mce2FvKZ-PI', 
-        caption: 'Chiến dịch Hồ Chí Minh - Tổng tiến công và nổi dậy' 
       }
     ],
     music: [
@@ -63,98 +150,108 @@ const DATA_1975: TimelineEvent[] = [
         src: 'https://www.nhaccuatui.com/mh/auto/GICiKLd9Z5nz', 
         caption: 'Như Có Bác Trong Ngày Đại Thắng', 
         author: 'Phạm Tuyên' 
-      },
-      { 
-        type: 'audio', 
-        src: 'https://www.nhaccuatui.com/mh/auto/Gvy9A5L2eUqD', 
-        caption: 'Đất Nước Trọn Niềm Vui', 
-        author: 'Hoàng Hà' 
       }
     ]
   },
   {
-    date: '02/07/1976',
-    title: 'Non Sông Thu Về Một Mối',
-    content: `Kỳ họp thứ nhất Quốc hội nước Việt Nam thống nhất (khoá VI) quyết định:
-• Tên nước: Cộng hòa Xã hội chủ nghĩa Việt Nam
-• Quốc kỳ: Cờ đỏ sao vàng
-• Quốc ca: Tiến Quân Ca
-• Thủ đô: Hà Nội
-• Đổi tên Sài Gòn - Gia Định thành Thành phố Hồ Chí Minh
+    date: 'Tháng 5-8/1975',
+    title: 'Tiếp quản và ổn định tình hình',
+    content: `Giai đoạn thiết lập trật tự mới:
+1. Ổn định đô thị: Duy trì hệ thống điện, nước, viễn thông
+2. Bài trừ văn hóa cũ: Tịch thu sách báo, băng đĩa "đồi trụy"
+3. Khắc phục khủng hoảng kinh tế: Cắt đứt viện trợ Mỹ, thực hiện phân phối bao cấp
+4. Di chuyển dân cư: Đưa dân đi xây dựng vùng kinh tế mới
 
-Sự kiện này đánh dấu sự thống nhất hoàn toàn về mặt nhà nước, tạo nền tảng pháp lý vững chắc cho việc xây dựng đất nước sau chiến tranh.`,
+Đây là giai đoạn "cú sốc" văn hóa - kinh tế đầu tiên khi hai lối sống khác biệt sau 20 năm chia cắt bắt đầu va chạm.`,
     images: [
       { 
         type: 'image', 
-        src: 'https://media.vneconomy.vn/images/upload/2024/07/02/2-7-1976-quoc-hoi-khoa-vii.jpg', 
-        caption: 'Kỳ họp Quốc hội thống nhất đất nước' 
-      },
+        src: 'https://baotanglichsu.vn/uploads/news/2021_04/quan-quan-sai-gon-5-1975-1.jpg', 
+        caption: 'Ủy ban Quân quản làm việc tại Sài Gòn' 
+      }
+    ],
+    videos: [],
+    music: []
+  },
+  {
+    date: '22/09/1975',
+    title: 'Chiến dịch X1 - Đổi tiền và quốc hữu hóa',
+    content: `Chiến dịch X1 đánh vào "lũy quỹ" của tư sản mại bản:
+• Đổi tiền: 1 đồng mới = 500 đồng cũ
+• Hạn mức đổi tiền mặt, số còn lại gửi ngân hàng
+• Quốc hữu hóa ngân hàng, nhà máy, kho vận
+• Tịch thu tài sản tư sản lớn
+
+Biện pháp này nhằm:
+• Triệt tiêu khả năng đầu cơ
+• Kiểm soát tiền tệ
+• Thiết lập kinh tế kế hoạch hóa
+• Xóa bỏ quyền sở hữu tư nhân tư liệu sản xuất`,
+    images: [
+      { 
+        type: 'image', 
+        src: 'https://cdnimg.vietnamplus.vn/uploaded/fsmsr/2020_09_21/doitien_1975_1.jpg', 
+        caption: 'Đồng tiền giải phóng sau đổi tiền 1975' 
+      }
+    ],
+    videos: [],
+    music: []
+  },
+  {
+    date: '15-21/11/1975',
+    title: 'Hội nghị Hiệp thương thống nhất Tổ quốc',
+    content: `Hội nghị tại Dinh Độc Lập giữa hai đoàn đại biểu:
+• Miền Bắc: Ông Trường Chinh - Trưởng đoàn
+• Miền Nam: Ông Phạm Hùng - Trưởng đoàn
+
+Quyết định quan trọng:
+• Tổ chức Tổng tuyển cử bầu Quốc hội chung
+• Thống nhất tên nước, quốc kỳ, quốc ca
+• Xác định thủ đô là Hà Nội
+• Tiến thẳng lên CNXH không qua TBCN
+
+Đây là bước chuẩn bị pháp lý cho sự ra đời nước CHXHCN Việt Nam.`,
+    images: [
       { 
         type: 'image', 
         src: 'https://baoquocte.vn/stores/news_dataimages/linhanh/042024/15/16/hoi-nghi-hiep-thuong-thong-nhat-to-quoc-30-11-1975.jpg', 
-        caption: 'Hội nghị Hiệp thương thống nhất Tổ quốc (11/1975)' 
+        caption: 'Hội nghị Hiệp thương thống nhất Tổ quốc' 
       }
     ],
     videos: [
       { 
         type: 'video', 
         src: 'LQUXuQ6Zd9w', 
-        caption: 'Tư liệu: Quốc hội khóa VI - Thống nhất đất nước' 
+        caption: 'Tư liệu Hội nghị Hiệp thương' 
       }
     ],
+    music: []
+  },
+  {
+    date: '02/07/1976',
+    title: 'Non Sông Thu Về Một Mối',
+    content: `Kỳ họp thứ nhất Quốc hội khóa VI quyết định:
+• Tên nước: Cộng hòa Xã hội chủ nghĩa Việt Nam
+• Quốc kỳ: Cờ đỏ sao vàng
+• Quốc ca: Tiến Quân Ca
+• Thủ đô: Hà Nội
+• Đổi tên Sài Gòn - Gia Định thành TP.HCM
+
+Đánh dấu sự thống nhất hoàn toàn về mặt nhà nước, tạo nền tảng pháp lý vững chắc cho xây dựng đất nước sau chiến tranh.`,
+    images: [
+      { 
+        type: 'image', 
+        src: 'https://media.vneconomy.vn/images/upload/2024/07/02/2-7-1976-quoc-hoi-khoa-vii.jpg', 
+        caption: 'Kỳ họp Quốc hội thống nhất đất nước' 
+      }
+    ],
+    videos: [],
     music: [
       { 
         type: 'audio', 
         src: 'https://www.nhaccuatui.com/mh/auto/Vlq4TUsXbQ7h', 
         caption: 'Mùa Xuân Trên Thành Phố Hồ Chí Minh', 
         author: 'Xuân Hồng' 
-      },
-      { 
-        type: 'audio', 
-        src: 'https://www.nhaccuatui.com/mh/auto/xYbzKrFvLcHj', 
-        caption: 'Bài Ca Thống Nhất', 
-        author: 'Võ Văn Di' 
-      }
-    ]
-  },
-  {
-    date: '1976 - 1986',
-    title: 'Khắc Phục Hậu Quả Chiến Tranh & Bước Đầu Xây Dựng Đất Nước',
-    content: `Sau ngày thống nhất, cả nước phải đối mặt với những thách thức lớn:
-1. Khắc phục hậu quả chiến tranh: Hàng triệu người thương vong, cơ sở hạ tầng bị tàn phá nặng nề, kinh tế kiệt quệ.
-2. Thống nhất thể chế: Từ hai chế độ chính trị - kinh tế khác biệt thành một thể thống nhất.
-3. Tái thiết đất nước: Xây dựng cơ sở vật chất, phát triển kinh tế, ổn định đời sống nhân dân.
-
-Các nhiệm vụ trọng tâm:
-• Tổ chức bầu cử Quốc hội thống nhất (1976)
-• Thực hiện các chương trình khôi phục kinh tế
-• Xây dựng hệ thống giáo dục, y tế thống nhất
-• Ổn định đời sống nhân dân cả nước`,
-    images: [
-      { 
-        type: 'image', 
-        src: 'https://media.vneconomy.vn/images/upload/2024/04/28/hau-qua-chien-tranh.jpg', 
-        caption: 'Khắc phục hậu quả chiến tranh' 
-      },
-      { 
-        type: 'image', 
-        src: 'https://baotanglichsu.vn/uploads/news/2021_04/bau-cu-quoc-hoi-khoa-vi-25-4-1976-1.jpg', 
-        caption: 'Bầu cử Quốc hội khóa VI (25/4/1976)' 
-      }
-    ],
-    videos: [
-      { 
-        type: 'video', 
-        src: 'YbR2x1d7HPU', 
-        caption: 'Việt Nam sau 1975: Khắc phục hậu quả chiến tranh' 
-      }
-    ],
-    music: [
-      { 
-        type: 'audio', 
-        src: 'https://www.nhaccuatui.com/mh/auto/Rf8Z9JcKpQ2v', 
-        caption: 'Việt Nam Quê Hương Tôi', 
-        author: 'Đỗ Nhuận' 
       }
     ]
   }
@@ -165,12 +262,13 @@ export function Timeline1975() {
   const [activeTab, setActiveTab] = useState<'info' | 'video' | 'music'>('info');
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
-  const allVideos = DATA_1975.flatMap(event => event.videos.map(v => ({ 
+  const allVideos = DATA_1975.flatMap(event => event.videos.filter(v => v.src).map(v => ({ 
     ...v, 
     eventDate: event.date, 
     eventTitle: event.title 
   })));
-  const allMusic = DATA_1975.flatMap(event => event.music.map(m => ({ 
+  
+  const allMusic = DATA_1975.flatMap(event => event.music.filter(m => m.src).map(m => ({ 
     ...m, 
     eventDate: event.date, 
     eventTitle: event.title 
@@ -179,32 +277,32 @@ export function Timeline1975() {
   return (
     <div className="space-y-8">
       {/* Header với hiệu ứng nổi bật */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-green-900/20 to-emerald-900/20 p-8 border border-emerald-200/30">
+      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-red-900/20 to-yellow-900/20 p-8 border border-amber-200/30">
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/paper.png')] opacity-10"></div>
         <div className="relative z-10">
           <div className="flex items-center gap-4 mb-4">
-            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-green-700 to-emerald-600 flex items-center justify-center shadow-lg">
+            <div className="w-12 h-12 rounded-full bg-gradient-to-br from-red-700 to-yellow-600 flex items-center justify-center shadow-lg">
               <Calendar className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h2 className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-green-800 to-emerald-700 tracking-tighter">
-                1975 - 1986
+              <h2 className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-red-800 to-yellow-700 tracking-tighter">
+                1975 - Đại Thắng Mùa Xuân
               </h2>
               <p className="text-lg font-semibold text-gray-700">
-                Đại Thắng Mùa Xuân - Thống Nhất Đất Nước
+                Từ Chiến dịch Tây Nguyên đến Thống nhất đất nước
               </p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Tab Navigation cải tiến */}
+      {/* Tab Navigation */}
       <div className="bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-200 p-1 shadow-sm">
         <div className="flex flex-wrap gap-1">
           <TabBtn 
             isActive={activeTab === 'info'} 
             onClick={() => setActiveTab('info')} 
-            label="Thông Tin Lịch Sử" 
+            label="Sự Kiện Lịch Sử" 
             icon={<FileText className="w-5 h-5" />} 
             count={DATA_1975.length}
           />
@@ -234,7 +332,7 @@ export function Timeline1975() {
             {DATA_1975.map((event, idx) => (
               <div key={idx} className="relative group">
                 {/* Timeline line */}
-                <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-gradient-to-b from-green-600 via-emerald-500 to-transparent" />
+                <div className="absolute left-0 top-0 bottom-0 w-0.5 bg-gradient-to-b from-red-600 via-yellow-500 to-transparent" />
                 
                 {/* Content Card */}
                 <div className="ml-10 bg-white/90 backdrop-blur-sm rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 history-card">
@@ -242,11 +340,11 @@ export function Timeline1975() {
                   <div className="flex items-center gap-4 p-6 border-b border-gray-100">
                     <div className="relative">
                       <div className="absolute -left-12 top-1/2 -translate-y-1/2">
-                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-green-600 to-emerald-500 flex items-center justify-center shadow-lg border-4 border-white">
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-br from-red-600 to-yellow-500 flex items-center justify-center shadow-lg border-4 border-white">
                           <Calendar className="w-3 h-3 text-white" />
                         </div>
                       </div>
-                      <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-50 text-green-800 text-sm font-bold border border-green-200">
+                      <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-red-50 text-red-800 text-sm font-bold border border-red-200">
                         <Calendar className="w-4 h-4" />
                         {event.date}
                       </span>
@@ -320,8 +418,8 @@ export function Timeline1975() {
                 </div>
                 <div className="p-5">
                   <div className="flex items-start gap-3">
-                    <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
-                      <Play className="w-5 h-5 text-green-600" />
+                    <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0">
+                      <Play className="w-5 h-5 text-red-600" />
                     </div>
                     <div className="flex-1">
                       <h4 className="font-bold text-gray-900 line-clamp-2 mb-1" title={vid.caption}>
@@ -342,7 +440,7 @@ export function Timeline1975() {
               </div>
             )) : (
               <EmptyState 
-                message="Đang cập nhật video tư liệu cho giai đoạn này" 
+                message="Đang cập nhật video tư liệu" 
                 icon={<Film className="w-12 h-12" />}
               />
             )}
@@ -357,10 +455,10 @@ export function Timeline1975() {
                 <div className="flex items-center gap-4">
                   {/* Album Art */}
                   <div className="relative flex-shrink-0">
-                    <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-green-100 to-emerald-100 flex items-center justify-center shadow-md group-hover:scale-105 transition-transform">
-                      <Music className="w-8 h-8 text-green-600" />
+                    <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-red-100 to-yellow-100 flex items-center justify-center shadow-md group-hover:scale-105 transition-transform">
+                      <Music className="w-8 h-8 text-red-600" />
                     </div>
-                    <div className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-green-600 text-white text-xs flex items-center justify-center font-bold">
+                    <div className="absolute -top-1 -right-1 w-6 h-6 rounded-full bg-red-600 text-white text-xs flex items-center justify-center font-bold">
                       {idx + 1}
                     </div>
                   </div>
@@ -393,7 +491,7 @@ export function Timeline1975() {
               </div>
             )) : (
               <EmptyState 
-                message="Đang cập nhật bài hát cho giai đoạn này" 
+                message="Đang cập nhật bài hát lịch sử" 
                 icon={<Music className="w-12 h-12" />}
               />
             )}
@@ -413,7 +511,7 @@ export function Timeline1975() {
                 e.stopPropagation();
                 setSelectedImage(null);
               }}
-              className="absolute -top-12 right-0 text-white hover:text-green-300 transition-colors px-4 py-2 bg-black/50 rounded-lg"
+              className="absolute -top-12 right-0 text-white hover:text-red-300 transition-colors px-4 py-2 bg-black/50 rounded-lg"
             >
               ✕ Đóng
             </button>
@@ -430,7 +528,7 @@ export function Timeline1975() {
   );
 }
 
-// Component cải tiến
+// Component Tab Button
 function TabBtn({ isActive, onClick, label, icon, count }: { 
   isActive: boolean; 
   onClick: () => void; 
@@ -443,7 +541,7 @@ function TabBtn({ isActive, onClick, label, icon, count }: {
       onClick={onClick}
       className={`flex items-center gap-3 px-6 py-4 rounded-xl text-sm font-semibold transition-all duration-300 flex-1 min-w-[200px] justify-center ${
         isActive 
-          ? 'bg-gradient-to-r from-green-600 to-emerald-600 text-white shadow-lg' 
+          ? 'bg-gradient-to-r from-red-600 to-yellow-600 text-white shadow-lg' 
           : 'bg-white text-gray-700 hover:bg-gray-50 hover:text-gray-900 border border-gray-200'
       }`}
     >
