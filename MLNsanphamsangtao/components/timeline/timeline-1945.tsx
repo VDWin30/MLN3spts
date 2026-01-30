@@ -1,13 +1,13 @@
 'use client';
 
 import React, { useState } from 'react';
-import { FileText, Film, Calendar, Play, Image as ImageIcon, Video, X } from 'lucide-react';
+import { Calendar, Image as ImageIcon, Video, Play, ChevronRight, ExternalLink } from 'lucide-react';
 
-// --- 1. CẤU TRÚC DỮ LIỆU ---
 interface MediaItem {
   type: 'image' | 'video';
   src: string;
   caption: string;
+  author?: string;
 }
 
 interface TimelineEvent {
@@ -17,491 +17,319 @@ interface TimelineEvent {
   media: MediaItem[];
 }
 
-const DATA_1945: TimelineEvent[] = [
-  {
-    date: '1945',
-    title: 'Khái Niệm "Quá Độ Gián Tiếp" Trong Tư Tưởng Hồ Chí Minh',
-    content: `Trong lý luận của chủ nghĩa Mác – Lênin và được Hồ Chí Minh vận dụng sáng tạo vào điều kiện Việt Nam, quá độ gián tiếp lên chủ nghĩa xã hội là con đường phát triển từ một nước thuộc địa, nông nghiệp lạc hậu, bỏ qua việc thiết lập chế độ tư bản chủ nghĩa hoàn chỉnh để tiến lên chủ nghĩa xã hội.
-
-"Bỏ qua chế độ tư bản chủ nghĩa" không có nghĩa là phủ nhận hoàn toàn những yếu tố tiến bộ của văn minh tư bản, mà là không xây dựng một nhà nước tư sản và không để quan hệ sản xuất tư bản chủ nghĩa giữ vai trò thống trị trong xã hội. Thay vào đó, dưới sự lãnh đạo của Đảng Cộng sản, đất nước tiến hành cách mạng dân tộc dân chủ nhân dân, từng bước xây dựng nền tảng chính trị, kinh tế và xã hội để phát triển lên chủ nghĩa xã hội.`,
-    media: [
-      { 
-        type: 'image', 
-        src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/Ho_Chi_Minh_reading_declaration_of_independence_of_Vietnam_02.09.1945.jpg/800px-Ho_Chi_Minh_reading_declaration_of_independence_of_Vietnam_02.09.1945.jpg', 
-        caption: 'Chủ tịch Hồ Chí Minh đọc Tuyên ngôn Độc lập' 
-      },
-      { 
-        type: 'video', 
-        src: 'o7lwWGfYyAg', 
-        caption: 'Toàn cảnh Lễ Tuyên ngôn Độc lập 2/9/1945' 
-      }
-    ]
-  },
-  {
-    date: '02/09/1945',
-    title: 'Tuyên Ngôn Độc Lập Và Xác Lập Con Đường Phát Triển Của Dân Tộc',
-    content: `Ngày 2/9/1945, tại Quảng trường Ba Đình (Hà Nội), Chủ tịch Hồ Chí Minh đọc Tuyên ngôn Độc lập, tuyên bố thành lập nước Việt Nam Dân chủ Cộng hòa. Văn kiện này không chỉ khẳng định quyền tự do, độc lập của dân tộc Việt Nam mà còn thể hiện tư tưởng nhất quán của Người: độc lập dân tộc phải gắn liền với con đường tiến lên chủ nghĩa xã hội.
+const eventData: TimelineEvent = {
+  date: '02/09/1945',
+  title: 'Tuyên Ngôn Độc Lập Và Xác Lập Con Đường Phát Triển Của Dân Tộc',
+  content: `Ngày 2/9/1945, tại Quảng trường Ba Đình (Hà Nội), Chủ tịch Hồ Chí Minh đọc Tuyên ngôn Độc lập, tuyên bố thành lập nước Việt Nam Dân chủ Cộng hòa. Văn kiện này không chỉ khẳng định quyền tự do, độc lập của dân tộc Việt Nam mà còn thể hiện tư tưởng nhất quán của Người: độc lập dân tộc phải gắn liền với con đường tiến lên chủ nghĩa xã hội.
 
 Ngay sau khi giành chính quyền, Hồ Chí Minh xác định nhiệm vụ trung tâm là củng cố chính quyền cách mạng, bảo vệ thành quả cách mạng và xây dựng nền tảng cho một xã hội mới. Theo tư tưởng của Người, Việt Nam lựa chọn con đường quá độ lên CNXH bỏ qua chế độ tư bản chủ nghĩa – phù hợp với đặc điểm là một nước thuộc địa, nông nghiệp lạc hậu.`,
-    media: [
-      { 
-        type: 'image', 
-        src: 'https://media.vneconomy.vn/images/upload/2021/09/02/ho-chi-minh-doc-tuyen-ngon.jpg', 
-        caption: 'Chủ tịch Hồ Chí Minh đọc Tuyên ngôn Độc lập tại Ba Đình' 
-      },
-      { 
-        type: 'image', 
-        src: 'https://media.vneconomy.vn/images/upload/2021/09/02/ba-dinh-1945.jpg', 
-        caption: 'Quảng trường Ba Đình ngày 2/9/1945' 
-      },
-      { 
-        type: 'video', 
-        src: 'dQw4w9WgXcQ', 
-        caption: 'Toàn cảnh Lễ Tuyên ngôn Độc lập 2/9/1945' 
-      }
-    ]
-  },
-  {
-    date: 'Cuối 1945',
-    title: 'Giải Quyết "Giặc Đói" Và "Giặc Dốt"',
-    content: `Sau khi độc lập, đất nước rơi vào tình trạng khủng hoảng nghiêm trọng. Nạn đói năm 1945 đã làm hơn 2 triệu người chết ở miền Bắc. Trước tình hình đó, Chính phủ phát động phong trào "nhường cơm sẻ áo", kêu gọi mỗi người dân nhịn ăn một bữa để cứu đói đồng bào. Đồng thời, phong trào tăng gia sản xuất được triển khai rộng khắp.
+  media: [
+    { 
+      type: 'image', 
+      src: 'https://media.vneconomy.vn/images/upload/2021/09/02/ho-chi-minh-doc-tuyen-ngon.jpg', 
+      caption: 'Chủ tịch Hồ Chí Minh đọc Tuyên ngôn Độc lập tại Ba Đình',
+      author: 'Tư liệu lịch sử'
+    },
+    { 
+      type: 'image', 
+      src: 'https://media.vneconomy.vn/images/upload/2021/09/02/ba-dinh-1945.jpg', 
+      caption: 'Quảng trường Ba Đình ngày 2/9/1945',
+      author: 'Tư liệu lịch sử'
+    },
+    { 
+      type: 'video', 
+      src: 'dQw4w9WgXcQ', 
+      caption: 'Toàn cảnh Lễ Tuyên ngôn Độc lập 2/9/1945',
+      author: 'Tư liệu lịch sử'
+    }
+  ]
+};
 
-Về giáo dục, ngày 8/9/1945, Chủ tịch Hồ Chí Minh ký sắc lệnh thành lập Nha Bình dân học vụ nhằm xóa nạn mù chữ. Hàng triệu người dân đã tham gia học chữ trong những năm đầu của chính quyền cách mạng. Điều này thể hiện quan điểm của Hồ Chí Minh: xây dựng xã hội mới phải bắt đầu từ nâng cao dân trí, phát huy vai trò làm chủ của nhân dân.`,
-    media: [
-      { 
-        type: 'image', 
-        src: 'https://media.vov.vn/sites/default/files/styles/large/public/2020-09/nan-doi-1945.jpg', 
-        caption: 'Nạn đói năm 1945' 
-      },
-      { 
-        type: 'image', 
-        src: 'https://file3.qdnd.vn/data/images/0/2020/09/07/upload_1597/binh-dan-hoc-vu.jpg', 
-        caption: 'Lớp học bình dân học vụ' 
-      },
-      { 
-        type: 'video', 
-        src: 'eF5g9hDq8Rc', 
-        caption: 'Chống giặc đói, giặc dốt những năm đầu độc lập' 
-      }
-    ]
-  },
-  {
-    date: '1946',
-    title: 'Tổng Tuyển Cử Và Hiến Pháp Đầu Tiên',
-    content: `Ngày 6/1/1946, cuộc Tổng tuyển cử đầu tiên được tổ chức với hơn 90% cử tri đi bầu. Quốc hội khóa I ra đời, đánh dấu bước trưởng thành của Nhà nước dân chủ nhân dân. Cuối năm 1946, Hiến pháp 1946 được thông qua – bản Hiến pháp đầu tiên trong lịch sử Việt Nam.
-
-Hiến pháp 1946 khẳng định các quyền tự do dân chủ cơ bản của nhân dân và nguyên tắc quyền lực thuộc về nhân dân. Đây là bước cụ thể hóa tư tưởng Hồ Chí Minh về một nhà nước của dân, do dân và vì dân – nền tảng chính trị cho quá trình quá độ lên CNXH sau này.`,
-    media: [
-      { 
-        type: 'image', 
-        src: 'https://media.vneconomy.vn/images/upload/2021/01/06/tong-tuyen-cu-1946.jpg', 
-        caption: 'Cử tri đi bầu trong tổng tuyển cử đầu tiên 6/1/1946' 
-      },
-      { 
-        type: 'image', 
-        src: 'https://media.baodautu.vn/Images/chicuong/2021/11/09/hien-phap-1946.jpg', 
-        caption: 'Hiến pháp 1946' 
-      },
-      { 
-        type: 'video', 
-        src: 'fG6h3iEq9Sd', 
-        caption: 'Tổng tuyển cử 1946 - Mốc son của nền dân chủ' 
-      }
-    ]
-  },
-  {
-    date: '19/12/1946',
-    title: 'Toàn Quốc Kháng Chiến',
-    content: `Trước dã tâm xâm lược trở lại của thực dân Pháp, ngày 19/12/1946, Chủ tịch Hồ Chí Minh ra Lời kêu gọi Toàn quốc kháng chiến với tinh thần: "Chúng ta thà hy sinh tất cả chứ nhất định không chịu mất nước, nhất định không chịu làm nô lệ."
-
-Cuộc kháng chiến chống Pháp bước vào giai đoạn toàn diện, lâu dài. Hồ Chí Minh xác định phương châm kháng chiến là "toàn dân, toàn diện, trường kỳ, tự lực cánh sinh". Đây cũng là giai đoạn thể hiện rõ đặc điểm của thời kỳ quá độ: vừa chiến đấu bảo vệ độc lập, vừa xây dựng nền tảng kinh tế – xã hội mới.`,
-    media: [
-      { 
-        type: 'image', 
-        src: 'https://media.vov.vn/sites/default/files/styles/large/public/2021-12/hanoi-1946.jpg', 
-        caption: 'Chiến sĩ tự vệ chiến đấu tại Hà Nội đêm 19/12/1946' 
-      },
-      { 
-        type: 'image', 
-        src: 'https://file3.qdnd.vn/data/images/0/2021/12/19/upload_1889/loi-keu-goi-toan-quoc-khang-chien.jpg', 
-        caption: 'Lời kêu gọi Toàn quốc kháng chiến' 
-      },
-      { 
-        type: 'video', 
-        src: 'gH7j4iFr0Te', 
-        caption: '60 ngày đêm chiến đấu bảo vệ Thủ đô Hà Nội' 
-      }
-    ]
-  }
-];
-
-// --- 2. COMPONENT CHÍNH ---
-export function Timeline1945() {
-  const [activeTab, setActiveTab] = useState<'timeline' | 'gallery'>('timeline');
+export function HistoryEventCard() {
   const [selectedMedia, setSelectedMedia] = useState<MediaItem | null>(null);
-  const [showAllMedia, setShowAllMedia] = useState<boolean>(false);
+  const [activeMediaIndex, setActiveMediaIndex] = useState(0);
 
-  const allMedia = DATA_1945.flatMap(event => 
-    event.media.map(m => ({ 
-      ...m, 
-      eventDate: event.date, 
-      eventTitle: event.title 
-    }))
-  );
+  const handleNextMedia = () => {
+    setActiveMediaIndex((prev) => (prev + 1) % eventData.media.length);
+  };
 
-  const featuredMedia = allMedia.slice(0, 8);
+  const handlePrevMedia = () => {
+    setActiveMediaIndex((prev) => (prev - 1 + eventData.media.length) % eventData.media.length);
+  };
+
+  const activeMedia = eventData.media[activeMediaIndex];
 
   return (
-    <div className="space-y-8">
-      {/* Header */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-red-900/20 via-amber-900/20 to-red-900/20 p-8 border border-amber-200/30 shadow-lg">
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/paper.png')] opacity-10"></div>
-        <div className="relative z-10">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-            <div className="flex items-center gap-4">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-red-700 to-amber-600 flex items-center justify-center shadow-xl">
-                <Calendar className="w-8 h-8 text-white" />
-              </div>
-              <div>
-                <h2 className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-red-800 via-amber-700 to-red-800 tracking-tighter">
-                  1945 - 1953
-                </h2>
-                <p className="text-lg font-semibold text-gray-800 mt-2">
-                  Khởi Đầu Con Đường Quá Độ Gián Tiếp Lên Chủ Nghĩa Xã Hội
-                </p>
-              </div>
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white p-4 md:p-8">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="mb-8 md:mb-12">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-r from-red-600 to-amber-500 flex items-center justify-center">
+              <Calendar className="w-5 h-5 text-white" />
             </div>
-            <div className="flex gap-2">
-              <div className="text-right">
-                <div className="text-2xl font-bold text-gray-900">{DATA_1945.length}</div>
-                <div className="text-sm text-gray-600">Sự kiện lịch sử</div>
-              </div>
-              <div className="h-12 w-px bg-gray-300 mx-4"></div>
-              <div className="text-right">
-                <div className="text-2xl font-bold text-gray-900">{allMedia.length}</div>
-                <div className="text-sm text-gray-600">Tư liệu đa phương tiện</div>
-              </div>
-            </div>
+            <span className="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-red-700 to-amber-600">
+              {eventData.date}
+            </span>
           </div>
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 leading-tight mb-4">
+            {eventData.title}
+          </h1>
+          <div className="w-24 h-1 bg-gradient-to-r from-red-600 to-amber-500 rounded-full"></div>
         </div>
-      </div>
 
-      {/* Tab Navigation */}
-      <div className="flex space-x-2">
-        <button
-          onClick={() => setActiveTab('timeline')}
-          className={`flex items-center gap-3 px-6 py-4 rounded-xl text-sm font-semibold transition-all duration-300 flex-1 justify-center ${
-            activeTab === 'timeline' 
-              ? 'bg-gradient-to-r from-red-600 to-amber-600 text-white shadow-lg' 
-              : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
-          }`}
-        >
-          <FileText className="w-5 h-5" />
-          <span>Dòng thời gian</span>
-          <span className={`ml-2 px-2 py-1 rounded-full text-xs font-bold ${
-            activeTab === 'timeline' ? 'bg-white/20 text-white' : 'bg-gray-100 text-gray-700'
-          }`}>
-            {DATA_1945.length}
-          </span>
-        </button>
-        <button
-          onClick={() => setActiveTab('gallery')}
-          className={`flex items-center gap-3 px-6 py-4 rounded-xl text-sm font-semibold transition-all duration-300 flex-1 justify-center ${
-            activeTab === 'gallery' 
-              ? 'bg-gradient-to-r from-red-600 to-amber-600 text-white shadow-lg' 
-              : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
-          }`}
-        >
-          <Film className="w-5 h-5" />
-          <span>Thư viện tư liệu</span>
-          <span className={`ml-2 px-2 py-1 rounded-full text-xs font-bold ${
-            activeTab === 'gallery' ? 'bg-white/20 text-white' : 'bg-gray-100 text-gray-700'
-          }`}>
-            {allMedia.length}
-          </span>
-        </button>
-      </div>
-
-      {/* Content Area */}
-      <div className="min-h-[600px] animate-in fade-in duration-700">
-        
-        {/* TAB DÒNG THỜI GIAN */}
-        {activeTab === 'timeline' && (
-          <div className="space-y-12">
-            {DATA_1945.map((event, idx) => (
-              <div key={idx} className="relative group">
-                {/* Timeline line and dot */}
-                <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-red-400 via-amber-300 to-transparent hidden md:block"></div>
-                <div className="absolute left-6 top-8 -translate-x-1/2 w-4 h-4 rounded-full bg-gradient-to-r from-red-600 to-amber-500 border-4 border-white shadow-lg hidden md:block"></div>
-                
-                {/* Content Card */}
-                <div className="ml-0 md:ml-12 bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 overflow-hidden">
-                  {/* Date Header */}
-                  <div className="bg-gradient-to-r from-red-50 to-amber-50 p-6 border-b border-gray-100">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-red-600 to-amber-500 flex items-center justify-center shadow-md">
-                        <Calendar className="w-6 h-6 text-white" />
-                      </div>
-                      <div>
-                        <span className="inline-block px-4 py-2 bg-white rounded-full text-red-700 font-bold border border-red-200">
-                          {event.date}
-                        </span>
-                        <h3 className="text-2xl font-bold text-gray-900 mt-3 leading-tight">{event.title}</h3>
-                      </div>
-                    </div>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          {/* Left Column - Text Content */}
+          <div className="lg:col-span-7">
+            <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+              {/* Content Header */}
+              <div className="p-6 md:p-8 bg-gradient-to-r from-red-50 to-amber-50 border-b border-gray-200">
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-3">
+                    <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                    <span className="font-semibold text-gray-700">Nội dung lịch sử</span>
                   </div>
-
-                  {/* Content and Media */}
-                  <div className="p-6">
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                      {/* Text Content */}
-                      <div className="lg:col-span-2">
-                        <div className="prose prose-lg max-w-none">
-                          <div className="text-gray-700 leading-relaxed space-y-4">
-                            {event.content.split('\n\n').map((paragraph, pIdx) => (
-                              <p key={pIdx} className="text-lg">
-                                {paragraph}
-                              </p>
-                            ))}
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Media Gallery */}
-                      {event.media.length > 0 && (
-                        <div className="lg:col-span-1">
-                          <div className="sticky top-6 space-y-4">
-                            <div className="flex items-center gap-2 mb-4">
-                              <div className="flex items-center gap-2 text-gray-700 font-semibold">
-                                <ImageIcon className="w-5 h-5 text-red-600" />
-                                <span>Ảnh & Video</span>
-                              </div>
-                              <span className="px-2 py-1 bg-gray-100 rounded-full text-sm text-gray-600">
-                                {event.media.length} tư liệu
-                              </span>
-                            </div>
-                            
-                            <div className="space-y-4">
-                              {event.media.slice(0, 3).map((media, mediaIdx) => (
-                                <div 
-                                  key={mediaIdx} 
-                                  className="group relative rounded-xl overflow-hidden border border-gray-300 bg-white shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer"
-                                  onClick={() => setSelectedMedia(media)}
-                                >
-                                  <div className="aspect-video overflow-hidden bg-gray-100">
-                                    {media.type === 'image' ? (
-                                      <>
-                                        <img 
-                                          src={media.src} 
-                                          alt={media.caption}
-                                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                                          loading="lazy"
-                                          onError={(e) => {
-                                            e.currentTarget.src = "https://placehold.co/600x400/ef4444/ffffff?text=Tư+Liệu+Lịch+Sử";
-                                          }}
-                                        />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                                      </>
-                                    ) : (
-                                      <div className="relative w-full h-full">
-                                        <div className="absolute inset-0 bg-gradient-to-r from-red-900/50 to-amber-900/50 flex items-center justify-center">
-                                          <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                                            <Play className="w-8 h-8 text-white" />
-                                          </div>
-                                        </div>
-                                        <img 
-                                          src={`https://img.youtube.com/vi/${media.src}/hqdefault.jpg`}
-                                          alt={media.caption}
-                                          className="w-full h-full object-cover opacity-60"
-                                        />
-                                      </div>
-                                    )}
-                                  </div>
-                                  <div className="p-4">
-                                    <div className="flex items-center gap-2 mb-2">
-                                      <div className={`w-3 h-3 rounded-full ${media.type === 'image' ? 'bg-red-500' : 'bg-amber-500'}`}></div>
-                                      <span className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-                                        {media.type === 'image' ? 'Ảnh tư liệu' : 'Video tư liệu'}
-                                      </span>
-                                    </div>
-                                    <p className="text-sm font-medium text-gray-800 line-clamp-2">{media.caption}</p>
-                                  </div>
-                                </div>
-                              ))}
-                              
-                              {event.media.length > 3 && (
-                                <div className="text-center pt-2">
-                                  <button 
-                                    onClick={() => setSelectedMedia(event.media[0])}
-                                    className="text-sm text-red-600 hover:text-red-800 font-medium"
-                                  >
-                                    + {event.media.length - 3} tư liệu khác
-                                  </button>
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                        </div>
-                      )}
-                    </div>
+                  <div className="px-3 py-1 bg-white rounded-full text-sm font-medium text-gray-600 border border-gray-200">
+                    Mốc lịch sử quan trọng
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
-        )}
 
-        {/* TAB THƯ VIỆN TƯ LIỆU */}
-        {activeTab === 'gallery' && (
-          <div className="space-y-6">
-            {/* Media Stats */}
-            <div className="bg-gradient-to-r from-red-50 to-amber-50 rounded-2xl p-6 border border-gray-200">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="bg-white rounded-xl p-4 text-center border border-gray-200">
-                  <div className="text-3xl font-bold text-red-600">{allMedia.length}</div>
-                  <div className="text-sm text-gray-600">Tổng số tư liệu</div>
+              {/* Text Content */}
+              <div className="p-6 md:p-8">
+                <div className="prose prose-lg max-w-none">
+                  {eventData.content.split('\n\n').map((paragraph, idx) => (
+                    <div key={idx} className="mb-6">
+                      <p className="text-gray-800 leading-relaxed text-lg">
+                        {paragraph}
+                      </p>
+                    </div>
+                  ))}
                 </div>
-                <div className="bg-white rounded-xl p-4 text-center border border-gray-200">
-                  <div className="text-3xl font-bold text-red-600">
-                    {allMedia.filter(m => m.type === 'image').length}
+
+                {/* Stats */}
+                <div className="mt-8 pt-6 border-t border-gray-100">
+                  <div className="grid grid-cols-3 gap-4">
+                    <div className="text-center p-4 bg-red-50 rounded-xl">
+                      <div className="text-2xl font-bold text-red-700">2</div>
+                      <div className="text-sm text-gray-600 mt-1">Ảnh tư liệu</div>
+                    </div>
+                    <div className="text-center p-4 bg-amber-50 rounded-xl">
+                      <div className="text-2xl font-bold text-amber-700">1</div>
+                      <div className="text-sm text-gray-600 mt-1">Video tư liệu</div>
+                    </div>
+                    <div className="text-center p-4 bg-gray-50 rounded-xl">
+                      <div className="text-2xl font-bold text-gray-700">1945</div>
+                      <div className="text-sm text-gray-600 mt-1">Năm lịch sử</div>
+                    </div>
                   </div>
-                  <div className="text-sm text-gray-600">Ảnh tư liệu</div>
-                </div>
-                <div className="bg-white rounded-xl p-4 text-center border border-gray-200">
-                  <div className="text-3xl font-bold text-amber-600">
-                    {allMedia.filter(m => m.type === 'video').length}
-                  </div>
-                  <div className="text-sm text-gray-600">Video tư liệu</div>
                 </div>
               </div>
             </div>
+          </div>
 
-            {/* Media Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {(showAllMedia ? allMedia : featuredMedia).map((media, idx) => (
-                <div 
-                  key={idx} 
-                  className="group relative rounded-2xl overflow-hidden border border-gray-300 bg-white shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 cursor-pointer"
-                  onClick={() => setSelectedMedia(media)}
-                >
-                  {/* Media Preview */}
-                  <div className="aspect-video overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
-                    {media.type === 'image' ? (
-                      <>
+          {/* Right Column - Media Gallery */}
+          <div className="lg:col-span-5">
+            <div className="sticky top-8 space-y-6">
+              {/* Main Media Display */}
+              <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+                <div className="p-6 bg-gradient-to-r from-gray-900 to-gray-800">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-3">
+                      <div className={`w-3 h-3 rounded-full ${activeMedia.type === 'image' ? 'bg-red-500' : 'bg-amber-500'}`}></div>
+                      <span className="font-semibold text-white">
+                        {activeMedia.type === 'image' ? 'ẢNH TƯ LIỆU' : 'VIDEO TƯ LIỆU'}
+                      </span>
+                    </div>
+                    <div className="text-sm text-gray-300">
+                      {activeMediaIndex + 1} / {eventData.media.length}
+                    </div>
+                  </div>
+                  
+                  {/* Media Container */}
+                  <div className="relative rounded-xl overflow-hidden bg-black/20">
+                    {activeMedia.type === 'image' ? (
+                      <div className="aspect-[4/3] relative">
                         <img 
-                          src={media.src} 
-                          alt={media.caption}
-                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                          loading="lazy"
+                          src={activeMedia.src} 
+                          alt={activeMedia.caption}
+                          className="w-full h-full object-cover transition-opacity duration-300"
                           onError={(e) => {
-                            e.currentTarget.src = "https://placehold.co/600x400/ef4444/ffffff?text=Ảnh+Tư+Liệu";
+                            e.currentTarget.src = "https://placehold.co/800x600/1f2937/ffffff?text=Tư+Liệu+Lịch+Sử";
                           }}
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                      </>
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                        <button
+                          onClick={() => setSelectedMedia(activeMedia)}
+                          className="absolute top-4 right-4 p-2 bg-black/50 rounded-lg text-white hover:bg-black/70 transition-colors"
+                        >
+                          <ExternalLink className="w-5 h-5" />
+                        </button>
+                      </div>
                     ) : (
-                      <div className="relative w-full h-full">
+                      <div className="aspect-video relative">
+                        <div className="absolute inset-0 bg-gradient-to-r from-red-900/40 to-amber-900/40"></div>
                         <img 
-                          src={`https://img.youtube.com/vi/${media.src}/hqdefault.jpg`}
-                          alt={media.caption}
-                          className="w-full h-full object-cover"
+                          src={`https://img.youtube.com/vi/${activeMedia.src}/maxresdefault.jpg`}
+                          alt={activeMedia.caption}
+                          className="w-full h-full object-cover opacity-70"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent flex items-end p-4">
-                          <div className="w-12 h-12 rounded-full bg-red-600/90 backdrop-blur-sm flex items-center justify-center group-hover:bg-red-700 transition-colors">
-                            <Play className="w-6 h-6 text-white" />
-                          </div>
+                        <div className="absolute inset-0 flex items-center justify-center">
+                          <button
+                            onClick={() => setSelectedMedia(activeMedia)}
+                            className="w-20 h-20 rounded-full bg-gradient-to-r from-red-600 to-amber-500 flex items-center justify-center shadow-2xl hover:scale-105 transition-transform group"
+                          >
+                            <Play className="w-8 h-8 text-white ml-1 group-hover:scale-110 transition-transform" />
+                          </button>
                         </div>
                       </div>
                     )}
                   </div>
 
                   {/* Media Info */}
-                  <div className="p-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="flex items-center gap-2">
-                        <div className={`w-2 h-2 rounded-full ${media.type === 'image' ? 'bg-red-500' : 'bg-amber-500'}`}></div>
-                        <span className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-                          {media.type === 'image' ? 'Ảnh' : 'Video'}
-                        </span>
-                      </div>
-                      <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
-                        {media.eventDate}
-                      </span>
+                  <div className="mt-6">
+                    <h3 className="text-xl font-bold text-white mb-2 line-clamp-2">
+                      {activeMedia.caption}
+                    </h3>
+                    <div className="flex items-center justify-between text-gray-300">
+                      <span className="text-sm">{activeMedia.author}</span>
+                      {activeMedia.type === 'video' && (
+                        <span className="text-sm px-2 py-1 bg-white/10 rounded-full">4K</span>
+                      )}
                     </div>
-                    <h4 className="font-bold text-gray-900 line-clamp-2 mb-2" title={media.caption}>
-                      {media.caption}
-                    </h4>
-                    <p className="text-xs text-gray-600 line-clamp-2" title={media.eventTitle}>
-                      {media.eventTitle}
-                    </p>
                   </div>
 
-                  {/* Hover Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                    <div className="text-white">
-                      <div className="text-sm font-medium mb-1">Xem chi tiết</div>
-                      <div className="text-xs opacity-90">Nhấn để mở rộng</div>
-                    </div>
+                  {/* Navigation Arrows */}
+                  <div className="flex justify-between mt-6">
+                    <button
+                      onClick={handlePrevMedia}
+                      className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors flex items-center gap-2"
+                    >
+                      <ChevronRight className="w-5 h-5 rotate-180" />
+                      Trước
+                    </button>
+                    <button
+                      onClick={handleNextMedia}
+                      className="px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors flex items-center gap-2"
+                    >
+                      Tiếp theo
+                      <ChevronRight className="w-5 h-5" />
+                    </button>
                   </div>
                 </div>
-              ))}
-            </div>
-
-            {/* Show More Button */}
-            {allMedia.length > 8 && !showAllMedia && (
-              <div className="text-center pt-6">
-                <button
-                  onClick={() => setShowAllMedia(true)}
-                  className="px-6 py-3 bg-gradient-to-r from-red-600 to-amber-600 text-white font-semibold rounded-xl hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
-                >
-                  Xem tất cả {allMedia.length} tư liệu
-                </button>
               </div>
-            )}
+
+              {/* Thumbnail Navigation */}
+              <div className="grid grid-cols-3 gap-4">
+                {eventData.media.map((media, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setActiveMediaIndex(index)}
+                    className={`relative rounded-xl overflow-hidden border-2 transition-all duration-300 ${
+                      activeMediaIndex === index 
+                        ? 'border-red-500 ring-2 ring-red-500/20' 
+                        : 'border-transparent hover:border-gray-300'
+                    }`}
+                  >
+                    <div className="aspect-square relative">
+                      {media.type === 'image' ? (
+                        <img 
+                          src={media.src} 
+                          alt={media.caption}
+                          className="w-full h-full object-cover"
+                          onError={(e) => {
+                            e.currentTarget.src = "https://placehold.co/400x400/1f2937/ffffff?text=Tư+Liệu";
+                          }}
+                        />
+                      ) : (
+                        <>
+                          <img 
+                            src={`https://img.youtube.com/vi/${media.src}/hqdefault.jpg`}
+                            alt={media.caption}
+                            className="w-full h-full object-cover"
+                          />
+                          <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                            <Play className="w-6 h-6 text-white" />
+                          </div>
+                        </>
+                      )}
+                      <div className="absolute bottom-2 left-2 right-2">
+                        <div className="flex items-center justify-between">
+                          <div className={`px-2 py-1 rounded text-xs font-medium ${
+                            media.type === 'image' 
+                              ? 'bg-red-500/90 text-white' 
+                              : 'bg-amber-500/90 text-white'
+                          }`}>
+                            {media.type === 'image' ? 'ẢNH' : 'VIDEO'}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </button>
+                ))}
+              </div>
+
+              {/* Additional Info */}
+              <div className="bg-gradient-to-r from-gray-50 to-white rounded-2xl p-6 border border-gray-200">
+                <h4 className="font-semibold text-gray-900 mb-4">Thông tin tư liệu</h4>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-gray-600">Chất lượng:</span>
+                    <span className="font-medium text-gray-900">Độ phân giải cao</span>
+                  </div>
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-gray-600">Nguồn:</span>
+                    <span className="font-medium text-gray-900">Lưu trữ quốc gia</span>
+                  </div>
+                  <div className="flex items-center justify-between text-sm">
+                    <span className="text-gray-600">Trạng thái:</span>
+                    <span className="px-2 py-1 bg-green-100 text-green-800 rounded-full text-xs font-medium">
+                      Đã xác thực
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-        )}
+        </div>
       </div>
 
-      {/* Media Modal */}
+      {/* Fullscreen Modal */}
       {selectedMedia && (
         <div 
           className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4"
           onClick={() => setSelectedMedia(null)}
         >
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              setSelectedMedia(null);
-            }}
-            className="absolute top-4 right-4 text-white hover:text-red-300 transition-colors p-2 bg-black/50 rounded-full z-10"
-          >
-            <X className="w-6 h-6" />
-          </button>
-          
           <div 
-            className="relative max-w-6xl w-full max-h-[90vh] overflow-auto rounded-2xl bg-gray-900"
+            className="relative max-w-5xl w-full bg-black rounded-2xl overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
+            {/* Close Button */}
+            <button
+              onClick={() => setSelectedMedia(null)}
+              className="absolute top-4 right-4 z-10 p-3 bg-black/50 text-white rounded-full hover:bg-black/70 transition-colors"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            {/* Media Content */}
             {selectedMedia.type === 'image' ? (
-              <div className="flex flex-col">
-                <div className="flex-1 overflow-hidden">
-                  <img 
-                    src={selectedMedia.src} 
-                    alt={selectedMedia.caption}
-                    className="w-full h-auto max-h-[70vh] object-contain"
-                    onError={(e) => {
-                      e.currentTarget.src = "https://placehold.co/800x600/ef4444/ffffff?text=Không+thể+tải+ảnh";
-                    }}
-                  />
-                </div>
-                <div className="p-6 bg-gray-800 border-t border-gray-700">
-                  <h3 className="text-xl font-bold text-white mb-2">{selectedMedia.caption}</h3>
-                  <p className="text-gray-300 text-sm">Ảnh tư liệu lịch sử</p>
+              <div className="relative">
+                <img 
+                  src={selectedMedia.src} 
+                  alt={selectedMedia.caption}
+                  className="w-full max-h-[80vh] object-contain"
+                />
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
+                  <h3 className="text-2xl font-bold text-white mb-2">{selectedMedia.caption}</h3>
+                  <p className="text-gray-300">Ảnh tư liệu lịch sử - {selectedMedia.author}</p>
                 </div>
               </div>
             ) : (
-              <div className="flex flex-col">
-                <div className="relative aspect-video w-full">
+              <div className="relative">
+                <div className="aspect-video">
                   <iframe
                     width="100%"
                     height="100%"
@@ -512,9 +340,9 @@ export function Timeline1945() {
                     className="absolute inset-0 w-full h-full"
                   />
                 </div>
-                <div className="p-6 bg-gray-800 border-t border-gray-700">
-                  <h3 className="text-xl font-bold text-white mb-2">{selectedMedia.caption}</h3>
-                  <p className="text-gray-300 text-sm">Video tư liệu lịch sử</p>
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
+                  <h3 className="text-2xl font-bold text-white mb-2">{selectedMedia.caption}</h3>
+                  <p className="text-gray-300">Video tư liệu lịch sử - {selectedMedia.author}</p>
                 </div>
               </div>
             )}
