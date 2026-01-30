@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import  Timeline1945  from '@/components/timeline/timeline-1945';
+import { Timeline1945 } from '@/components/timeline/timeline-1945';
 import { Timeline1954 } from '@/components/timeline/timeline-1954';
 import { Timeline1975 } from '@/components/timeline/timeline-1975';
 import { Timeline1986 } from '@/components/timeline/timeline-1986';
