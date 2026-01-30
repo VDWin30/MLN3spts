@@ -696,5 +696,5 @@ const Timeline1945 = () => {
 };
 
 // EXPORT ĐÚNG CÁCH
-export { Timeline1945 };
+
 export default Timeline1945;
