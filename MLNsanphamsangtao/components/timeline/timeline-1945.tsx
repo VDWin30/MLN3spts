@@ -5,16 +5,12 @@ import { FileText, Film, Music, Calendar, Play, Image as ImageIcon } from 'lucid
 
 // --- Dữ liệu mẫu cập nhật với link thật ---
 const DATA_1945: TimelineEvent[] = [
-  {
-    date: '19/08/1945',
-    title: 'Cách Mạng Tháng Tám Thành Công',
-    content: 'Cuộc tổng khởi nghĩa giành chính quyền ở Hà Nội. Hàng vạn nhân dân ngoại thành và các tỉnh lân cận kéo về Nhà hát Lớn mít tinh, sau đó chiếm các cơ quan đầu não của chính quyền tay sai.',
-    images: [
-      { 
-        type: 'image', 
-        src: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/92/Hanoi-August1945-2.jpg/800px-Hanoi-August1945-2.jpg', 
-        caption: 'Quần chúng tham gia mít tinh ngày 19/8/1945' 
-      },
+ {
+    date: 'Giai đoạn quá độ',
+    title: 'Khái niệm “Quá độ gián tiếp” trong tư tưởng Hồ Chí Minh',
+    content: 'Trong lý luận của chủ nghĩa Mác – Lênin và được Hồ Chí Minh vận dụng sáng tạo vào điều kiện Việt Nam, quá độ gián tiếp lên chủ nghĩa xã hội là con đường phát triển từ một nước thuộc địa, nông nghiệp lạc hậu, bỏ qua việc thiết lập chế độ tư bản chủ nghĩa hoàn chỉnh để tiến lên chủ nghĩa xã hội.\n\n“Bỏ qua chế độ tư bản chủ nghĩa” không có nghĩa là phủ nhận hoàn toàn những yếu tố tiến bộ của văn minh tư bản, mà là không xây dựng một nhà nước tư sản và không để quan hệ sản xuất tư bản chủ nghĩa giữ vai trò thống trị trong xã hội. Thay vào đó, dưới sự lãnh đạo của Đảng Cộng sản, đất nước tiến hành cách mạng dân tộc dân chủ nhân dân, từng bước xây dựng nền tảng chính trị, kinh tế và xã hội để phát triển lên chủ nghĩa xã hội.',
+    images: []
+ },
       { 
         type: 'image', 
         src: 'https://upload.wikimedia.org/wikipedia/vi/thumb/9/91/C%E1%BA%A1ch_m%E1%BA%A1ng_th%C3%A1ng_T%C3%A1m.jpg/800px-C%E1%BA%A1ch_m%E1%BA%A1ng_th%C3%A1ng_T%C3%A1m.jpg', 
