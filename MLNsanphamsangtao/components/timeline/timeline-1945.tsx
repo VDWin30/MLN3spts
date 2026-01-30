@@ -9,8 +9,10 @@ const DATA_1945: TimelineEvent[] = [
     date: 'Giai đoạn quá độ',
     title: 'Khái niệm “Quá độ gián tiếp” trong tư tưởng Hồ Chí Minh',
     content: 'Trong lý luận của chủ nghĩa Mác – Lênin và được Hồ Chí Minh vận dụng sáng tạo vào điều kiện Việt Nam, quá độ gián tiếp lên chủ nghĩa xã hội là con đường phát triển từ một nước thuộc địa, nông nghiệp lạc hậu, bỏ qua việc thiết lập chế độ tư bản chủ nghĩa hoàn chỉnh để tiến lên chủ nghĩa xã hội.\n\n“Bỏ qua chế độ tư bản chủ nghĩa” không có nghĩa là phủ nhận hoàn toàn những yếu tố tiến bộ của văn minh tư bản, mà là không xây dựng một nhà nước tư sản và không để quan hệ sản xuất tư bản chủ nghĩa giữ vai trò thống trị trong xã hội. Thay vào đó, dưới sự lãnh đạo của Đảng Cộng sản, đất nước tiến hành cách mạng dân tộc dân chủ nhân dân, từng bước xây dựng nền tảng chính trị, kinh tế và xã hội để phát triển lên chủ nghĩa xã hội.',
-    images: []
- },
+    images: [], // Mảng rỗng
+    videos: [], // QUAN TRỌNG: Phải có mảng rỗng để tránh lỗi .map()
+    music: []   // QUAN TRỌNG: Phải có mảng rỗng để tránh lỗi .map()
+  },
   {
     date: '02/09/1945',
     title: 'Quốc Khánh Nước Việt Nam Dân Chủ Cộng Hòa',
