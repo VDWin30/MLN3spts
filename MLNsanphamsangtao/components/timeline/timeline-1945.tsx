@@ -232,7 +232,7 @@ Giai đoạn này tuy chưa trực tiếp xây dựng chủ nghĩa xã hội, nh
 ];
 
 // --- 2. COMPONENT CHÍNH ---
-export function Timeline1945() {
+const Timeline1945 = () => {
   const [activeTab, setActiveTab] = useState<'timeline' | 'gallery'>('timeline');
   const [selectedMedia, setSelectedMedia] = useState<MediaItem | null>(null);
   const [showAllMedia, setShowAllMedia] = useState<boolean>(false);
@@ -693,10 +693,8 @@ export function Timeline1945() {
       )}
     </div>
   );
-}
+};
 
-// ... ở cuối file timeline-1945.tsx, thêm:
-
-// Export named để hỗ trợ cả 2 cách import
+// EXPORT ĐÚNG CÁCH
 export { Timeline1945 };
 export default Timeline1945;
