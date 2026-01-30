@@ -619,5 +619,3 @@ const Timeline1945 = () => {
     </div>
   );
 };
-
-export default Timeline1945;
