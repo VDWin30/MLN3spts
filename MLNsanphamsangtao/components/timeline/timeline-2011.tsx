@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { FileText, Film, Music, Calendar, Play, Image as ImageIcon, Globe, Rocket, TrendingUp } from 'lucide-react';
+import { FileText, Film, Music, Calendar, Play, Image as ImageIcon, Book, Scale, Shield, Users, Target, Globe } from 'lucide-react';
 
 // --- 1. CẤU TRÚC DỮ LIỆU 2011 ---
 interface MediaItem {
@@ -23,29 +23,18 @@ interface TimelineEvent {
 
 const DATA_2011: TimelineEvent[] = [
   {
-    date: '12-18/01/2011',
-    title: 'Đại Hội XI - Tầm Nhìn Chiến Lược Phát Triển Đất Nước',
-    content: `Đại hội đại biểu toàn quốc lần thứ XI của Đảng (12-18/1/2011) đã thông qua "Cương lĩnh xây dựng đất nước trong thời kỳ quá độ lên chủ nghĩa xã hội (bổ sung, phát triển năm 2011)" - văn kiện chiến lược quan trọng cho giai đoạn mới.
+    date: '2011 – 2013',
+    title: 'Bối Cảnh Mới Và Yêu Cầu Đổi Mới Thể Chế',
+    content: `Năm 2011 đánh dấu thời điểm Việt Nam bước sang một giai đoạn phát triển mới của thời kỳ quá độ lên chủ nghĩa xã hội. Sau hơn 25 năm đổi mới, đất nước đã đạt được nhiều thành tựu quan trọng về kinh tế – xã hội, thoát khỏi tình trạng kém phát triển, đồng thời hội nhập ngày càng sâu rộng vào nền kinh tế thế giới.
 
-**Những định hướng chiến lược quan trọng:**
-• Mục tiêu đến năm 2020: Nước ta cơ bản trở thành nước công nghiệp theo hướng hiện đại
-• Phát triển kinh tế thị trường định hướng xã hội chủ nghĩa
-• Xây dựng nền văn hóa tiên tiến, đậm đà bản sắc dân tộc
-• Bảo đảm vững chắc quốc phòng, an ninh
-• Chủ động và tích cực hội nhập quốc tế
-• Xây dựng hệ thống chính trị vững mạnh
+Trong bối cảnh đó, theo lý luận Chủ nghĩa xã hội khoa học, khi lực lượng sản xuất phát triển ở trình độ cao hơn và các quan hệ xã hội trở nên đa dạng, phức tạp, thì việc quản lý xã hội bằng pháp luật và hoàn thiện thể chế chính trị trở thành yêu cầu tất yếu. Thực tiễn đặt ra đòi hỏi Nhà nước không chỉ điều hành kinh tế mà còn phải bảo đảm dân chủ, công bằng xã hội và ổn định chính trị.
 
-Đại hội XI đặt nền móng cho sự phát triển bứt phá của đất nước trong thập kỷ thứ hai của thế kỷ XXI.`,
+Giai đoạn 2011–2013 vì vậy được xem là giai đoạn định hình tư duy xây dựng Nhà nước pháp quyền xã hội chủ nghĩa, chuẩn bị cơ sở lý luận và thực tiễn cho những cải cách thể chế sâu rộng trong các giai đoạn tiếp theo.`,
     images: [
       { 
         type: 'image', 
-        src: 'https://dangcongsan.vn/DATA/0/2016/01/12/Dangcongsan/dhoi%20xi%20_21_39_23_741.jpg', 
-        caption: 'Khai mạc Đại hội Đảng toàn quốc lần thứ XI (12/1/2011)' 
-      },
-      { 
-        type: 'image', 
         src: 'https://media.vneconomy.vn/images/upload/2021/01/12/dai-hoi-dang-xi.jpg', 
-        caption: 'Các đại biểu tham dự Đại hội XI' 
+        caption: 'Đại hội XI (2011) - Định hướng phát triển mới của đất nước' 
       },
       { 
         type: 'image', 
@@ -58,7 +47,38 @@ const DATA_2011: TimelineEvent[] = [
         type: 'video', 
         src: 'yA7d7gBq3Pc', 
         caption: 'Phim tài liệu: Dấu ấn Đại hội XI - Tầm nhìn mới' 
+      }
+    ],
+    music: [
+      { 
+        type: 'audio', 
+        src: 'https://www.nhaccuatui.com/mh/auto/T3uV9wXeZy0a', 
+        caption: 'Đường Đến Ngày Vinh Quang', 
+        author: 'Bức Tường' 
+      }
+    ]
+  },
+  {
+    date: '2013',
+    title: 'Hiến Pháp 2013 – Nền Tảng Pháp Lý Của Nhà Nước Pháp Quyền XHCN',
+    content: `Năm 2013, Hiến pháp nước Cộng hòa xã hội chủ nghĩa Việt Nam được thông qua, đánh dấu một bước phát triển quan trọng trong quá trình hoàn thiện thể chế chính trị ở Việt Nam. Hiến pháp năm 2013 đã chính thức hiến định bản chất của Nhà nước pháp quyền xã hội chủ nghĩa Việt Nam là Nhà nước của Nhân dân, do Nhân dân và vì Nhân dân, qua đó khẳng định rõ quyền lực nhà nước thuộc về Nhân dân và được thực hiện thông qua hệ thống pháp luật.
+
+Theo quan điểm của Chủ nghĩa xã hội khoa học, Nhà nước trong thời kỳ quá độ lên chủ nghĩa xã hội không chỉ giữ vai trò là công cụ quản lý xã hội mà còn là nhân tố tổ chức, định hướng và thúc đẩy sự phát triển xã hội theo con đường xã hội chủ nghĩa. Hiến pháp năm 2013 đã cụ thể hóa vai trò đó bằng việc đề cao và bảo đảm quyền con người, quyền và nghĩa vụ cơ bản của công dân, đồng thời xác lập nguyên tắc quyền lực nhà nước là thống nhất nhưng có sự phân công, phối hợp và kiểm soát giữa các cơ quan trong bộ máy nhà nước. Bên cạnh đó, Hiến pháp cũng khẳng định vị trí trung tâm của pháp luật trong quản lý xã hội, góp phần xây dựng nền dân chủ xã hội chủ nghĩa ngày càng hoàn thiện.
+
+Với những nội dung mang tính nền tảng đó, giai đoạn 2013–2016 được xem là giai đoạn đặt cơ sở pháp lý quan trọng cho việc xây dựng và vận hành Nhà nước pháp quyền xã hội chủ nghĩa ở Việt Nam trong thời kỳ mới.`,
+    images: [
+      { 
+        type: 'image', 
+        src: 'https://media.vneconomy.vn/images/upload/2013/11/28/hien-phap-2013.jpg', 
+        caption: 'Hiến pháp 2013 - Nền tảng pháp lý của Nhà nước pháp quyền XHCN' 
       },
+      { 
+        type: 'image', 
+        src: 'https://file3.qdnd.vn/data/images/0/2013/11/28/upload_1456/quoc-hoi-thong-qua-hien-phap.jpg', 
+        caption: 'Quốc hội thông qua Hiến pháp 2013' 
+      }
+    ],
+    videos: [
       { 
         type: 'video', 
         src: 'zB8c9dCq4Qd', 
@@ -68,12 +88,6 @@ const DATA_2011: TimelineEvent[] = [
     music: [
       { 
         type: 'audio', 
-        src: 'https://www.nhaccuatui.com/mh/auto/T3uV9wXeZy0a', 
-        caption: 'Đường Đến Ngày Vinh Quang', 
-        author: 'Bức Tường' 
-      },
-      { 
-        type: 'audio', 
         src: 'https://www.nhaccuatui.com/mh/auto/U4vX0xYfAz1b', 
         caption: 'Tự Hào Đảng Cộng Sản Việt Nam', 
         author: 'Trọng Loan' 
@@ -81,47 +95,23 @@ const DATA_2011: TimelineEvent[] = [
     ]
   },
   {
-    date: '2011 - 2015',
-    title: 'Hội Nhập Sâu Rộng & Đột Phá Kinh Tế',
-    content: `Giai đoạn 2011-2015 đánh dấu sự hội nhập sâu rộng của Việt Nam vào nền kinh tế toàn cầu:
+    date: '2016 – 2020',
+    title: 'Cải Cách Bộ Máy Nhà Nước Và Phòng, Chống Tham Nhũng',
+    content: `Từ năm 2016, quá trình hoàn thiện thể chế xã hội chủ nghĩa được đẩy mạnh thông qua cải cách tổ chức bộ máy nhà nước và tăng cường phòng, chống tham nhũng. Đây là yêu cầu khách quan xuất phát từ thực tiễn phát triển kinh tế thị trường định hướng xã hội chủ nghĩa, nơi tồn tại nhiều thành phần kinh tế đan xen.
 
-**Hội nhập kinh tế quốc tế:**
-• Tham gia đàm phán Hiệp định Đối tác Toàn diện và Tiến bộ xuyên Thái Bình Dương (CPTPP)
-• Ký kết Hiệp định Thương mại tự do với EU (EVFTA)
-• Mở rộng hợp tác với các nước ASEAN và APEC
-• Thu hút mạnh mẽ đầu tư nước ngoài
+Theo lý luận CNXH khoa học, để bảo đảm bản chất xã hội chủ nghĩa, Nhà nước phải hoạt động liêm chính, hiệu lực và hiệu quả, đặt lợi ích của Nhân dân lên trên hết. Vì vậy, việc tinh gọn bộ máy, cải cách hành chính và đấu tranh chống tham nhũng không chỉ mang ý nghĩa quản lý mà còn mang ý nghĩa bảo vệ bản chất của chế độ xã hội chủ nghĩa.
 
-**Phát triển hạ tầng đột phá:**
-• Cao tốc Bắc - Nam dần hình thành
-• Các cây cầu lớn: Cầu Rồng (Đà Nẵng 2013), Cầu Nhật Tân (Hà Nội 2015)
-• Mở rộng hệ thống sân bay quốc tế
-• Phát triển các khu đô thị mới
-
-**Công nghệ và số hóa:**
-• Bùng nổ internet và điện thoại thông minh
-• Sự phát triển của các tập đoàn công nghệ Việt Nam
-• Khởi nghiệp đổi mới sáng tạo (startup) phát triển mạnh
-• Chuyển đổi số trong các lĩnh vực kinh tế - xã hội`,
+Trong giai đoạn này, vai trò của Nhà nước pháp quyền XHCN được thể hiện rõ thông qua việc tăng cường kỷ cương pháp luật, củng cố niềm tin của Nhân dân và tạo môi trường ổn định cho phát triển kinh tế – xã hội.`,
     images: [
       { 
         type: 'image', 
-        src: 'https://media.vneconomy.vn/images/upload/2020/06/08/cau-rong-da-nang.jpg', 
-        caption: 'Cầu Rồng Đà Nẵng - Biểu tượng phát triển đô thị' 
+        src: 'https://media.vneconomy.vn/images/upload/2020/12/15/cai-cach-bo-may-nha-nuoc.jpg', 
+        caption: 'Cải cách bộ máy nhà nước giai đoạn 2016-2020' 
       },
       { 
         type: 'image', 
-        src: 'https://file3.qdnd.vn/data/images/0/2018/11/12/upload_1816/cpseaport_1.jpg', 
-        caption: 'Cảng biển quốc tế - Cửa ngõ hội nhập' 
-      },
-      { 
-        type: 'image', 
-        src: 'https://media.vov.vn/sites/default/files/styles/large/public/2020-03/startup-vietnam.jpg', 
-        caption: 'Cộng đồng startup Việt Nam phát triển mạnh mẽ' 
-      },
-      { 
-        type: 'image', 
-        src: 'https://media.baodautu.vn/Images/chicuong/2020/10/12/cao-toc-bac-nam.jpg', 
-        caption: 'Hệ thống cao tốc Bắc - Nam dần hình thành' 
+        src: 'https://file3.qdnd.vn/data/images/0/2020/12/15/upload_1890/phong-chong-tham-nhung.jpg', 
+        caption: 'Đấu tranh phòng, chống tham nhũng' 
       }
     ],
     videos: [
@@ -129,11 +119,6 @@ const DATA_2011: TimelineEvent[] = [
         type: 'video', 
         src: 'aC9d8eBq5Re', 
         caption: 'Việt Nam hội nhập: Hành trình 2011-2015' 
-      },
-      { 
-        type: 'video', 
-        src: 'bD0e9fCq6Sf', 
-        caption: 'Startup Việt - Khát vọng vươn tầm thế giới' 
       }
     ],
     music: [
@@ -142,83 +127,34 @@ const DATA_2011: TimelineEvent[] = [
         src: 'https://www.nhaccuatui.com/mh/auto/V5wY1yZgBx2c', 
         caption: 'Việt Nam Ơi', 
         author: 'Minh Beta' 
-      },
-      { 
-        type: 'audio', 
-        src: 'https://www.nhaccuatui.com/mh/auto/W6xZ2zAhCy3d', 
-        caption: 'Khát Vọng Tuổi Trẻ', 
-        author: 'Vũ Hoàng' 
       }
     ]
   },
   {
-    date: '2016 - Nay',
-    title: 'Khát Vọng Phồn Vinh & Định Vị Mới Trên Trường Quốc Tế',
-    content: `Giai đoạn 2016 đến nay chứng kiến sự chuyển mình mạnh mẽ của Việt Nam:
+    date: '2021 – Nay',
+    title: 'Hoàn Thiện Nhà Nước Pháp Quyền XHCN Gắn Với Tầm Nhìn Phát Triển Dài Hạn',
+    content: `Từ năm 2021 đến nay, Việt Nam bước vào giai đoạn hoàn thiện Nhà nước pháp quyền xã hội chủ nghĩa theo hướng hiện đại, gắn với Chiến lược phát triển kinh tế – xã hội giai đoạn 2021–2030 và tầm nhìn phát triển đất nước đến năm 2045. Đây là giai đoạn thể hiện rõ sự chuyển dịch từ yêu cầu phát triển kinh tế đơn thuần sang yêu cầu phát triển toàn diện, bền vững trên nền tảng thể chế chính trị và pháp luật ngày càng hoàn thiện.
 
-**Thành tựu kinh tế - xã hội nổi bật:**
-• Duy trì tốc độ tăng trưởng kinh tế cao (6-7%/năm)
-• Quy mô GDP vượt mốc 400 tỷ USD
-• Thu nhập bình quân đầu người tăng nhanh
-• Xóa đói giảm nghèo đạt thành tựu ấn tượng
-• Chỉ số HDI không ngừng cải thiện
+Theo quan điểm của Chủ nghĩa xã hội khoa học, đây là bước phát triển tất yếu của thời kỳ quá độ lên chủ nghĩa xã hội, khi nhiệm vụ trung tâm của Nhà nước không chỉ dừng lại ở việc thúc đẩy tăng trưởng kinh tế mà còn tập trung vào hoàn thiện thể chế, phát huy dân chủ xã hội chủ nghĩa, đồng thời bảo đảm và bảo vệ quyền con người, quyền công dân. Trong bối cảnh đó, Nhà nước pháp quyền xã hội chủ nghĩa được xác định là công cụ quan trọng để tổ chức, quản lý và định hướng sự phát triển xã hội theo đúng mục tiêu xã hội chủ nghĩa.
 
-**Hội nhập và vị thế quốc tế:**
-• Chủ tịch ASEAN 2020 - Thể hiện vai trò dẫn dắt khu vực
-• Ủy viên không thường trực Hội đồng Bảo an LHQ 2020-2021
-• Tham gia sâu rộng vào chuỗi giá trị toàn cầu
-• Đối tác chiến lược với nhiều cường quốc
-
-**Công nghệ và đổi mới sáng tạo:**
-• Cách mạng công nghiệp 4.0 được đẩy mạnh
-• Phát triển hệ sinh thái số quốc gia
-• Nhiều startup Việt đạt kỳ lục gọi vốn
-• Công dân số, chính phủ số, kinh tế số phát triển
-
-**Văn hóa và thể thao:**
-• Đội tuyển bóng đá Việt Nam ghi dấu ấn mạnh mẽ
-• Văn hóa Việt lan tỏa ra thế giới
-• Du lịch phát triển thành ngành kinh tế mũi nhọn
-• Di sản văn hóa được bảo tồn và phát huy
-
-Việt Nam đang trên đà thực hiện khát vọng trở thành quốc gia phát triển, có thu nhập cao vào năm 2045.`,
+Trọng tâm của giai đoạn này được thể hiện thông qua việc xây dựng Nhà nước pháp quyền xã hội chủ nghĩa hoạt động ngày càng hiệu lực, hiệu quả; tiếp tục hoàn thiện hệ thống pháp luật theo hướng đồng bộ, thống nhất và khả thi; phát huy vai trò giám sát của Nhân dân và các tổ chức chính trị – xã hội trong quản lý nhà nước; đồng thời gắn việc thực thi pháp quyền với quá trình chuyển đổi số và hội nhập quốc tế sâu rộng. Những định hướng này tạo nền tảng chính trị – pháp lý vững chắc, góp phần đưa Việt Nam phát triển ổn định và tiến từng bước vững chắc trên con đường đi lên chủ nghĩa xã hội.`,
     images: [
       { 
         type: 'image', 
         src: 'https://media.vneconomy.vn/images/upload/2023/04/27/vietnam-economy-growth.jpg', 
-        caption: 'Kinh tế Việt Nam tăng trưởng ấn tượng' 
+        caption: 'Việt Nam 2045 - Tầm nhìn phát triển dài hạn' 
       },
       { 
         type: 'image', 
-        src: 'https://file3.qdnd.vn/data/images/0/2020/11/15/upload_2363/asean-2020-vietnam.jpg', 
-        caption: 'Việt Nam chủ tịch ASEAN 2020' 
-      },
-      { 
-        type: 'image', 
-        src: 'https://media.vov.vn/sites/default/files/styles/large/public/2019-06/vietnam-u23.jpg', 
-        caption: 'Thành công của thể thao Việt Nam trên trường quốc tế' 
-      },
-      { 
-        type: 'image', 
-        src: 'https://media.baodautu.vn/Images/chicuong/2022/12/29/digital-vietnam.jpg', 
-        caption: 'Chuyển đổi số - Động lực phát triển mới' 
+        src: 'https://file3.qdnd.vn/data/images/0/2022/12/29/upload_1987/digital-vietnam.jpg', 
+        caption: 'Chuyển đổi số và hội nhập quốc tế' 
       }
     ],
     videos: [
       { 
         type: 'video', 
-        src: 'cE1g0dDq7Tg', 
-        caption: 'Việt Nam - Hành trình phát triển thần kỳ' 
-      },
-      { 
-        type: 'video', 
         src: 'dF2h1eEq8Uh', 
         caption: 'Khát vọng Việt Nam 2045' 
-      },
-      { 
-        type: 'video', 
-        src: 'eG3i9fRq9Vi', 
-        caption: 'Thể thao Việt Nam - Niềm tự hào dân tộc' 
       }
     ],
     music: [
@@ -227,13 +163,33 @@ Việt Nam đang trên đà thực hiện khát vọng trở thành quốc gia p
         src: 'https://www.nhaccuatui.com/mh/auto/X7yA3aBiDz4e', 
         caption: 'Việt Nam Tôi Yêu', 
         author: 'Nguyễn Đức Cường' 
+      }
+    ]
+  },
+  {
+    date: 'Tổng kết',
+    title: 'Kết Luận Chung',
+    content: `Từ năm 2011 đến nay, quá trình hoàn thiện thể chế xã hội chủ nghĩa ở Việt Nam là sự tiếp nối và phát triển của con đường quá độ gián tiếp lên chủ nghĩa xã hội, phù hợp với lý luận Chủ nghĩa xã hội khoa học và điều kiện thực tiễn của đất nước. Qua từng giai đoạn, Nhà nước pháp quyền xã hội chủ nghĩa ngày càng được hoàn thiện, góp phần bảo đảm ổn định chính trị, phát triển kinh tế và nâng cao đời sống Nhân dân.`,
+    images: [
+      { 
+        type: 'image', 
+        src: 'https://media.vneconomy.vn/images/upload/2023/12/31/tong-ket-2011-2023.jpg', 
+        caption: 'Việt Nam 2011-2023: Hành trình hoàn thiện thể chế XHCN' 
       },
       { 
-        type: 'audio', 
-        src: 'https://www.nhaccuatui.com/mh/auto/Y8zB4bCjEa5f', 
-        caption: 'Hào Khí Việt Nam', 
-        author: 'Đỗ Bảo' 
-      },
+        type: 'image', 
+        src: 'https://file3.qdnd.vn/data/images/0/2023/12/31/upload_1987/nen-tang-phap-ly-vung-chac.jpg', 
+        caption: 'Nền tảng pháp lý vững chắc cho phát triển đất nước' 
+      }
+    ],
+    videos: [
+      { 
+        type: 'video', 
+        src: 'cE1g0dDq7Tg', 
+        caption: 'Việt Nam - Hành trình phát triển thần kỳ' 
+      }
+    ],
+    music: [
       { 
         type: 'audio', 
         src: 'https://www.nhaccuatui.com/mh/auto/Z9cC5dDkFb6g', 
@@ -275,7 +231,7 @@ export function Timeline2011() {
                 2011 - Nay
               </h2>
               <p className="text-lg font-semibold text-gray-700">
-                Phát Triển Bền Vững - Khát Vọng Hùng Cường
+                Hoàn Thiện Thể Chế Xã Hội Chủ Nghĩa & Xây Dựng Nhà Nước Pháp Quyền
               </p>
             </div>
           </div>
@@ -295,7 +251,7 @@ export function Timeline2011() {
           <TabBtn 
             isActive={activeTab === 'video'} 
             onClick={() => setActiveTab('video')} 
-            label="Video Phát Triển" 
+            label="Video Tư Liệu" 
             icon={<Film className="w-5 h-5" />} 
             count={allVideos.length}
           />
@@ -349,7 +305,7 @@ export function Timeline2011() {
                       <div>
                         <div className="flex items-center gap-2 mb-4 text-gray-600">
                           <ImageIcon className="w-5 h-5" />
-                          <span className="font-semibold">Hình ảnh phát triển</span>
+                          <span className="font-semibold">Hình ảnh tư liệu</span>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           {event.images.map((img, imgIdx) => (
