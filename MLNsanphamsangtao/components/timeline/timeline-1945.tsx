@@ -245,7 +245,7 @@ export function Timeline1945() {
         })}
       </div>
 
-      {/* ================= MODAL KHÔNG CẦN CUỘN - FIX HOÀN TOÀN ================= */}
+      {/* ================= MODAL LUÔN Ở GIỮA MÀN HÌNH - KHÔNG CẦN CUỘN ================= */}
       {selectedMedia && (
         <div className="fixed inset-0 z-[9999]">
           {/* OVERLAY */}
@@ -262,52 +262,44 @@ export function Timeline1945() {
             <X className="w-8 h-8" />
           </button>
 
-          {/* MAIN CONTENT */}
-          <div className="relative z-10 w-full h-full flex items-center justify-center">
-            <div className="relative w-full h-full max-w-6xl max-h-[90vh] flex flex-col mx-4 my-auto">
+          {/* MODAL CONTENT - LUÔN CĂN GIỮA MÀN HÌNH */}
+          <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 w-full max-w-5xl max-h-[85vh] px-4">
+            <div className="bg-black rounded-xl overflow-hidden shadow-2xl">
               
-              {/* VIDEO */}
+              {/* VIDEO - TỶ LỆ 16:9 */}
               {selectedMedia.type === 'video' ? (
-                <div className="flex-1 relative min-h-0">
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="w-full h-full max-w-5xl mx-auto">
-                      <div className="relative w-full pt-[56.25%]">
-                        <iframe
-                          className="absolute top-0 left-0 w-full h-full rounded-lg"
-                          src={`https://www.youtube.com/embed/${selectedMedia.src}?autoplay=1&rel=0&modestbranding=1`}
-                          title="YouTube video player"
-                          frameBorder="0"
-                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                          allowFullScreen
-                          loading="lazy"
-                        />
-                      </div>
-                    </div>
-                  </div>
+                <div className="relative w-full pt-[56.25%]">
+                  <iframe
+                    className="absolute top-0 left-0 w-full h-full"
+                    src={`https://www.youtube.com/embed/${selectedMedia.src}?autoplay=1&rel=0&modestbranding=1`}
+                    title="YouTube video player"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    loading="lazy"
+                  />
                 </div>
               ) : 
-              /* IMAGE */
+              /* IMAGE - CĂN GIỮA HOÀN TOÀN */
               (
-                <div className="flex-1 relative min-h-0">
-                  <div className="absolute inset-0 flex items-center justify-center p-2 md:p-4">
-                    <div className="w-full h-full flex items-center justify-center">
-                      <img
-                        src={selectedMedia.src}
-                        className="max-w-full max-h-full w-auto h-auto object-contain"
-                        alt={selectedMedia.caption}
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.src = 'https://via.placeholder.com/800x600/333333/cccccc?text=Không+tải+được+ảnh';
-                          target.className = 'max-w-full max-h-full w-auto h-auto object-contain opacity-60';
-                        }}
-                      />
-                    </div>
+                <div className="w-full h-full max-h-[70vh] flex items-center justify-center p-4">
+                  <div className="w-full h-full flex items-center justify-center">
+                    <img
+                      src={selectedMedia.src}
+                      className="max-w-full max-h-full object-contain"
+                      alt={selectedMedia.caption}
+                      onError={(e) => {
+                        const target = e.target as HTMLImageElement;
+                        target.src = 'https://via.placeholder.com/800x600/333333/cccccc?text=Không+tải+được+ảnh';
+                        target.className = 'max-w-full max-h-full object-contain opacity-60';
+                      }}
+                    />
                   </div>
                 </div>
               )}
 
               {/* CAPTION */}
-              <div className="flex-shrink-0 bg-gradient-to-t from-black via-black/95 to-transparent px-4 py-6">
+              <div className="bg-gradient-to-t from-black via-black/95 to-transparent px-4 py-6">
                 <div className="text-white font-semibold text-lg text-center">
                   {selectedMedia.caption}
                 </div>
