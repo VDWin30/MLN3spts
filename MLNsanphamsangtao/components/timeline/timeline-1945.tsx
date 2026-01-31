@@ -1,9 +1,9 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Play, ImageIcon, Video, X } from 'lucide-react';
+import { Play, X } from 'lucide-react';
 
-// --- CẤU TRÚC DỮ LIỆU (giữ nguyên) ---
+// --- CẤU TRÚC DỮ LIỆU ---
 interface MediaItem {
   type: 'image' | 'video';
   src: string;
@@ -142,15 +142,22 @@ Giai đoạn này tuy chưa trực tiếp xây dựng chủ nghĩa xã hội, nh
   }
 ];
 
-// --- COMPONENT CHÍNH - TRỞ VỀ GIAO DIỆN ĐƠN GIẢN BAN ĐẦU ---
+// --- COMPONENT CHÍNH - FIX MODAL HOÀN TOÀN ---
 export function Timeline1945() {
   const [selectedMedia, setSelectedMedia] = useState<MediaItem | null>(null);
 
-  /* 🔒 FIX KHÓA SCROLL TUYỆT ĐỐI */
+  /* 🔒 FIX KHÓA SCROLL TUYỆT ĐỐI VÀ ESC KEY */
   useEffect(() => {
+    const handleEscKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && selectedMedia) {
+        setSelectedMedia(null);
+      }
+    };
+
     if (selectedMedia) {
       document.documentElement.style.overflow = 'hidden';
       document.body.style.overflow = 'hidden';
+      document.addEventListener('keydown', handleEscKey);
     } else {
       document.documentElement.style.overflow = '';
       document.body.style.overflow = '';
@@ -159,6 +166,7 @@ export function Timeline1945() {
     return () => {
       document.documentElement.style.overflow = '';
       document.body.style.overflow = '';
+      document.removeEventListener('keydown', handleEscKey);
     };
   }, [selectedMedia]);
 
@@ -167,7 +175,6 @@ export function Timeline1945() {
       {/* ================= TIMELINE ĐƠN GIẢN ================= */}
       <div className="space-y-12">
         {DATA_1945.map((event, idx) => {
-          // Kiểm tra nội dung ngắn để bố trí layout
           const isShortContent = event.content.split(/\s+/).length < 150;
 
           return (
@@ -238,47 +245,66 @@ export function Timeline1945() {
         })}
       </div>
 
-      {/* ================= MODAL (FIXED) ================= */}
+      {/* ================= MODAL FIX HOÀN TOÀN ================= */}
       {selectedMedia && (
         <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
           {/* OVERLAY */}
           <div
-            className="absolute inset-0 bg-black/90"
+            className="absolute inset-0 bg-black/90 backdrop-blur-sm"
             onClick={() => setSelectedMedia(null)}
           />
 
           {/* CLOSE BUTTON */}
           <button
             onClick={() => setSelectedMedia(null)}
-            className="absolute top-4 right-4 md:top-6 md:right-6 z-20 bg-black/50 hover:bg-black/80 text-white rounded-full p-2"
+            className="absolute top-4 right-4 md:top-8 md:right-8 z-20 bg-black/70 hover:bg-black text-white rounded-full p-3 transition-all shadow-lg"
           >
             <X className="w-6 h-6 md:w-8 md:h-8" />
           </button>
 
-          {/* CONTENT CONTAINER */}
-          <div className="relative z-10 w-full max-w-6xl max-h-[90vh] flex flex-col">
-            {selectedMedia.type === 'image' ? (
-              <div className="flex-1 overflow-hidden flex items-center justify-center">
-                <img
-                  src={selectedMedia.src}
-                  className="max-h-full max-w-full object-contain"
-                  alt={selectedMedia.caption}
+          {/* MEDIA CONTAINER - CĂN GIỮA HOÀN TOÀN */}
+          <div className="relative z-10 w-full max-w-5xl max-h-[85vh] bg-black rounded-xl overflow-hidden shadow-2xl">
+            
+            {/* VIDEO - TỶ LỆ CỐ ĐỊNH 16:9 */}
+            {selectedMedia.type === 'video' ? (
+              <div className="relative w-full pt-[56.25%]"> {/* 16:9 Aspect Ratio */}
+                <iframe
+                  className="absolute top-0 left-0 w-full h-full"
+                  src={`https://www.youtube.com/embed/${selectedMedia.src}?autoplay=1&rel=0&modestbranding=1&showinfo=0`}
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                  loading="lazy"
                 />
               </div>
-            ) : (
-              <div className="relative w-full aspect-video">
-                <iframe
-                  className="absolute inset-0 w-full h-full rounded-t-xl"
-                  src={`https://www.youtube.com/embed/${selectedMedia.src}?autoplay=1`}
-                  allow="autoplay; encrypted-media"
-                  allowFullScreen
-                />
+            ) : 
+            /* IMAGE - CĂN GIỮA HOÀN TOÀN */
+            (
+              <div className="w-full h-full min-h-[300px] max-h-[70vh] flex items-center justify-center p-4 md:p-8">
+                <div className="relative w-full h-full flex items-center justify-center">
+                  <img
+                    src={selectedMedia.src}
+                    className="w-auto h-auto max-w-full max-h-full object-contain"
+                    alt={selectedMedia.caption}
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = 'https://via.placeholder.com/800x600/cccccc/666666?text=Không+tải+được+ảnh';
+                      target.className = 'w-auto h-auto max-w-full max-h-full object-contain opacity-50';
+                    }}
+                  />
+                </div>
               </div>
             )}
 
-            {/* CAPTION */}
-            <div className="bg-black text-white p-3 md:p-4 font-semibold text-sm md:text-base text-center rounded-b-xl">
-              {selectedMedia.caption}
+            {/* CAPTION - LUÔN Ở DƯỚI CÙNG */}
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/90 to-transparent pt-12 pb-4 px-4 md:px-6">
+              <div className="text-white font-semibold text-base md:text-lg text-center">
+                {selectedMedia.caption}
+              </div>
+              <div className="text-white/70 text-sm text-center mt-2">
+                {selectedMedia.type === 'image' ? 'Ảnh' : 'Video'} • Nhấn ESC hoặc click ra ngoài để đóng
+              </div>
             </div>
           </div>
         </div>
