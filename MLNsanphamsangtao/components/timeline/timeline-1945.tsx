@@ -142,7 +142,7 @@ Giai đoạn này tuy chưa trực tiếp xây dựng chủ nghĩa xã hội, nh
   }
 ];
 
-// --- COMPONENT CHÍNH - FIX MODAL HOÀN TOÀN ---
+// --- COMPONENT CHÍNH - MODAL CỐ ĐỊNH PHÍA TRÊN CÙNG ---
 export function Timeline1945() {
   const [selectedMedia, setSelectedMedia] = useState<MediaItem | null>(null);
 
@@ -245,7 +245,7 @@ export function Timeline1945() {
         })}
       </div>
 
-      {/* ================= MODAL LUÔN Ở GIỮA MÀN HÌNH - KHÔNG CẦN CUỘN ================= */}
+      {/* ================= MODAL CỐ ĐỊNH PHÍA TRÊN CÙNG - KHÔNG CẦN CUỘN ================= */}
       {selectedMedia && (
         <div className="fixed inset-0 z-[9999]">
           {/* OVERLAY */}
@@ -262,8 +262,8 @@ export function Timeline1945() {
             <X className="w-8 h-8" />
           </button>
 
-          {/* MODAL CONTENT - LUÔN CĂN GIỮA MÀN HÌNH */}
-          <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-10 w-full max-w-5xl max-h-[85vh] px-4">
+          {/* MODAL CONTENT - CỐ ĐỊNH PHÍA TRÊN CÙNG */}
+          <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-10 w-full max-w-5xl max-h-[calc(100vh-2rem)] px-4">
             <div className="bg-black rounded-xl overflow-hidden shadow-2xl">
               
               {/* VIDEO - TỶ LỆ 16:9 */}
@@ -280,9 +280,9 @@ export function Timeline1945() {
                   />
                 </div>
               ) : 
-              /* IMAGE - CĂN GIỮA HOÀN TOÀN */
+              /* IMAGE - CĂN GIỮA TRONG KHUNG */
               (
-                <div className="w-full h-full max-h-[70vh] flex items-center justify-center p-4">
+                <div className="w-full max-h-[75vh] min-h-[300px] flex items-center justify-center p-4">
                   <div className="w-full h-full flex items-center justify-center">
                     <img
                       src={selectedMedia.src}
@@ -298,7 +298,7 @@ export function Timeline1945() {
                 </div>
               )}
 
-              {/* CAPTION */}
+              {/* CAPTION - PHÍA DƯỚI */}
               <div className="bg-gradient-to-t from-black via-black/95 to-transparent px-4 py-6">
                 <div className="text-white font-semibold text-lg text-center">
                   {selectedMedia.caption}
