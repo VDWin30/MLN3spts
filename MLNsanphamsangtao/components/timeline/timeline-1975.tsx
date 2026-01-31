@@ -30,19 +30,19 @@ Chiến dịch Tây Nguyên là đòn tiến công chiến lược đầu tiên,
     images: [
       { 
         type: 'image', 
-        src: 'https://media.vov.vn/uploaded/gnnlexby/2024_03_08/bmt1_icwo.jpg', 
-        caption: 'Bộ đội tiến vào giải phóng Buôn Ma Thuột' 
+        src: 'https://cdnmedia.baotintuc.vn/2015/03/10/15/44/taynguyen4.jpg', 
+        caption: 'Bồ đội tiến đánh chiến dịch Tây Nguyên' 
       },
       { 
         type: 'image', 
-        src: 'https://media.vov.vn/uploaded/gnnlexby/2024_03_10/buon_ma_thuot_1975_2_qkoy.jpg', 
+        src: 'https://image.sggp.org.vn/w1000/Uploaded/2026/ohpohuo/2023_03_10/j3a-8878.jpg.webp', 
         caption: 'Trận đánh tại Buôn Ma Thuột' 
       }
     ],
     videos: [
       { 
         type: 'video', 
-        src: '6Xwqg7YpD7E', 
+        src: 'h98d6lr09qA', 
         caption: 'Chiến dịch Tây Nguyên 1975' 
       }
     ]
