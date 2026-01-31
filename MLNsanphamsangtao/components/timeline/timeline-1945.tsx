@@ -141,7 +141,8 @@ Giai đoạn này tuy chưa trực tiếp xây dựng chủ nghĩa xã hội, nh
     media: []
   }
 ];
-// --- COMPONENT CHÍNH - OVERLAY & MODAL CỐ ĐỊNH HOÀN TOÀN ---
+
+// --- COMPONENT CHÍNH - MODAL OVERLAY TOÀN TRANG ---
 export function Timeline1945() {
   const [selectedMedia, setSelectedMedia] = useState<MediaItem | null>(null);
 
@@ -170,102 +171,94 @@ export function Timeline1945() {
   }, [selectedMedia]);
 
   return (
-    <div className="space-y-8">
+    <>
       {/* ================= TIMELINE ĐƠN GIẢN ================= */}
-      <div className="space-y-12">
-        {DATA_1945.map((event, idx) => {
-          const isShortContent = event.content.split(/\s+/).length < 150;
+      <div className="space-y-8 relative z-0">
+        <div className="space-y-12">
+          {DATA_1945.map((event, idx) => {
+            const isShortContent = event.content.split(/\s+/).length < 150;
 
-          return (
-            <div key={idx} className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100">
-              {/* Tiêu đề sự kiện */}
-              <div className="mb-6">
-                <h3 className="text-2xl font-bold text-gray-900">
-                  {event.date} – {event.title}
-                </h3>
-              </div>
-
-              {/* Nội dung và Media */}
-              <div className={isShortContent ? 'grid grid-cols-1 lg:grid-cols-3 gap-8' : 'space-y-6'}>
-                {/* Nội dung văn bản */}
-                <div className={isShortContent ? 'lg:col-span-2' : ''}>
-                  {event.content.split('\n\n').map((p, i) => (
-                    <p key={i} className="mb-4 text-gray-700 text-lg leading-relaxed">
-                      {p}
-                    </p>
-                  ))}
+            return (
+              <div key={idx} className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 relative z-0">
+                {/* Tiêu đề sự kiện */}
+                <div className="mb-6">
+                  <h3 className="text-2xl font-bold text-gray-900">
+                    {event.date} – {event.title}
+                  </h3>
                 </div>
 
-                {/* Media */}
-                {event.media.length > 0 && (
-                  <div className="space-y-4">
-                    {event.media.map((m, i) => (
-                      <div
-                        key={i}
-                        onClick={() => setSelectedMedia(m)}
-                        className="cursor-pointer rounded-xl overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-                      >
-                        <div className="aspect-video bg-gray-100 relative">
-                          {m.type === 'image' ? (
-                            <img
-                              src={m.src}
-                              className="w-full h-full object-cover"
-                              alt={m.caption}
-                            />
-                          ) : (
-                            <>
-                              <img
-                                src={`https://img.youtube.com/vi/${m.src}/hqdefault.jpg`}
-                                className="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity"
-                                alt={m.caption}
-                              />
-                              <div className="absolute inset-0 flex items-center justify-center">
-                                <div className="w-14 h-14 bg-red-600 rounded-full flex items-center justify-center hover:scale-110 transition-transform">
-                                  <Play className="w-7 h-7 text-white ml-1" />
-                                </div>
-                              </div>
-                            </>
-                          )}
-                          {/* Badge loại media */}
-                          <div className="absolute top-3 right-3 bg-black/70 text-white text-xs px-2 py-1 rounded">
-                            {m.type === 'image' ? 'ẢNH' : 'VIDEO'}
-                          </div>
-                        </div>
-                        <div className="p-4 bg-white">
-                          <div className="font-semibold text-gray-900">{m.caption}</div>
-                        </div>
-                      </div>
+                {/* Nội dung và Media */}
+                <div className={isShortContent ? 'grid grid-cols-1 lg:grid-cols-3 gap-8' : 'space-y-6'}>
+                  {/* Nội dung văn bản */}
+                  <div className={isShortContent ? 'lg:col-span-2' : ''}>
+                    {event.content.split('\n\n').map((p, i) => (
+                      <p key={i} className="mb-4 text-gray-700 text-lg leading-relaxed">
+                        {p}
+                      </p>
                     ))}
                   </div>
-                )}
+
+                  {/* Media */}
+                  {event.media.length > 0 && (
+                    <div className="space-y-4">
+                      {event.media.map((m, i) => (
+                        <div
+                          key={i}
+                          onClick={() => setSelectedMedia(m)}
+                          className="cursor-pointer rounded-xl overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 relative z-0"
+                        >
+                          <div className="aspect-video bg-gray-100 relative">
+                            {m.type === 'image' ? (
+                              <img
+                                src={m.src}
+                                className="w-full h-full object-cover"
+                                alt={m.caption}
+                              />
+                            ) : (
+                              <>
+                                <img
+                                  src={`https://img.youtube.com/vi/${m.src}/hqdefault.jpg`}
+                                  className="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity"
+                                  alt={m.caption}
+                                />
+                                <div className="absolute inset-0 flex items-center justify-center">
+                                  <div className="w-14 h-14 bg-red-600 rounded-full flex items-center justify-center hover:scale-110 transition-transform">
+                                    <Play className="w-7 h-7 text-white ml-1" />
+                                  </div>
+                                </div>
+                              </>
+                            )}
+                            {/* Badge loại media */}
+                            <div className="absolute top-3 right-3 bg-black/70 text-white text-xs px-2 py-1 rounded">
+                              {m.type === 'image' ? 'ẢNH' : 'VIDEO'}
+                            </div>
+                          </div>
+                          <div className="p-4 bg-white">
+                            <div className="font-semibold text-gray-900">{m.caption}</div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
 
-      {/* ================= MODAL & OVERLAY CỐ ĐỊNH HOÀN TOÀN ================= */}
+      {/* ================= MODAL OVERLAY TOÀN TRANG ================= */}
       {selectedMedia && (
-        <>
-          {/* OVERLAY CỐ ĐỊNH - CHE TOÀN MÀN HÌNH */}
+        <div className="fixed inset-0 z-[9999]">
+          {/* OVERLAY CHE TOÀN BỘ TRANG */}
           <div
-            className="fixed inset-0 z-[9999] bg-black/90"
+            className="absolute inset-0 bg-black/90 backdrop-blur-sm"
             onClick={() => setSelectedMedia(null)}
           />
 
-          {/* MODAL CỐ ĐỊNH - Ở GIỮA MÀN HÌNH */}
-          <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4">
-            
-            {/* CLOSE BUTTON */}
-            <button
-              onClick={() => setSelectedMedia(null)}
-              className="absolute top-4 right-4 md:top-8 md:right-8 z-20 bg-black/70 hover:bg-black text-white rounded-full p-3 transition-all shadow-xl"
-            >
-              <X className="w-6 h-6 md:w-8 md:h-8" />
-            </button>
-
-            {/* MODAL CONTENT - CỐ ĐỊNH KÍCH THƯỚC */}
-            <div className="relative w-full max-w-4xl max-h-[85vh] bg-black rounded-xl overflow-hidden shadow-2xl">
+          {/* MODAL CỐ ĐỊNH GIỮA MÀN HÌNH */}
+          <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-[10000] w-full max-w-5xl max-h-[85vh] px-4">
+            <div className="bg-black rounded-xl overflow-hidden shadow-2xl">
               
               {/* VIDEO */}
               {selectedMedia.type === 'video' ? (
@@ -283,7 +276,7 @@ export function Timeline1945() {
               ) : 
               /* IMAGE */
               (
-                <div className="w-full h-full max-h-[70vh] flex items-center justify-center p-4">
+                <div className="w-full max-h-[70vh] min-h-[300px] flex items-center justify-center p-4">
                   <img
                     src={selectedMedia.src}
                     className="max-w-full max-h-full object-contain"
@@ -298,7 +291,7 @@ export function Timeline1945() {
               )}
 
               {/* CAPTION */}
-              <div className="bg-gradient-to-t from-black via-black/90 to-transparent px-4 py-6">
+              <div className="bg-gradient-to-t from-black via-black/95 to-transparent px-4 py-6">
                 <div className="text-white font-semibold text-lg text-center">
                   {selectedMedia.caption}
                 </div>
@@ -307,9 +300,17 @@ export function Timeline1945() {
                 </div>
               </div>
             </div>
+
+            {/* CLOSE BUTTON */}
+            <button
+              onClick={() => setSelectedMedia(null)}
+              className="absolute -top-12 right-0 md:-top-16 md:right-0 z-20 bg-black/80 hover:bg-black text-white rounded-full p-3 transition-all shadow-xl"
+            >
+              <X className="w-6 h-6 md:w-8 md:h-8" />
+            </button>
           </div>
-        </>
+        </div>
       )}
-    </div>
+    </>
   );
 }
