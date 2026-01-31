@@ -27,7 +27,7 @@ const DATA_1945: TimelineEvent[] = [
     media: [
       { 
         type: 'image', 
-        src: 'https://www.bing.com/images/search?view=detailV2&ccid=FcCiL%2bgx&id=5BE687BEC7FC06361DF7CCF53B92EADCCF1279E2&thid=OIP.FcCiL-gxZuRsIcxmsP5ZBgHaDi&mediaurl=https%3a%2f%2fmedia.baosonla.org.vn%2fUploads%2fImage52021%2fUntitled-2.jpg&cdnurl=https%3a%2f%2fth.bing.com%2fth%2fid%2fR.15c0a22fe83166e46c21cc66b0fe5906%3frik%3d4nkSz9zqkjv1zA%26pid%3dImgRaw%26r%3d0&exph=301&expw=630&q=%e1%ba%a3nh+b%c3%a1c+h%e1%bb%93+%c4%91%e1%bb%8dc+tuy%c3%aan+ng%c3%b4n+%c4%91%e1%bb%99c+l%e1%ba%adp&mode=overlay&FORM=IQFRBA&ck=F647878B0E9701538183F506DB636321&selectedIndex=0&idpp=serp&ajaxhist=0&ajaxserp=0', 
+        src: 'https://tttctt.1cdn.vn/2025/08/30/anh-1(1).jpg', 
         caption: 'Chủ tịch Hồ Chí Minh đọc Tuyên ngôn Độc lập' 
       },
       { 
