@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Play, X } from 'lucide-react';
 
 // --- CẤU TRÚC DỮ LIỆU ---
@@ -142,42 +142,27 @@ Giai đoạn này tuy chưa trực tiếp xây dựng chủ nghĩa xã hội, nh
   }
 ];
 
-// --- TRONG TIMELINE1945 COMPONENT ---
+// --- COMPONENT CHÍNH - MODAL OVERLAY CỘT PHẢI HOÀN CHỈNH ---
+interface TimelineProps {
+  containerRef?: React.RefObject<HTMLDivElement>;
+}
+
 export function Timeline1945({ containerRef }: TimelineProps) {
   const [selectedMedia, setSelectedMedia] = useState<MediaItem | null>(null);
-  const [modalPosition, setModalPosition] = useState({ top: '50%', left: '50%' });
+  const [isMobile, setIsMobile] = useState(false);
+  const modalRef = useRef<HTMLDivElement>(null);
 
-  /* 🔒 TÍNH VỊ TRÍ MODAL DỰA TRÊN CLICK */
-  const handleMediaClick = (m: MediaItem, event: React.MouseEvent) => {
-    setSelectedMedia(m);
+  /* 🔒 KIỂM TRA MOBILE */
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
     
-    // Tính toán vị trí modal để nó ở gần vị trí click
-    const timelineRect = containerRef?.current?.getBoundingClientRect();
-    const clickY = event.clientY;
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
     
-    if (timelineRect) {
-      // Modal sẽ ở 70% từ trên xuống của cột phải
-      const modalTop = Math.min(
-        Math.max(clickY - 200, timelineRect.top + 100), // Không quá cao
-        timelineRect.bottom - 400 // Không quá thấp
-      );
-      
-      const modalLeft = timelineRect.left + (timelineRect.width / 2);
-      
-      setModalPosition({
-        top: `${modalTop}px`,
-        left: `${modalLeft}px`
-      });
-    } else {
-      // Fallback: trung tâm cột phải
-      const windowWidth = window.innerWidth;
-      const leftColumnWidth = windowWidth * 0.45;
-      setModalPosition({
-        top: '50%',
-        left: `${leftColumnWidth + (windowWidth * 0.55 / 2)}px`
-      });
-    }
-  };
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   /* 🔒 FIX KHÓA SCROLL VÀ ESC KEY */
   useEffect(() => {
@@ -187,21 +172,57 @@ export function Timeline1945({ containerRef }: TimelineProps) {
       }
     };
 
+    const handleClickOutside = (event: MouseEvent) => {
+      if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+        // Chỉ đóng khi click vào overlay bên phải
+        const clickX = event.clientX;
+        const windowWidth = window.innerWidth;
+        const leftColumnWidth = windowWidth * 0.45;
+        
+        if (clickX > leftColumnWidth) {
+          setSelectedMedia(null);
+        }
+      }
+    };
+
     if (selectedMedia) {
       document.documentElement.style.overflow = 'hidden';
       document.body.style.overflow = 'hidden';
       document.addEventListener('keydown', handleEscKey);
+      document.addEventListener('mousedown', handleClickOutside);
     } else {
       document.documentElement.style.overflow = '';
       document.body.style.overflow = '';
+      document.removeEventListener('keydown', handleEscKey);
+      document.removeEventListener('mousedown', handleClickOutside);
     }
 
     return () => {
       document.documentElement.style.overflow = '';
       document.body.style.overflow = '';
       document.removeEventListener('keydown', handleEscKey);
+      document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [selectedMedia]);
+
+  /* 🔒 TÍNH VỊ TRÍ MODAL CHO ĐẸP */
+  const getModalPosition = () => {
+    if (isMobile) {
+      // Mobile: modal ở giữa màn hình
+      return {
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)'
+      };
+    }
+    
+    // Desktop: modal ở giữa cột phải, cao 70% từ trên xuống
+    return {
+      top: '70vh',
+      left: 'calc(45% + 27.5%)', // 45% + (55%/2)
+      transform: 'translate(-50%, -50%)'
+    };
+  };
 
   return (
     <>
@@ -213,53 +234,108 @@ export function Timeline1945({ containerRef }: TimelineProps) {
 
             return (
               <div key={idx} className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 relative z-0">
-                {/* ... timeline content ... */}
+                {/* Tiêu đề sự kiện */}
+                <div className="mb-6">
+                  <h3 className="text-2xl font-bold text-gray-900">
+                    {event.date} – {event.title}
+                  </h3>
+                </div>
 
-                {/* Media */}
-                {event.media.length > 0 && (
-                  <div className="space-y-4">
-                    {event.media.map((m, i) => (
-                      <div
-                        key={i}
-                        onClick={(e) => handleMediaClick(m, e)} // ← THAY ĐỔI Ở ĐÂY
-                        className="cursor-pointer rounded-xl overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 relative z-0"
-                      >
-                        {/* ... media content ... */}
-                      </div>
+                {/* Nội dung và Media */}
+                <div className={isShortContent ? 'grid grid-cols-1 lg:grid-cols-3 gap-8' : 'space-y-6'}>
+                  {/* Nội dung văn bản */}
+                  <div className={isShortContent ? 'lg:col-span-2' : ''}>
+                    {event.content.split('\n\n').map((p, i) => (
+                      <p key={i} className="mb-4 text-gray-700 text-lg leading-relaxed">
+                        {p}
+                      </p>
                     ))}
                   </div>
-                )}
+
+                  {/* Media */}
+                  {event.media.length > 0 && (
+                    <div className="space-y-4">
+                      {event.media.map((m, i) => (
+                        <div
+                          key={i}
+                          onClick={() => setSelectedMedia(m)}
+                          className="cursor-pointer rounded-xl overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 relative z-0"
+                        >
+                          <div className="aspect-video bg-gray-100 relative">
+                            {m.type === 'image' ? (
+                              <img
+                                src={m.src}
+                                className="w-full h-full object-cover"
+                                alt={m.caption}
+                              />
+                            ) : (
+                              <>
+                                <img
+                                  src={`https://img.youtube.com/vi/${m.src}/hqdefault.jpg`}
+                                  className="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity"
+                                  alt={m.caption}
+                                />
+                                <div className="absolute inset-0 flex items-center justify-center">
+                                  <div className="w-14 h-14 bg-red-600 rounded-full flex items-center justify-center hover:scale-110 transition-transform">
+                                    <Play className="w-7 h-7 text-white ml-1" />
+                                  </div>
+                                </div>
+                              </>
+                            )}
+                            {/* Badge loại media */}
+                            <div className="absolute top-3 right-3 bg-black/70 text-white text-xs px-2 py-1 rounded">
+                              {m.type === 'image' ? 'ẢNH' : 'VIDEO'}
+                            </div>
+                          </div>
+                          <div className="p-4 bg-white">
+                            <div className="font-semibold text-gray-900">{m.caption}</div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
             );
           })}
         </div>
       </div>
 
-      {/* ================= MODAL & OVERLAY ĐỒNG BỘ ================= */}
+      {/* ================= MODAL OVERLAY CỘT PHẢI HOÀN CHỈNH ================= */}
       {selectedMedia && (
         <div className="fixed inset-0 z-[9999]">
-          {/* OVERLAY CHE TOÀN BỘ MÀN HÌNH NHƯNG CỘT TRÁI TRONG SUỐT */}
+          {/* OVERLAY GRADIENT: CỘT TRÁI TRONG SUỐT, CỘT PHẢI ĐEN */}
           <div 
-            className="absolute inset-0 grid grid-cols-[45%_55%] z-[9998]"
-            onClick={() => setSelectedMedia(null)}
-          >
-            {/* Cột trái: trong suốt, click được */}
-            <div className="bg-transparent cursor-pointer" />
-            
-            {/* Cột phải: overlay đen */}
-            <div className="bg-black/90 backdrop-blur-sm" />
-          </div>
-
-          {/* MODAL NẰM TRONG OVERLAY CỘT PHẢI */}
-          <div 
-            className="fixed z-[10000]"
+            className="absolute inset-0 z-[9998]"
             style={{
-              top: modalPosition.top,
-              left: modalPosition.left,
-              transform: 'translate(-50%, -50%)'
+              background: isMobile 
+                ? 'rgba(0, 0, 0, 0.95)' // Mobile: che toàn màn hình
+                : `linear-gradient(to right, 
+                    rgba(0, 0, 0, 0) 0%,
+                    rgba(0, 0, 0, 0) 45%,
+                    rgba(0, 0, 0, 0.95) 45%,
+                    rgba(0, 0, 0, 0.95) 100%
+                  )`
             }}
+            onClick={(e) => {
+              const clickX = e.clientX;
+              const windowWidth = window.innerWidth;
+              const leftColumnWidth = windowWidth * 0.45;
+              
+              // Chỉ đóng khi click vào overlay bên phải (hoặc toàn bộ trên mobile)
+              if (isMobile || clickX > leftColumnWidth) {
+                setSelectedMedia(null);
+              }
+            }}
+          />
+
+          {/* MODAL CONTENT */}
+          <div 
+            ref={modalRef}
+            className="fixed z-[10000]"
+            style={getModalPosition()}
           >
-            <div className="w-full max-w-4xl max-h-[70vh] bg-black rounded-xl overflow-hidden shadow-2xl">
+            <div className="w-full max-w-4xl max-h-[80vh] bg-black rounded-xl overflow-hidden shadow-2xl">
               
               {/* VIDEO */}
               {selectedMedia.type === 'video' ? (
@@ -277,7 +353,7 @@ export function Timeline1945({ containerRef }: TimelineProps) {
               ) : 
               /* IMAGE */
               (
-                <div className="w-full max-h-[60vh] min-h-[300px] flex items-center justify-center p-4">
+                <div className="w-full max-h-[70vh] min-h-[300px] flex items-center justify-center p-4">
                   <img
                     src={selectedMedia.src}
                     className="max-w-full max-h-full object-contain"
@@ -297,7 +373,7 @@ export function Timeline1945({ containerRef }: TimelineProps) {
                   {selectedMedia.caption}
                 </div>
                 <div className="text-white/70 text-sm text-center mt-2">
-                  {selectedMedia.type === 'image' ? 'Ảnh' : 'Video'} • Nhấn ESC để đóng
+                  {selectedMedia.type === 'image' ? 'Ảnh' : 'Video'} • {isMobile ? 'Chạm ra ngoài' : 'Click bên phải'} để đóng
                 </div>
               </div>
             </div>
