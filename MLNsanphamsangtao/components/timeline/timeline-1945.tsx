@@ -24,18 +24,7 @@ const DATA_1945: TimelineEvent[] = [
     content: `Trong lý luận của chủ nghĩa Mác – Lênin và được Hồ Chí Minh vận dụng sáng tạo vào điều kiện Việt Nam, quá độ gián tiếp lên chủ nghĩa xã hội là con đường phát triển từ một nước thuộc địa, nông nghiệp lạc hậu, bỏ qua việc thiết lập chế độ tư bản chủ nghĩa hoàn chỉnh để tiến lên chủ nghĩa xã hội.
 
 "Bỏ qua chế độ tư bản chủ nghĩa" không có nghĩa là phủ nhận hoàn toàn những yếu tố tiến bộ của văn minh tư bản, mà là không xây dựng một nhà nước tư sản và không để quan hệ sản xuất tư bản chủ nghĩa giữ vai trò thống trị trong xã hội. Thay vào đó, dưới sự lãnh đạo của Đảng Cộng sản, đất nước tiến hành cách mạng dân tộc dân chủ nhân dân, từng bước xây dựng nền tảng chính trị, kinh tế và xã hội để phát triển lên chủ nghĩa xã hội.`,
-    media: [
-      { 
-        type: 'image', 
-        src: 'https://tttctt.1cdn.vn/2025/08/30/anh-1(1).jpg', 
-        caption: 'Chủ tịch Hồ Chí Minh đọc Tuyên ngôn Độc lập' 
-      },
-      { 
-        type: 'video', 
-        src: 'uJhb_5wr4yc', 
-        caption: 'Bác Hồ Lễ Tuyên ngôn Độc lập 2/9/1945' 
-      }
-    ]
+    media: []
   },
   {
     date: '02/09/1945',
@@ -46,18 +35,13 @@ Ngay sau khi giành chính quyền, Hồ Chí Minh xác định nhiệm vụ tru
     media: [
       { 
         type: 'image', 
-        src: 'https://media.vneconomy.vn/images/upload/2021/09/02/ho-chi-minh-doc-tuyen-ngon.jpg', 
+        src: 'https://tttctt.1cdn.vn/2025/08/30/anh-1(1).jpg', 
         caption: 'Chủ tịch Hồ Chí Minh đọc Tuyên ngôn Độc lập tại Ba Đình' 
       },
       { 
-        type: 'image', 
-        src: 'https://media.vneconomy.vn/images/upload/2021/09/02/ba-dinh-1945.jpg', 
-        caption: 'Quảng trường Ba Đình ngày 2/9/1945' 
-      },
-      { 
         type: 'video', 
-        src: 'dQw4w9WgXcQ', 
-        caption: 'Toàn cảnh Lễ Tuyên ngôn Độc lập 2/9/1945' 
+        src: 'uJhb_5wr4yc', 
+        caption: 'Lễ Tuyên ngôn Độc lập 2/9/1945' 
       }
     ]
   }
