@@ -141,8 +141,7 @@ Giai đoạn này tuy chưa trực tiếp xây dựng chủ nghĩa xã hội, nh
     media: []
   }
 ];
-
-// --- COMPONENT CHÍNH - MODAL CỐ ĐỊNH PHÍA TRÊN CÙNG ---
+// --- COMPONENT CHÍNH - FIX OVERLAY KHÔNG THEO TIMELINE ---
 export function Timeline1945() {
   const [selectedMedia, setSelectedMedia] = useState<MediaItem | null>(null);
 
@@ -245,28 +244,28 @@ export function Timeline1945() {
         })}
       </div>
 
-      {/* ================= MODAL CỐ ĐỊNH PHÍA TRÊN CÙNG - KHÔNG CẦN CUỘN ================= */}
+      {/* ================= MODAL FIX - OVERLAY CỐ ĐỊNH VIEWPORT ================= */}
       {selectedMedia && (
-        <div className="fixed inset-0 z-[9999]">
-          {/* OVERLAY */}
+        <div className="fixed inset-0 z-[9999] flex flex-col">
+          {/* OVERLAY FIXED - CHỈ CHE PHẦN NHÌN THẤY */}
           <div
-            className="absolute inset-0 bg-black/95 backdrop-blur-sm"
+            className="fixed inset-0 bg-black/95 backdrop-blur-sm"
             onClick={() => setSelectedMedia(null)}
           />
 
           {/* CLOSE BUTTON */}
           <button
             onClick={() => setSelectedMedia(null)}
-            className="absolute top-6 right-6 z-20 bg-black/80 hover:bg-black text-white rounded-full p-3 transition-all shadow-xl"
+            className="fixed top-6 right-6 z-20 bg-black/80 hover:bg-black text-white rounded-full p-3 transition-all shadow-xl"
           >
             <X className="w-8 h-8" />
           </button>
 
-          {/* MODAL CONTENT - CỐ ĐỊNH PHÍA TRÊN CÙNG */}
-          <div className="absolute top-4 left-1/2 transform -translate-x-1/2 z-10 w-full max-w-5xl max-h-[calc(100vh-2rem)] px-4">
+          {/* MODAL CONTENT - CỐ ĐỊNH VIEWPORT */}
+          <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-10 w-full max-w-5xl max-h-[90vh] px-4">
             <div className="bg-black rounded-xl overflow-hidden shadow-2xl">
               
-              {/* VIDEO - TỶ LỆ 16:9 */}
+              {/* VIDEO */}
               {selectedMedia.type === 'video' ? (
                 <div className="relative w-full pt-[56.25%]">
                   <iframe
@@ -280,7 +279,7 @@ export function Timeline1945() {
                   />
                 </div>
               ) : 
-              /* IMAGE - CĂN GIỮA TRONG KHUNG */
+              /* IMAGE */
               (
                 <div className="w-full max-h-[75vh] min-h-[300px] flex items-center justify-center p-4">
                   <div className="w-full h-full flex items-center justify-center">
@@ -298,7 +297,7 @@ export function Timeline1945() {
                 </div>
               )}
 
-              {/* CAPTION - PHÍA DƯỚI */}
+              {/* CAPTION */}
               <div className="bg-gradient-to-t from-black via-black/95 to-transparent px-4 py-6">
                 <div className="text-white font-semibold text-lg text-center">
                   {selectedMedia.caption}
