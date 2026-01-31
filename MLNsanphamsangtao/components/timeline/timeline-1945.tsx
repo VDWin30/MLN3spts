@@ -157,7 +157,20 @@ export function Timeline1945() {
   );
 
   const featuredMedia = allMedia.slice(0, 8);
+ useEffect(() => {
+    if (selectedMedia) {
+      document.body.style.overflow = 'hidden';
+      document.body.style.paddingRight = '15px';
+    } else {
+      document.body.style.overflow = '';
+      document.body.style.paddingRight = '';
+    }
 
+    return () => {
+      document.body.style.overflow = '';
+      document.body.style.paddingRight = '';
+    };
+  }, [selectedMedia]);
   // Hàm kiểm tra nội dung ngắn
   const isShortContent = (content: string) => {
     const wordCount = content.split(/\s+/).length;
