@@ -141,7 +141,7 @@ Giai đoạn này tuy chưa trực tiếp xây dựng chủ nghĩa xã hội, nh
     media: []
   }
 ];
-// --- COMPONENT CHÍNH - FIX OVERLAY KHÔNG THEO TIMELINE ---
+// --- COMPONENT CHÍNH - OVERLAY & MODAL CỐ ĐỊNH HOÀN TOÀN ---
 export function Timeline1945() {
   const [selectedMedia, setSelectedMedia] = useState<MediaItem | null>(null);
 
@@ -244,26 +244,28 @@ export function Timeline1945() {
         })}
       </div>
 
-      {/* ================= MODAL FIX - OVERLAY CỐ ĐỊNH VIEWPORT ================= */}
+      {/* ================= MODAL & OVERLAY CỐ ĐỊNH HOÀN TOÀN ================= */}
       {selectedMedia && (
-        <div className="fixed inset-0 z-[9999] flex flex-col">
-          {/* OVERLAY FIXED - CHỈ CHE PHẦN NHÌN THẤY */}
+        <>
+          {/* OVERLAY CỐ ĐỊNH - CHE TOÀN MÀN HÌNH */}
           <div
-            className="fixed inset-0 bg-black/95 backdrop-blur-sm"
+            className="fixed inset-0 z-[9999] bg-black/90"
             onClick={() => setSelectedMedia(null)}
           />
 
-          {/* CLOSE BUTTON */}
-          <button
-            onClick={() => setSelectedMedia(null)}
-            className="fixed top-6 right-6 z-20 bg-black/80 hover:bg-black text-white rounded-full p-3 transition-all shadow-xl"
-          >
-            <X className="w-8 h-8" />
-          </button>
+          {/* MODAL CỐ ĐỊNH - Ở GIỮA MÀN HÌNH */}
+          <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4">
+            
+            {/* CLOSE BUTTON */}
+            <button
+              onClick={() => setSelectedMedia(null)}
+              className="absolute top-4 right-4 md:top-8 md:right-8 z-20 bg-black/70 hover:bg-black text-white rounded-full p-3 transition-all shadow-xl"
+            >
+              <X className="w-6 h-6 md:w-8 md:h-8" />
+            </button>
 
-          {/* MODAL CONTENT - CỐ ĐỊNH VIEWPORT */}
-          <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-10 w-full max-w-5xl max-h-[90vh] px-4">
-            <div className="bg-black rounded-xl overflow-hidden shadow-2xl">
+            {/* MODAL CONTENT - CỐ ĐỊNH KÍCH THƯỚC */}
+            <div className="relative w-full max-w-4xl max-h-[85vh] bg-black rounded-xl overflow-hidden shadow-2xl">
               
               {/* VIDEO */}
               {selectedMedia.type === 'video' ? (
@@ -281,24 +283,22 @@ export function Timeline1945() {
               ) : 
               /* IMAGE */
               (
-                <div className="w-full max-h-[75vh] min-h-[300px] flex items-center justify-center p-4">
-                  <div className="w-full h-full flex items-center justify-center">
-                    <img
-                      src={selectedMedia.src}
-                      className="max-w-full max-h-full object-contain"
-                      alt={selectedMedia.caption}
-                      onError={(e) => {
-                        const target = e.target as HTMLImageElement;
-                        target.src = 'https://via.placeholder.com/800x600/333333/cccccc?text=Không+tải+được+ảnh';
-                        target.className = 'max-w-full max-h-full object-contain opacity-60';
-                      }}
-                    />
-                  </div>
+                <div className="w-full h-full max-h-[70vh] flex items-center justify-center p-4">
+                  <img
+                    src={selectedMedia.src}
+                    className="max-w-full max-h-full object-contain"
+                    alt={selectedMedia.caption}
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = 'https://via.placeholder.com/800x600/333333/cccccc?text=Không+tải+được+ảnh';
+                      target.className = 'max-w-full max-h-full object-contain opacity-60';
+                    }}
+                  />
                 </div>
               )}
 
               {/* CAPTION */}
-              <div className="bg-gradient-to-t from-black via-black/95 to-transparent px-4 py-6">
+              <div className="bg-gradient-to-t from-black via-black/90 to-transparent px-4 py-6">
                 <div className="text-white font-semibold text-lg text-center">
                   {selectedMedia.caption}
                 </div>
@@ -308,7 +308,7 @@ export function Timeline1945() {
               </div>
             </div>
           </div>
-        </div>
+        </>
       )}
     </div>
   );
