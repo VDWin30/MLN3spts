@@ -158,39 +158,19 @@ export function Timeline1945() {
 
   const featuredMedia = allMedia.slice(0, 8);
 
-  // 🔒 FIX KHÓA SCROLL TOÀN DIỆN (BODY + HTML + SCROLL CONTAINER)
+ /* 🔒 FIX KHÓA SCROLL TUYỆT ĐỐI */
   useEffect(() => {
-    const scrollContainer = document.getElementById('main-scroll-container');
-
     if (selectedMedia) {
-      const scrollbarWidth =
-        window.innerWidth - document.documentElement.clientWidth;
-
-      document.body.style.overflow = 'hidden';
-      document.body.style.paddingRight = `${scrollbarWidth}px`;
       document.documentElement.style.overflow = 'hidden';
-
-      if (scrollContainer) {
-        scrollContainer.style.overflow = 'hidden';
-      }
+      document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = '';
-      document.body.style.paddingRight = '';
       document.documentElement.style.overflow = '';
-
-      if (scrollContainer) {
-        scrollContainer.style.overflow = '';
-      }
+      document.body.style.overflow = '';
     }
 
     return () => {
-      document.body.style.overflow = '';
-      document.body.style.paddingRight = '';
       document.documentElement.style.overflow = '';
-
-      if (scrollContainer) {
-        scrollContainer.style.overflow = '';
-      }
+      document.body.style.overflow = '';
     };
   }, [selectedMedia]);
 
@@ -199,7 +179,7 @@ export function Timeline1945() {
 
   return (
     <div className="space-y-8">
-      {/* TAB */}
+      {/* ================= TAB ================= */}
       <div className="flex gap-2">
         <button
           onClick={() => setActiveTab('timeline')}
@@ -219,11 +199,11 @@ export function Timeline1945() {
               : 'bg-white border'
           }`}
         >
-          Thư viện tư liệu
+          Thư viện
         </button>
       </div>
 
-      {/* TIMELINE */}
+      {/* ================= TIMELINE ================= */}
       {activeTab === 'timeline' && (
         <div className="space-y-12">
           {DATA_1945.map((event, idx) => {
@@ -256,7 +236,7 @@ export function Timeline1945() {
                         <div
                           key={i}
                           onClick={() => setSelectedMedia(m)}
-                          className="cursor-pointer rounded-xl overflow-hidden border hover:shadow-lg transition"
+                          className="cursor-pointer rounded-xl overflow-hidden border hover:shadow-lg"
                         >
                           <div className="aspect-video bg-gray-100 relative">
                             {m.type === 'image' ? (
@@ -288,21 +268,18 @@ export function Timeline1945() {
         </div>
       )}
 
-      {/* GALLERY */}
+      {/* ================= GALLERY ================= */}
       {activeTab === 'gallery' && (
         <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-6">
           {(showAllMedia ? allMedia : featuredMedia).map((m, i) => (
             <div
               key={i}
               onClick={() => setSelectedMedia(m)}
-              className="cursor-pointer rounded-xl overflow-hidden border hover:shadow-xl transition"
+              className="cursor-pointer rounded-xl overflow-hidden border hover:shadow-xl"
             >
               <div className="aspect-video bg-gray-100 relative">
                 {m.type === 'image' ? (
-                  <img
-                    src={m.src}
-                    className="w-full h-full object-cover"
-                  />
+                  <img src={m.src} className="w-full h-full object-cover" />
                 ) : (
                   <>
                     <img
@@ -319,44 +296,44 @@ export function Timeline1945() {
         </div>
       )}
 
-      {/* MODAL */}
+      {/* ================= MODAL (FIXED) ================= */}
       {selectedMedia && (
-        <div
-          className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
-          onClick={() => setSelectedMedia(null)}
-        >
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              setSelectedMedia(null);
-            }}
-            className="absolute top-6 right-6 text-white"
-          >
-            <X className="w-8 h-8" />
-          </button>
-
+        <div className="fixed inset-0 z-[9999]">
+          {/* OVERLAY */}
           <div
-            onClick={(e) => e.stopPropagation()}
-            className="w-full max-w-6xl bg-black rounded-xl overflow-hidden"
-          >
-            {selectedMedia.type === 'image' ? (
-              <img
-                src={selectedMedia.src}
-                className="max-h-[80vh] w-full object-contain"
-              />
-            ) : (
-              <div className="relative pt-[56.25%]">
-                <iframe
-                  className="absolute inset-0 w-full h-full"
-                  src={`https://www.youtube.com/embed/${selectedMedia.src}?autoplay=1`}
-                  allow="autoplay; encrypted-media"
-                  allowFullScreen
-                />
-              </div>
-            )}
+            className="absolute inset-0 bg-black/90"
+            onClick={() => setSelectedMedia(null)}
+          />
 
-            <div className="p-4 text-white font-semibold">
-              {selectedMedia.caption}
+          {/* CONTENT */}
+          <div className="relative z-10 flex items-center justify-center w-full h-full p-4">
+            <button
+              onClick={() => setSelectedMedia(null)}
+              className="absolute top-6 right-6 text-white z-20"
+            >
+              <X className="w-8 h-8" />
+            </button>
+
+            <div className="w-full max-w-6xl bg-black rounded-xl overflow-hidden">
+              {selectedMedia.type === 'image' ? (
+                <img
+                  src={selectedMedia.src}
+                  className="max-h-[80vh] w-full object-contain"
+                />
+              ) : (
+                <div className="relative pt-[56.25%]">
+                  <iframe
+                    className="absolute inset-0 w-full h-full"
+                    src={`https://www.youtube.com/embed/${selectedMedia.src}?autoplay=1`}
+                    allow="autoplay; encrypted-media"
+                    allowFullScreen
+                  />
+                </div>
+              )}
+
+              <div className="p-4 text-white font-semibold">
+                {selectedMedia.caption}
+              </div>
             </div>
           </div>
         </div>
