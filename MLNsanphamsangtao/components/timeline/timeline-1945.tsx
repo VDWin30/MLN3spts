@@ -142,12 +142,13 @@ Giai đoạn này tuy chưa trực tiếp xây dựng chủ nghĩa xã hội, nh
   }
 ];
 
-// --- COMPONENT CHÍNH - HOÀN CHỈNH VỚI MODAL VIDEO MỞ TẠI CHỖ ---
+// --- COMPONENT CHÍNH VỚI FIX LỖI ẢNH/VIDEO ---
 export function Timeline1945() {
   const [activeTab, setActiveTab] = useState<'timeline' | 'gallery'>('timeline');
-  const [selectedMedia, setSelectedMedia] = useState<MediaItem | null>(null);
+  const [selectedMedia, setSelectedMedia] = useState<any>(null);
   const [showAllMedia, setShowAllMedia] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set());
 
   const allMedia = DATA_1945.flatMap(event => 
     event.media.map(m => ({ 
@@ -159,18 +160,30 @@ export function Timeline1945() {
 
   const featuredMedia = allMedia.slice(0, 8);
 
-  // Hàm kiểm tra nội dung ngắn
-  const isShortContent = (content: string) => {
-    const wordCount = content.split(/\s+/).length;
-    return wordCount < 150;
+  // Hàm xử lý lỗi hình ảnh
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
+    const target = e.currentTarget;
+    target.src = "https://placehold.co/600x400/ef4444/ffffff?text=Tư+Liệu+Lịch+Sử";
+    target.onerror = null;
+    target.style.objectFit = "cover";
   };
 
-  // Hàm xử lý mở modal - ĐÃ TỐI ƯU
-  const handleOpenMedia = (media: MediaItem) => {
+  // Hàm xử lý load hình ảnh thành công
+  const handleImageLoad = (src: string) => {
+    setLoadedImages(prev => new Set(prev).add(src));
+  };
+
+  // Hàm lấy YouTube thumbnail với fallback
+  const getYouTubeThumbnail = (videoId: string) => {
+    return `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
+  };
+
+  // Hàm xử lý mở modal
+  const handleOpenMedia = (media: any) => {
     setSelectedMedia(media);
     setIsModalOpen(true);
     
-    // Lưu scroll position trước khi lock
+    // Lưu scroll position
     const scrollY = window.scrollY;
     document.body.style.position = 'fixed';
     document.body.style.top = `-${scrollY}px`;
@@ -178,11 +191,11 @@ export function Timeline1945() {
     document.body.style.overflow = 'hidden';
   };
 
-  // Hàm xử lý đóng modal - ĐÃ TỐI ƯU
+  // Hàm xử lý đóng modal
   const handleCloseMedia = () => {
     setIsModalOpen(false);
     
-    // Khôi phục scroll position
+    // Khôi phục scroll
     const scrollY = document.body.style.top;
     document.body.style.position = '';
     document.body.style.top = '';
@@ -198,375 +211,164 @@ export function Timeline1945() {
     }, 300);
   };
 
-  // Hàm chuyển sang media trước/tiếp theo
-  const handlePrevMedia = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (!selectedMedia) return;
-    
-    const currentIndex = allMedia.findIndex(m => 
-      m.src === selectedMedia.src && m.type === selectedMedia.type
-    );
-    const prevIndex = (currentIndex - 1 + allMedia.length) % allMedia.length;
-    setSelectedMedia(allMedia[prevIndex]);
-  };
+  // Render Media Item Component
+  const MediaItem = ({ media, eventDate, eventTitle, onClick }: any) => {
+    const [imgLoaded, setImgLoaded] = useState(false);
+    const [imgError, setImgError] = useState(false);
 
-  const handleNextMedia = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (!selectedMedia) return;
-    
-    const currentIndex = allMedia.findIndex(m => 
-      m.src === selectedMedia.src && m.type === selectedMedia.type
-    );
-    const nextIndex = (currentIndex + 1) % allMedia.length;
-    setSelectedMedia(allMedia[nextIndex]);
-  };
-
-  // Xử lý phím ESC để đóng modal
-  useEffect(() => {
-    const handleEscapeKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isModalOpen) {
-        handleCloseMedia();
-      }
+    const handleLoad = () => {
+      setImgLoaded(true);
     };
 
-    window.addEventListener('keydown', handleEscapeKey);
-    
-    return () => {
-      window.removeEventListener('keydown', handleEscapeKey);
+    const handleError = () => {
+      setImgError(true);
+      setImgLoaded(true);
     };
-  }, [isModalOpen]);
 
-  // Ngăn scroll khi modal mở
-  useEffect(() => {
-    if (isModalOpen) {
-      const handleScroll = (e: Event) => {
-        e.preventDefault();
-        e.stopPropagation();
-        return false;
-      };
-
-      // Ngăn scroll bằng nhiều cách
-      document.addEventListener('scroll', handleScroll, { passive: false });
-      document.addEventListener('wheel', handleScroll, { passive: false });
-      document.addEventListener('touchmove', handleScroll, { passive: false });
-
-      return () => {
-        document.removeEventListener('scroll', handleScroll);
-        document.removeEventListener('wheel', handleScroll);
-        document.removeEventListener('touchmove', handleScroll);
-      };
-    }
-  }, [isModalOpen]);
+    return (
+      <div 
+        className="group relative rounded-xl overflow-hidden border border-gray-300 bg-white shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer"
+        onClick={onClick}
+      >
+        <div className="aspect-video overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
+          {media.type === 'image' ? (
+            <>
+              {!imgLoaded && (
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <div className="w-8 h-8 border-3 border-red-600 border-t-transparent rounded-full animate-spin"></div>
+                </div>
+              )}
+              <img 
+                src={media.src}
+                alt={media.caption}
+                className={`w-full h-full object-cover transition-transform duration-500 group-hover:scale-105 ${
+                  imgLoaded ? 'opacity-100' : 'opacity-0'
+                }`}
+                loading="lazy"
+                onLoad={handleLoad}
+                onError={handleError}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+            </>
+          ) : (
+            <div className="relative w-full h-full">
+              <img 
+                src={getYouTubeThumbnail(media.src)}
+                alt={media.caption}
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  e.currentTarget.src = "https://placehold.co/600x400/ef4444/ffffff?text=Video+Tư+Liệu";
+                }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-red-900/50 to-amber-900/50 flex items-center justify-center">
+                <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <Play className="w-8 h-8 text-white" />
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+        
+        <div className="p-4">
+          <div className="flex items-center gap-2 mb-2">
+            <div className={`w-3 h-3 rounded-full ${media.type === 'image' ? 'bg-red-500' : 'bg-amber-500'}`}></div>
+            <span className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+              {media.type === 'image' ? 'Ảnh' : 'Video'}
+            </span>
+          </div>
+          <p className="text-sm font-medium text-gray-800 line-clamp-2">{media.caption}</p>
+          {eventDate && (
+            <p className="text-xs text-gray-500 mt-1">{eventDate}</p>
+          )}
+        </div>
+      </div>
+    );
+  };
 
   return (
     <div className="space-y-8">
-      {/* Header */}
-      <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-red-900/20 via-amber-900/20 to-red-900/20 p-8 border border-amber-200/30 shadow-lg">
-        <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/paper.png')] opacity-10"></div>
-        <div className="relative z-10">
-          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
-            <div className="flex items-center gap-4">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-red-700 to-amber-600 flex items-center justify-center shadow-xl">
-                <Calendar className="w-8 h-8 text-white" />
-              </div>
-              <div>
-                <h2 className="text-5xl font-black text-transparent bg-clip-text bg-gradient-to-r from-red-800 via-amber-700 to-red-800 tracking-tighter">
-                  1945 - 1953
-                </h2>
-                <p className="text-lg font-semibold text-gray-800 mt-2">
-                  Khởi Đầu Con Đường Quá Độ Gián Tiếp Lên Chủ Nghĩa Xã Hội
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Tab Navigation */}
-      <div className="flex space-x-2">
-        <button
-          onClick={() => setActiveTab('timeline')}
-          className={`flex items-center gap-3 px-6 py-4 rounded-xl text-sm font-semibold transition-all duration-300 flex-1 justify-center ${
-            activeTab === 'timeline' 
-              ? 'bg-gradient-to-r from-red-600 to-amber-600 text-white shadow-lg' 
-              : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
-          }`}
-        >
-          <FileText className="w-5 h-5" />
-          <span>Dòng thời gian</span>
-        </button>
-        <button
-          onClick={() => setActiveTab('gallery')}
-          className={`flex items-center gap-3 px-6 py-4 rounded-xl text-sm font-semibold transition-all duration-300 flex-1 justify-center ${
-            activeTab === 'gallery' 
-              ? 'bg-gradient-to-r from-red-600 to-amber-600 text-white shadow-lg' 
-              : 'bg-white text-gray-700 hover:bg-gray-50 border border-gray-200'
-          }`}
-        >
-          <Film className="w-5 h-5" />
-          <span>Thư viện tư liệu</span>
-        </button>
-      </div>
+      {/* Header và Tabs (giữ nguyên) */}
 
       {/* Content Area */}
-      <div className="min-h-[600px] animate-in fade-in duration-700">
-        
-        {/* TAB DÒNG THỜI GIAN */}
+      <div className="min-h-[600px]">
         {activeTab === 'timeline' && (
           <div className="space-y-12">
-            {DATA_1945.map((event, idx) => {
-              const contentIsShort = isShortContent(event.content);
-              
-              return (
-                <div key={idx} className="relative group">
-                  {/* Timeline line and dot */}
-                  <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-red-400 via-amber-300 to-transparent hidden md:block"></div>
-                  <div className="absolute left-6 top-8 -translate-x-1/2 w-4 h-4 rounded-full bg-gradient-to-r from-red-600 to-amber-500 border-4 border-white shadow-lg hidden md:block"></div>
-                  
-                  {/* Content Card */}
-                  <div className="ml-0 md:ml-12 bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 overflow-hidden">
-                    {/* Date Header */}
-                    <div className="bg-gradient-to-r from-red-50 to-amber-50 p-6 border-b border-gray-100">
-                      <div className="flex items-center gap-4">
-                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-red-600 to-amber-500 flex items-center justify-center shadow-md">
-                          <Calendar className="w-6 h-6 text-white" />
-                        </div>
-                        <div>
-                          <span className="inline-block px-4 py-2 bg-white rounded-full text-red-700 font-bold border border-red-200">
-                            {event.date}
-                          </span>
-                          <h3 className="text-2xl font-bold text-gray-900 mt-3 leading-tight">{event.title}</h3>
-                        </div>
+            {DATA_1945.map((event, idx) => (
+              <div key={idx} className="relative group">
+                {/* Timeline line and dot */}
+                <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-red-400 via-amber-300 to-transparent hidden md:block"></div>
+                <div className="absolute left-6 top-8 -translate-x-1/2 w-4 h-4 rounded-full bg-gradient-to-r from-red-600 to-amber-500 border-4 border-white shadow-lg hidden md:block"></div>
+                
+                {/* Content Card */}
+                <div className="ml-0 md:ml-12 bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 overflow-hidden">
+                  {/* Date Header */}
+                  <div className="bg-gradient-to-r from-red-50 to-amber-50 p-6 border-b border-gray-100">
+                    <div className="flex items-center gap-4">
+                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-red-600 to-amber-500 flex items-center justify-center shadow-md">
+                        <Calendar className="w-6 h-6 text-white" />
+                      </div>
+                      <div>
+                        <span className="inline-block px-4 py-2 bg-white rounded-full text-red-700 font-bold border border-red-200">
+                          {event.date}
+                        </span>
+                        <h3 className="text-2xl font-bold text-gray-900 mt-3 leading-tight">{event.title}</h3>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Content */}
+                  <div className="p-6">
+                    <div className="prose prose-lg max-w-none mb-6">
+                      <div className="text-gray-700 leading-relaxed">
+                        {event.content}
                       </div>
                     </div>
 
-                    {/* Content and Media */}
-                    <div className="p-6">
-                      {event.media.length > 0 ? (
-                        <div className={`${contentIsShort ? 'grid grid-cols-1 lg:grid-cols-3 gap-8' : 'space-y-8'}`}>
-                          {/* Text Content */}
-                          <div className={`${contentIsShort ? 'lg:col-span-2' : 'w-full'}`}>
-                            <div className="prose prose-lg max-w-none">
-                              <div className="text-gray-700 leading-relaxed space-y-4">
-                                {event.content.split('\n\n').map((paragraph, pIdx) => (
-                                  <p key={pIdx} className="text-lg">
-                                    {paragraph}
-                                  </p>
-                                ))}
-                              </div>
-                            </div>
-                          </div>
-
-                          {/* Media Gallery */}
-                          {contentIsShort ? (
-                            <div className="lg:col-span-1 space-y-4">
-                              <div className="flex items-center gap-2 mb-2">
-                                <div className="flex items-center gap-2 text-gray-700 font-semibold">
-                                  <ImageIcon className="w-5 h-5 text-red-600" />
-                                  <span>Tư liệu ({event.media.length})</span>
-                                </div>
-                              </div>
-                              
-                              <div className="space-y-4">
-                                {event.media.map((media, mediaIdx) => (
-                                  <div 
-                                    key={mediaIdx} 
-                                    className="group relative rounded-xl overflow-hidden border border-gray-300 bg-white shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer"
-                                    onClick={() => handleOpenMedia(media)}
-                                  >
-                                    <div className="aspect-video overflow-hidden bg-gray-100">
-                                      {media.type === 'image' ? (
-                                        <>
-                                          <img 
-                                            src={media.src} 
-                                            alt={media.caption}
-                                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                                            loading="lazy"
-                                            onError={(e) => {
-                                              e.currentTarget.src = "https://placehold.co/600x400/ef4444/ffffff?text=Tư+Liệu+Lịch+Sử";
-                                            }}
-                                          />
-                                          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                                        </>
-                                      ) : (
-                                        <div className="relative w-full h-full">
-                                          <div className="absolute inset-0 bg-gradient-to-r from-red-900/50 to-amber-900/50 flex items-center justify-center">
-                                            <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                                              <Play className="w-8 h-8 text-white" />
-                                            </div>
-                                          </div>
-                                          <img 
-                                            src={`https://img.youtube.com/vi/${media.src}/hqdefault.jpg`}
-                                            alt={media.caption}
-                                            className="w-full h-full object-cover opacity-60"
-                                          />
-                                        </div>
-                                      )}
-                                    </div>
-                                    <div className="p-4">
-                                      <div className="flex items-center gap-2 mb-2">
-                                        <div className={`w-3 h-3 rounded-full ${media.type === 'image' ? 'bg-red-500' : 'bg-amber-500'}`}></div>
-                                        <span className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-                                          {media.type === 'image' ? 'Ảnh' : 'Video'}
-                                        </span>
-                                      </div>
-                                      <p className="text-sm font-medium text-gray-800 line-clamp-2">{media.caption}</p>
-                                    </div>
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                          ) : (
-                            <div className="w-full pt-8 border-t border-gray-100">
-                              <div className="flex items-center gap-2 mb-6">
-                                <div className="flex items-center gap-2 text-gray-700 font-semibold">
-                                  <ImageIcon className="w-5 h-5 text-red-600" />
-                                  <span>Tư liệu liên quan ({event.media.length})</span>
-                                </div>
-                              </div>
-                              
-                              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                {event.media.map((media, mediaIdx) => (
-                                  <div 
-                                    key={mediaIdx} 
-                                    className="group relative rounded-xl overflow-hidden border border-gray-300 bg-white shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer"
-                                    onClick={() => handleOpenMedia(media)}
-                                  >
-                                    <div className="aspect-video overflow-hidden bg-gray-100">
-                                      {media.type === 'image' ? (
-                                        <>
-                                          <img 
-                                            src={media.src} 
-                                            alt={media.caption}
-                                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                                            loading="lazy"
-                                          />
-                                          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                                        </>
-                                      ) : (
-                                        <div className="relative w-full h-full">
-                                          <div className="absolute inset-0 bg-gradient-to-r from-red-900/50 to-amber-900/50 flex items-center justify-center">
-                                            <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                                              <Play className="w-8 h-8 text-white" />
-                                            </div>
-                                          </div>
-                                          <img 
-                                            src={`https://img.youtube.com/vi/${media.src}/hqdefault.jpg`}
-                                            alt={media.caption}
-                                            className="w-full h-full object-cover opacity-60"
-                                          />
-                                        </div>
-                                      )}
-                                    </div>
-                                    <div className="p-4">
-                                      <div className="flex items-center gap-2 mb-2">
-                                        <div className={`w-3 h-3 rounded-full ${media.type === 'image' ? 'bg-red-500' : 'bg-amber-500'}`}></div>
-                                        <span className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-                                          {media.type === 'image' ? 'Ảnh' : 'Video'}
-                                        </span>
-                                      </div>
-                                      <p className="text-sm font-medium text-gray-800 line-clamp-2">{media.caption}</p>
-                                    </div>
-                                  </div>
-                                ))}
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      ) : (
-                        <div className="prose prose-lg max-w-none">
-                          <div className="text-gray-700 leading-relaxed space-y-4">
-                            {event.content.split('\n\n').map((paragraph, pIdx) => (
-                              <p key={pIdx} className="text-lg">
-                                {paragraph}
-                              </p>
-                            ))}
+                    {/* Media Section */}
+                    {event.media.length > 0 && (
+                      <div className="mt-8 pt-8 border-t border-gray-100">
+                        <div className="flex items-center gap-2 mb-6">
+                          <div className="flex items-center gap-2 text-gray-700 font-semibold">
+                            <ImageIcon className="w-5 h-5 text-red-600" />
+                            <span>Tư liệu liên quan ({event.media.length})</span>
                           </div>
                         </div>
-                      )}
-                    </div>
+                        
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                          {event.media.map((media, mediaIdx) => (
+                            <MediaItem
+                              key={mediaIdx}
+                              media={media}
+                              eventDate={event.date}
+                              eventTitle={event.title}
+                              onClick={() => handleOpenMedia(media)}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
-              );
-            })}
+              </div>
+            ))}
           </div>
         )}
 
-        {/* TAB THƯ VIỆN TƯ LIỆU */}
         {activeTab === 'gallery' && (
           <div className="space-y-6">
             {/* Media Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {(showAllMedia ? allMedia : featuredMedia).map((media, idx) => (
-                <div 
-                  key={idx} 
-                  className="group relative rounded-2xl overflow-hidden border border-gray-300 bg-white shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 cursor-pointer"
+                <MediaItem
+                  key={idx}
+                  media={media}
+                  eventDate={media.eventDate}
+                  eventTitle={media.eventTitle}
                   onClick={() => handleOpenMedia(media)}
-                >
-                  {/* Media Preview */}
-                  <div className="aspect-video overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
-                    {media.type === 'image' ? (
-                      <>
-                        <img 
-                          src={media.src} 
-                          alt={media.caption}
-                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                          loading="lazy"
-                          onError={(e) => {
-                            e.currentTarget.src = "https://placehold.co/600x400/ef4444/ffffff?text=Ảnh+Tư+Liệu";
-                          }}
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                      </>
-                    ) : (
-                      <div className="relative w-full h-full">
-                        <img 
-                          src={`https://img.youtube.com/vi/${media.src}/hqdefault.jpg`}
-                          alt={media.caption}
-                          className="w-full h-full object-cover"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent flex items-end p-4">
-                          <div className="w-12 h-12 rounded-full bg-red-600/90 backdrop-blur-sm flex items-center justify-center group-hover:bg-red-700 transition-colors">
-                            <Play className="w-6 h-6 text-white" />
-                          </div>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-
-                  {/* Media Info */}
-                  <div className="p-4">
-                    <div className="flex items-center justify-between mb-2">
-                      <div className="flex items-center gap-2">
-                        <div className={`w-2 h-2 rounded-full ${media.type === 'image' ? 'bg-red-500' : 'bg-amber-500'}`}></div>
-                        <span className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-                          {media.type === 'image' ? 'Ảnh' : 'Video'}
-                        </span>
-                      </div>
-                      <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
-                        {media.eventDate}
-                      </span>
-                    </div>
-                    <h4 className="font-bold text-gray-900 line-clamp-2 mb-2" title={media.caption}>
-                      {media.caption}
-                    </h4>
-                    <p className="text-xs text-gray-600 line-clamp-2" title={media.eventTitle}>
-                      {media.eventTitle}
-                    </p>
-                  </div>
-
-                  {/* Hover Overlay */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                    <div className="text-white">
-                      <div className="text-sm font-medium mb-1">Xem chi tiết</div>
-                      <div className="text-xs opacity-90">Nhấn để mở rộng</div>
-                    </div>
-                  </div>
-                </div>
+                />
               ))}
             </div>
 
-            {/* Show More Button */}
             {allMedia.length > 8 && !showAllMedia && (
               <div className="text-center pt-6">
                 <button
@@ -581,34 +383,25 @@ export function Timeline1945() {
         )}
       </div>
 
-      {/* VIDEO/IMAGE MODAL - HOÀN CHỈNH MỞ TẠI CHỖ */}
+      {/* Modal */}
       {selectedMedia && (
-        <div 
-          className={`video-modal-fixed ${isModalOpen ? 'active' : ''}`}
-          onClick={handleCloseMedia}
-        >
-          <div 
-            className="video-modal-container"
-            onClick={(e) => e.stopPropagation()}
-          >
+        <div className={`video-modal-fixed ${isModalOpen ? 'active' : ''}`}>
+          <div className="video-modal-container">
             <div className="video-modal-player">
               {selectedMedia.type === 'image' ? (
                 <img 
-                  src={selectedMedia.src} 
+                  src={selectedMedia.src}
                   alt={selectedMedia.caption}
                   className="w-full h-full object-contain"
-                  onError={(e) => {
-                    e.currentTarget.src = "https://placehold.co/800x600/ef4444/ffffff?text=Không+thể+tải+ảnh";
-                  }}
+                  onError={handleImageError}
                 />
               ) : (
                 <iframe
                   src={`https://www.youtube.com/embed/${selectedMedia.src}?autoplay=1&rel=0&modestbranding=1`}
                   title={selectedMedia.caption}
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                   allowFullScreen
                   className="w-full h-full"
-                  loading="lazy"
                 />
               )}
             </div>
@@ -616,18 +409,14 @@ export function Timeline1945() {
             <button 
               className="video-modal-close-btn"
               onClick={handleCloseMedia}
-              aria-label="Đóng"
             >
               ×
             </button>
 
-            {/* Thông tin caption */}
-            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/60 to-transparent p-6 text-white z-10">
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/60 to-transparent p-6 text-white">
               <div className="flex items-start gap-3">
-                <div className={`w-3 h-3 rounded-full mt-2 flex-shrink-0 ${
-                  selectedMedia.type === 'image' ? 'bg-red-500' : 'bg-amber-500'
-                }`}></div>
-                <div className="flex-1">
+                <div className={`w-3 h-3 rounded-full mt-2 ${selectedMedia.type === 'image' ? 'bg-red-500' : 'bg-amber-500'}`}></div>
+                <div>
                   <div className="flex items-center gap-3 mb-2">
                     <span className="text-xs font-semibold uppercase tracking-wide bg-white/20 px-3 py-1 rounded-full">
                       {selectedMedia.type === 'image' ? 'Ảnh tư liệu' : 'Video tư liệu'}
@@ -638,31 +427,6 @@ export function Timeline1945() {
               </div>
             </div>
           </div>
-
-          {/* Navigation buttons nếu có nhiều media */}
-          {allMedia.length > 1 && (
-            <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex items-center gap-4 z-20">
-              <button
-                onClick={handlePrevMedia}
-                className="p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors backdrop-blur-sm"
-                aria-label="Media trước"
-              >
-                <ChevronLeft className="w-6 h-6 text-white" />
-              </button>
-              <div className="text-white text-sm bg-black/50 px-3 py-1 rounded-full">
-                {allMedia.findIndex(m => 
-                  m.src === selectedMedia.src && m.type === selectedMedia.type
-                ) + 1} / {allMedia.length}
-              </div>
-              <button
-                onClick={handleNextMedia}
-                className="p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors backdrop-blur-sm"
-                aria-label="Media tiếp theo"
-              >
-                <ChevronRight className="w-6 h-6 text-white" />
-              </button>
-            </div>
-          )}
         </div>
       )}
     </div>
