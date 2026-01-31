@@ -89,7 +89,7 @@ Việc xây dựng các hợp tác xã (HTX) được coi là con đường tấ
 Kế hoạch 5 năm lần thứ nhất (1961 - 1965) đặt trọng tâm vào việc xây dựng nền tảng vật chất - kỹ thuật cho chủ nghĩa xã hội. 
 Khu gang thép Thái Nguyên. Được thành lập theo Quyết định ngày 04-6-1959, đây là công trình trọng điểm nhằm thực hiện Nghị quyết Trung ương 14 khóa II, biểu tượng cho "ngọn lửa thép gang" của miền Bắc xã hội chủ nghĩa. Sự hình thành các khu công nghiệp lớn tại Hà Nội, Hải Phòng, Việt Trì và Thái Nguyên đã tạo ra một diện mạo mới cho nền kinh tế, cung cấp tư liệu sản xuất cho nông nghiệp và vật chất cho tiền tuyến.`,
     images: [
-      { type: 'image', src: 'https://thainguyen.dcs.vn/uploads/hoat-dong-cua-cang-dang-bo/2024_06/image-20240604134132-2.png', caption: 'Khu công nghiệp Gang thép Thái Nguyên - Những người đầu tiên góp phần xây nên Khu Gang thép đầu tiên của đất nước' }
+      { type: 'image', src: 'https://thainguyen.dcs.vn/uploads/hoat-dong-cua-cac-dang-bo/2024_06/image-20240604134132-2.png', caption: 'Khu công nghiệp Gang thép Thái Nguyên - Những người đầu tiên góp phần xây nên Khu Gang thép đầu tiên của đất nước' }
     ],
     videos: [
       { type: 'video', src: 'LabfX3in-UY', caption: 'ĐẠI HỘI ĐẢNG LẦN THỨ III' },
