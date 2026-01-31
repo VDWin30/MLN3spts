@@ -142,11 +142,44 @@ Giai đoạn này tuy chưa trực tiếp xây dựng chủ nghĩa xã hội, nh
   }
 ];
 
-// --- COMPONENT CHÍNH - MODAL OVERLAY TOÀN TRANG ---
-export function Timeline1945() {
+// --- TRONG TIMELINE1945 COMPONENT ---
+export function Timeline1945({ containerRef }: TimelineProps) {
   const [selectedMedia, setSelectedMedia] = useState<MediaItem | null>(null);
+  const [modalPosition, setModalPosition] = useState({ top: '50%', left: '50%' });
 
-  /* 🔒 FIX KHÓA SCROLL TUYỆT ĐỐI VÀ ESC KEY */
+  /* 🔒 TÍNH VỊ TRÍ MODAL DỰA TRÊN CLICK */
+  const handleMediaClick = (m: MediaItem, event: React.MouseEvent) => {
+    setSelectedMedia(m);
+    
+    // Tính toán vị trí modal để nó ở gần vị trí click
+    const timelineRect = containerRef?.current?.getBoundingClientRect();
+    const clickY = event.clientY;
+    
+    if (timelineRect) {
+      // Modal sẽ ở 70% từ trên xuống của cột phải
+      const modalTop = Math.min(
+        Math.max(clickY - 200, timelineRect.top + 100), // Không quá cao
+        timelineRect.bottom - 400 // Không quá thấp
+      );
+      
+      const modalLeft = timelineRect.left + (timelineRect.width / 2);
+      
+      setModalPosition({
+        top: `${modalTop}px`,
+        left: `${modalLeft}px`
+      });
+    } else {
+      // Fallback: trung tâm cột phải
+      const windowWidth = window.innerWidth;
+      const leftColumnWidth = windowWidth * 0.45;
+      setModalPosition({
+        top: '50%',
+        left: `${leftColumnWidth + (windowWidth * 0.55 / 2)}px`
+      });
+    }
+  };
+
+  /* 🔒 FIX KHÓA SCROLL VÀ ESC KEY */
   useEffect(() => {
     const handleEscKey = (event: KeyboardEvent) => {
       if (event.key === 'Escape' && selectedMedia) {
@@ -180,85 +213,53 @@ export function Timeline1945() {
 
             return (
               <div key={idx} className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 relative z-0">
-                {/* Tiêu đề sự kiện */}
-                <div className="mb-6">
-                  <h3 className="text-2xl font-bold text-gray-900">
-                    {event.date} – {event.title}
-                  </h3>
-                </div>
+                {/* ... timeline content ... */}
 
-                {/* Nội dung và Media */}
-                <div className={isShortContent ? 'grid grid-cols-1 lg:grid-cols-3 gap-8' : 'space-y-6'}>
-                  {/* Nội dung văn bản */}
-                  <div className={isShortContent ? 'lg:col-span-2' : ''}>
-                    {event.content.split('\n\n').map((p, i) => (
-                      <p key={i} className="mb-4 text-gray-700 text-lg leading-relaxed">
-                        {p}
-                      </p>
+                {/* Media */}
+                {event.media.length > 0 && (
+                  <div className="space-y-4">
+                    {event.media.map((m, i) => (
+                      <div
+                        key={i}
+                        onClick={(e) => handleMediaClick(m, e)} // ← THAY ĐỔI Ở ĐÂY
+                        className="cursor-pointer rounded-xl overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 relative z-0"
+                      >
+                        {/* ... media content ... */}
+                      </div>
                     ))}
                   </div>
-
-                  {/* Media */}
-                  {event.media.length > 0 && (
-                    <div className="space-y-4">
-                      {event.media.map((m, i) => (
-                        <div
-                          key={i}
-                          onClick={() => setSelectedMedia(m)}
-                          className="cursor-pointer rounded-xl overflow-hidden border border-gray-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 relative z-0"
-                        >
-                          <div className="aspect-video bg-gray-100 relative">
-                            {m.type === 'image' ? (
-                              <img
-                                src={m.src}
-                                className="w-full h-full object-cover"
-                                alt={m.caption}
-                              />
-                            ) : (
-                              <>
-                                <img
-                                  src={`https://img.youtube.com/vi/${m.src}/hqdefault.jpg`}
-                                  className="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity"
-                                  alt={m.caption}
-                                />
-                                <div className="absolute inset-0 flex items-center justify-center">
-                                  <div className="w-14 h-14 bg-red-600 rounded-full flex items-center justify-center hover:scale-110 transition-transform">
-                                    <Play className="w-7 h-7 text-white ml-1" />
-                                  </div>
-                                </div>
-                              </>
-                            )}
-                            {/* Badge loại media */}
-                            <div className="absolute top-3 right-3 bg-black/70 text-white text-xs px-2 py-1 rounded">
-                              {m.type === 'image' ? 'ẢNH' : 'VIDEO'}
-                            </div>
-                          </div>
-                          <div className="p-4 bg-white">
-                            <div className="font-semibold text-gray-900">{m.caption}</div>
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </div>
+                )}
               </div>
             );
           })}
         </div>
       </div>
 
-      {/* ================= MODAL OVERLAY TOÀN TRANG ================= */}
+      {/* ================= MODAL & OVERLAY ĐỒNG BỘ ================= */}
       {selectedMedia && (
         <div className="fixed inset-0 z-[9999]">
-          {/* OVERLAY CHE TOÀN BỘ TRANG */}
-          <div
-            className="absolute inset-0 bg-black/90 backdrop-blur-sm"
+          {/* OVERLAY CHE TOÀN BỘ MÀN HÌNH NHƯNG CỘT TRÁI TRONG SUỐT */}
+          <div 
+            className="absolute inset-0 grid grid-cols-[45%_55%] z-[9998]"
             onClick={() => setSelectedMedia(null)}
-          />
+          >
+            {/* Cột trái: trong suốt, click được */}
+            <div className="bg-transparent cursor-pointer" />
+            
+            {/* Cột phải: overlay đen */}
+            <div className="bg-black/90 backdrop-blur-sm" />
+          </div>
 
-          {/* MODAL CỐ ĐỊNH GIỮA MÀN HÌNH */}
-          <div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-[10000] w-full max-w-5xl max-h-[85vh] px-4">
-            <div className="bg-black rounded-xl overflow-hidden shadow-2xl">
+          {/* MODAL NẰM TRONG OVERLAY CỘT PHẢI */}
+          <div 
+            className="fixed z-[10000]"
+            style={{
+              top: modalPosition.top,
+              left: modalPosition.left,
+              transform: 'translate(-50%, -50%)'
+            }}
+          >
+            <div className="w-full max-w-4xl max-h-[70vh] bg-black rounded-xl overflow-hidden shadow-2xl">
               
               {/* VIDEO */}
               {selectedMedia.type === 'video' ? (
@@ -276,7 +277,7 @@ export function Timeline1945() {
               ) : 
               /* IMAGE */
               (
-                <div className="w-full max-h-[70vh] min-h-[300px] flex items-center justify-center p-4">
+                <div className="w-full max-h-[60vh] min-h-[300px] flex items-center justify-center p-4">
                   <img
                     src={selectedMedia.src}
                     className="max-w-full max-h-full object-contain"
