@@ -157,20 +157,29 @@ export function Timeline1945() {
   );
 
   const featuredMedia = allMedia.slice(0, 8);
- useEffect(() => {
-    if (selectedMedia) {
-      document.body.style.overflow = 'hidden';
-      document.body.style.paddingRight = '15px';
-    } else {
-      document.body.style.overflow = '';
-      document.body.style.paddingRight = '';
-    }
+useEffect(() => {
+  if (selectedMedia) {
+    const scrollbarWidth =
+      window.innerWidth - document.documentElement.clientWidth;
 
-    return () => {
-      document.body.style.overflow = '';
-      document.body.style.paddingRight = '';
-    };
-  }, [selectedMedia]);
+    document.body.style.overflow = 'hidden';
+    document.body.style.paddingRight = `${scrollbarWidth}px`;
+
+    // QUAN TRỌNG CHO MOBILE
+    document.documentElement.style.overflow = 'hidden';
+  } else {
+    document.body.style.overflow = '';
+    document.body.style.paddingRight = '';
+    document.documentElement.style.overflow = '';
+  }
+
+  return () => {
+    document.body.style.overflow = '';
+    document.body.style.paddingRight = '';
+    document.documentElement.style.overflow = '';
+  };
+}, [selectedMedia]);
+
   // Hàm kiểm tra nội dung ngắn
   const isShortContent = (content: string) => {
     const wordCount = content.split(/\s+/).length;
