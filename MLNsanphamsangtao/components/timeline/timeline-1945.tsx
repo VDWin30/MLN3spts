@@ -51,7 +51,18 @@ Ngay sau khi giành chính quyền, Hồ Chí Minh xác định nhiệm vụ tru
     content: `Sau khi độc lập, đất nước rơi vào tình trạng khủng hoảng nghiêm trọng. Nạn đói năm 1945 đã làm hơn 2 triệu người chết ở miền Bắc. Trước tình hình đó, Chính phủ phát động phong trào “nhường cơm sẻ áo”, kêu gọi mỗi người dân nhịn ăn một bữa để cứu đói đồng bào. Đồng thời, phong trào tăng gia sản xuất được triển khai rộng khắp.
 
 Về giáo dục, ngày 8/9/1945, Chủ tịch Hồ Chí Minh ký sắc lệnh thành lập Nha Bình dân học vụ nhằm xóa nạn mù chữ. Hàng triệu người dân đã tham gia học chữ trong những năm đầu của chính quyền cách mạng. Điều này thể hiện quan điểm của Hồ Chí Minh: xây dựng xã hội mới phải bắt đầu từ nâng cao dân trí, phát huy vai trò làm chủ của nhân dân.`,
-    media: []
+    media: [
+      { 
+        type: 'image', 
+        src: 'https://photo.znews.vn/w660/Uploaded/oplukaa/2018_05_23/12.jpg', 
+        caption: 'Nạn đói năm 1945' 
+      },
+       { 
+        type: 'image', 
+        src: 'https://cdn.nhandan.vn/images/1ef398c4e2fb4bf07980a2ded785b3ef1eea1c7bcc924892efcb6f50ccf84c0ab0e1de0dd09e20cd66e0e4ccee91220fb7ae13cda333b1a658a4aa09dbd85477/31-7000.jpg', 
+        caption: 'Nạn dốt năm 1945' 
+      }
+    ]
   },
   {
     date: '1946',
