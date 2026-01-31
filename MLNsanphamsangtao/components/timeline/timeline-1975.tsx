@@ -206,7 +206,8 @@ Tổng thống Dương Văn Minh tuyên bố đầu hàng vô điều kiện.
       }
     ],
     videos: []
-  }{
+  },
+  {
     date: '03/1975',
     title: '1. Điểm gãy chiến lược tại "Nóc nhà" Tây Nguyên',
     content: `Mở đầu bằng tiếng súng tại Buôn Ma Thuột ngày 10/3, Chiến dịch Tây Nguyên không chỉ đơn thuần là một thắng lợi quân sự mà còn là minh chứng cho quy luật tích lũy về Lượng dẫn đến sự thay đổi về Chất. Sau hơn hai năm xây dựng hậu phương miền Bắc XHCN, tiềm lực vật chất và ý chí chính trị đã đạt đến "điểm tới hạn" để bùng nổ. Việc chọn Tây Nguyên làm điểm đột phá thể hiện tư duy nhạy bén của Đảng trong việc đánh vào "yết hầu" của chế độ cũ, khiến đối phương hoàn toàn bất ngờ. Kết quả không chỉ là giải phóng đất đai, mà là sự tan rã hoàn toàn về mặt tổ chức của một quân đoàn chính quy, khẳng định ưu thế của mô hình huy động tài lực tập trung trong việc tạo ra sức mạnh áp đảo khiến đối phương không kịp phản ứng.
