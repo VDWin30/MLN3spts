@@ -45,7 +45,7 @@ const DATA_1945: TimelineEvent[] = [
   }
 ];
 
-// --- COMPONENT CHÍNH - ĐÃ CẬP NHẬT VỚI GRID NGANG ---
+// --- COMPONENT CHÍNH - ĐÃ CẬP NHẬT VỚI MODAL VIDEO FIXED ---
 export function Timeline1945() {
   const [activeTab, setActiveTab] = useState<'timeline' | 'gallery'>('timeline');
   const [selectedMedia, setSelectedMedia] = useState<MediaItem | null>(null);
@@ -393,7 +393,7 @@ export function Timeline1945() {
         )}
       </div>
 
-      {/* Media Modal */}
+      {/* Media Modal - ĐÃ CẬP NHẬT: Sử dụng flex và overflow-y-auto để xử lý scroll */}
       {selectedMedia && (
         <div 
           className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4"
@@ -404,49 +404,111 @@ export function Timeline1945() {
               e.stopPropagation();
               setSelectedMedia(null);
             }}
-            className="absolute top-4 right-4 text-white hover:text-red-300 transition-colors p-2 bg-black/50 rounded-full z-10"
+            className="absolute top-6 right-6 text-white hover:text-red-300 transition-colors p-3 bg-black/50 rounded-full z-10 hover:bg-black/70"
           >
-            <X className="w-6 h-6" />
+            <X className="w-8 h-8" />
           </button>
           
           <div 
-            className="relative max-w-6xl w-full max-h-[90vh] overflow-auto rounded-2xl bg-gray-900"
+            className="relative w-full max-w-6xl flex flex-col items-center justify-center"
             onClick={(e) => e.stopPropagation()}
           >
-            {selectedMedia.type === 'image' ? (
-              <div className="flex flex-col">
-                <div className="flex-1 overflow-hidden">
-                  <img 
-                    src={selectedMedia.src} 
-                    alt={selectedMedia.caption}
-                    className="w-full h-auto max-h-[70vh] object-contain"
-                    onError={(e) => {
-                      e.currentTarget.src = "https://placehold.co/800x600/ef4444/ffffff?text=Không+thể+tải+ảnh";
-                    }}
-                  />
-                </div>
-                <div className="p-6 bg-gray-800 border-t border-gray-700">
-                  <h3 className="text-xl font-bold text-white mb-2">{selectedMedia.caption}</h3>
-                  <p className="text-gray-300 text-sm">Ảnh tư liệu lịch sử</p>
+            {/* Container chính với max-height cố định */}
+            <div className="w-full bg-gray-900 rounded-2xl overflow-hidden max-h-[90vh] flex flex-col">
+              {/* Nội dung video/ảnh - luôn visible */}
+              <div className="flex-1 min-h-0">
+                {selectedMedia.type === 'image' ? (
+                  <div className="w-full h-full flex items-center justify-center">
+                    <img 
+                      src={selectedMedia.src} 
+                      alt={selectedMedia.caption}
+                      className="w-auto h-auto max-w-full max-h-[70vh] object-contain"
+                      onError={(e) => {
+                        e.currentTarget.src = "https://placehold.co/800x600/ef4444/ffffff?text=Không+thể+tải+ảnh";
+                      }}
+                    />
+                  </div>
+                ) : (
+                  <div className="relative w-full pt-[56.25%]"> {/* 16:9 aspect ratio */}
+                    <iframe
+                      width="100%"
+                      height="100%"
+                      src={`https://www.youtube.com/embed/${selectedMedia.src}?autoplay=1&rel=0`}
+                      title={selectedMedia.caption}
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                      allowFullScreen
+                      className="absolute top-0 left-0 w-full h-full"
+                    />
+                  </div>
+                )}
+              </div>
+              
+              {/* Thông tin caption - có thể scroll nếu dài */}
+              <div className="p-6 bg-gray-800 border-t border-gray-700">
+                <div className="flex items-start gap-4">
+                  <div className={`w-4 h-4 rounded-full mt-1 flex-shrink-0 ${
+                    selectedMedia.type === 'image' ? 'bg-red-500' : 'bg-amber-500'
+                  }`}></div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-3">
+                      <span className="text-xs font-semibold uppercase tracking-wide text-gray-300 bg-gray-700 px-3 py-1 rounded-full">
+                        {selectedMedia.type === 'image' ? 'Ảnh tư liệu' : 'Video tư liệu'}
+                      </span>
+                      <span className="text-xs text-gray-400">
+                        {selectedMedia.type === 'video' ? 'Nhấn phát để xem' : 'Nhấn để phóng to'}
+                      </span>
+                    </div>
+                    <h3 className="text-xl font-bold text-white mb-2">{selectedMedia.caption}</h3>
+                    
+                    {/* Hiển thị thêm các video khác nếu có */}
+                    {selectedMedia.type === 'video' && (
+                      <div className="mt-4 pt-4 border-t border-gray-700">
+                        <p className="text-sm text-gray-300 mb-2">Video khác</p>
+                        <div className="text-lg font-semibold text-white">
+                          ĐẠI HỘI ĐẢNG LẦN THỨ III
+                          <span className="block text-sm text-gray-300 mt-1">Video tư liệu lịch sử</span>
+                        </div>
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
-            ) : (
-              <div className="flex flex-col">
-                <div className="relative aspect-video w-full">
-                  <iframe
-                    width="100%"
-                    height="100%"
-                    src={`https://www.youtube.com/embed/${selectedMedia.src}?autoplay=1&rel=0`}
-                    title={selectedMedia.caption}
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                    className="absolute inset-0 w-full h-full"
-                  />
+            </div>
+            
+            {/* Navigation buttons nếu có nhiều media */}
+            {allMedia.length > 1 && (
+              <div className="flex items-center justify-center gap-4 mt-6">
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    const currentIndex = allMedia.findIndex(m => 
+                      m.src === selectedMedia.src && m.type === selectedMedia.type
+                    );
+                    const prevIndex = (currentIndex - 1 + allMedia.length) % allMedia.length;
+                    setSelectedMedia(allMedia[prevIndex]);
+                  }}
+                  className="p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors"
+                >
+                  <ChevronLeft className="w-6 h-6 text-white" />
+                </button>
+                <div className="text-white text-sm">
+                  {allMedia.findIndex(m => 
+                    m.src === selectedMedia.src && m.type === selectedMedia.type
+                  ) + 1} / {allMedia.length}
                 </div>
-                <div className="p-6 bg-gray-800 border-t border-gray-700">
-                  <h3 className="text-xl font-bold text-white mb-2">{selectedMedia.caption}</h3>
-                  <p className="text-gray-300 text-sm">Video tư liệu lịch sử</p>
-                </div>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    const currentIndex = allMedia.findIndex(m => 
+                      m.src === selectedMedia.src && m.type === selectedMedia.type
+                    );
+                    const nextIndex = (currentIndex + 1) % allMedia.length;
+                    setSelectedMedia(allMedia[nextIndex]);
+                  }}
+                  className="p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors"
+                >
+                  <ChevronRight className="w-6 h-6 text-white" />
+                </button>
               </div>
             )}
           </div>
