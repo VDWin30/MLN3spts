@@ -94,7 +94,13 @@ Hiến pháp 1946 khẳng định các quyền tự do dân chủ cơ bản củ
     content: `Trước dã tâm xâm lược trở lại của thực dân Pháp, ngày 19/12/1946, Chủ tịch Hồ Chí Minh ra Lời kêu gọi Toàn quốc kháng chiến với tinh thần: “Chúng ta thà hy sinh tất cả chứ nhất định không chịu mất nước, nhất định không chịu làm nô lệ.”
 
 Cuộc kháng chiến chống Pháp bước vào giai đoạn toàn diện, lâu dài. Hồ Chí Minh xác định phương châm kháng chiến là “toàn dân, toàn diện, trường kỳ, tự lực cánh sinh”. Đây cũng là giai đoạn thể hiện rõ đặc điểm của thời kỳ quá độ: vừa chiến đấu bảo vệ độc lập, vừa xây dựng nền tảng kinh tế – xã hội mới.`,
-    media: []
+    media: [
+      { 
+        type: 'image', 
+        src: 'https://mediaptq.mediatech.vn/upload/image/202112/medium/46337_00e0517b4348d18fa3c6b677f70a7422.png', 
+        caption: 'Lời kêu gọi toàn quốc kháng chiến' 
+      }
+    ]
   },
   {
     date: '1947–1950',
@@ -118,7 +124,13 @@ Thắng lợi này củng cố niềm tin của nhân dân, nâng cao vị thế
     content: `Ngày 4/12/1953, Quốc hội thông qua Luật Cải cách ruộng đất. Mục tiêu là xóa bỏ quan hệ sản xuất phong kiến ở nông thôn, thực hiện khẩu hiệu “người cày có ruộng”. Chính sách này tịch thu ruộng đất của địa chủ phản động chia cho nông dân nghèo.
 
 Cải cách ruộng đất không chỉ có ý nghĩa kinh tế mà còn mang ý nghĩa chính trị sâu sắc: củng cố khối liên minh công – nông, tăng cường hậu phương kháng chiến và chuẩn bị điều kiện cho sự phát triển tiếp theo của cách mạng.`,
-    media: []
+    media: [
+      { 
+        type: 'video', 
+        src: 'h6qEJkQwFPs', 
+        caption: 'Ngày này năm xưa 4-12-1953: Luật Cải cách ruộng đất được thông qua' 
+      }
+    ]
   },
   {
     date: 'Tổng kết',
