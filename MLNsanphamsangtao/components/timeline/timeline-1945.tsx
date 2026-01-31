@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { FileText, Film, Calendar, Play, Image as ImageIcon, Video, X, ChevronRight, ChevronLeft } from 'lucide-react';
 
 // --- CẤU TRÚC DỮ LIỆU (giữ nguyên) ---
@@ -29,9 +29,7 @@ const DATA_1945: TimelineEvent[] = [
   {
     date: '02/09/1945',
     title: 'Tuyên Ngôn Độc Lập Và Xác Lập Con Đường Phát Triển Của Dân Tộc',
-    content: `Ngày 2/9/1945, tại Quảng trường Ba Đình (Hà Nội), Chủ tịch Hồ Chí Minh đọc Tuyên ngôn Độc lập, tuyên bố thành lập nước Việt Nam Dân chủ Cộng hòa. Văn kiện này không chỉ khẳng định quyền tự do, độc lập của dân tộc Việt Nam mà còn thể hiện tư tưởng nhất quán của Người: độc lập dân tộc phải gắn liền với con đường tiến lên chủ nghĩa xã hội.
-
-Ngay sau khi giành chính quyền, Hồ Chí Minh xác định nhiệm vụ trung tâm là củng cố chính quyền cách mạng, bảo vệ thành quả cách mạng và xây dựng nền tảng cho một xã hội mới. Theo tư tưởng của Người, Việt Nam lựa chọn con đường quá độ lên CNXH bỏ qua chế độ tư bản chủ nghĩa – phù hợp với đặc điểm là một nước thuộc địa, nông nghiệp lạc hậu.`,
+    content: `Ngày 2/9/1945, tại Quảng trường Ba Đình (Hà Nội), Chủ tịch Hồ Chí Minh đọc Tuyên ngôn Độc lập, tuyên bố thành lập nước Việt Nam Dân chủ Cộng hòa. Văn kiện này không chỉ khẳng định quyền tự do, độc lập của dân tộc Việt Nam mà còn thể hiện tư tưởng nhất quán của Người: độc lập dân tộc phải gắn liền với con đường tiến lên chủ nghĩa xã hội.`,
     media: [
       { 
         type: 'image', 
@@ -47,7 +45,7 @@ Ngay sau khi giành chính quyền, Hồ Chí Minh xác định nhiệm vụ tru
   }
 ];
 
-// --- COMPONENT CHÍNH - ĐÃ XÓA PHẦN THỐNG KÊ ---
+// --- COMPONENT CHÍNH - ĐÃ CẬP NHẬT VỚI GRID NGANG ---
 export function Timeline1945() {
   const [activeTab, setActiveTab] = useState<'timeline' | 'gallery'>('timeline');
   const [selectedMedia, setSelectedMedia] = useState<MediaItem | null>(null);
@@ -63,9 +61,15 @@ export function Timeline1945() {
 
   const featuredMedia = allMedia.slice(0, 8);
 
+  // Hàm kiểm tra nội dung ngắn
+  const isShortContent = (content: string) => {
+    const wordCount = content.split(/\s+/).length;
+    return wordCount < 150; // Nếu ít hơn 150 từ coi là ngắn
+  };
+
   return (
     <div className="space-y-8">
-      {/* Header - Đã xóa phần thống kê */}
+      {/* Header */}
       <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-red-900/20 via-amber-900/20 to-red-900/20 p-8 border border-amber-200/30 shadow-lg">
         <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/paper.png')] opacity-10"></div>
         <div className="relative z-10">
@@ -83,7 +87,6 @@ export function Timeline1945() {
                 </p>
               </div>
             </div>
-            {/* Đã xóa phần thống kê bên phải */}
           </div>
         </div>
       </div>
@@ -117,37 +120,172 @@ export function Timeline1945() {
       {/* Content Area */}
       <div className="min-h-[600px] animate-in fade-in duration-700">
         
-        {/* TAB DÒNG THỜI GIAN */}
+        {/* TAB DÒNG THỜI GIAN - ĐÃ CẬP NHẬT VỚI GRID NGANG */}
         {activeTab === 'timeline' && (
           <div className="space-y-12">
-            {DATA_1945.map((event, idx) => (
-              <div key={idx} className="relative group">
-                {/* Timeline line and dot */}
-                <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-red-400 via-amber-300 to-transparent hidden md:block"></div>
-                <div className="absolute left-6 top-8 -translate-x-1/2 w-4 h-4 rounded-full bg-gradient-to-r from-red-600 to-amber-500 border-4 border-white shadow-lg hidden md:block"></div>
-                
-                {/* Content Card */}
-                <div className="ml-0 md:ml-12 bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 overflow-hidden">
-                  {/* Date Header - Đã xóa phần thống kê */}
-                  <div className="bg-gradient-to-r from-red-50 to-amber-50 p-6 border-b border-gray-100">
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-red-600 to-amber-500 flex items-center justify-center shadow-md">
-                        <Calendar className="w-6 h-6 text-white" />
-                      </div>
-                      <div>
-                        <span className="inline-block px-4 py-2 bg-white rounded-full text-red-700 font-bold border border-red-200">
-                          {event.date}
-                        </span>
-                        <h3 className="text-2xl font-bold text-gray-900 mt-3 leading-tight">{event.title}</h3>
+            {DATA_1945.map((event, idx) => {
+              const contentIsShort = isShortContent(event.content);
+              
+              return (
+                <div key={idx} className="relative group">
+                  {/* Timeline line and dot */}
+                  <div className="absolute left-6 top-0 bottom-0 w-0.5 bg-gradient-to-b from-red-400 via-amber-300 to-transparent hidden md:block"></div>
+                  <div className="absolute left-6 top-8 -translate-x-1/2 w-4 h-4 rounded-full bg-gradient-to-r from-red-600 to-amber-500 border-4 border-white shadow-lg hidden md:block"></div>
+                  
+                  {/* Content Card */}
+                  <div className="ml-0 md:ml-12 bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-500 hover:-translate-y-1 overflow-hidden">
+                    {/* Date Header */}
+                    <div className="bg-gradient-to-r from-red-50 to-amber-50 p-6 border-b border-gray-100">
+                      <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-red-600 to-amber-500 flex items-center justify-center shadow-md">
+                          <Calendar className="w-6 h-6 text-white" />
+                        </div>
+                        <div>
+                          <span className="inline-block px-4 py-2 bg-white rounded-full text-red-700 font-bold border border-red-200">
+                            {event.date}
+                          </span>
+                          <h3 className="text-2xl font-bold text-gray-900 mt-3 leading-tight">{event.title}</h3>
+                        </div>
                       </div>
                     </div>
-                  </div>
 
-                  {/* Content and Media */}
-                  <div className="p-6">
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                      {/* Text Content */}
-                      <div className="lg:col-span-2">
+                    {/* Content and Media - CẬP NHẬT: Grid ngang khi nội dung ngắn */}
+                    <div className="p-6">
+                      {event.media.length > 0 ? (
+                        <div className={`${contentIsShort ? 'grid grid-cols-1 lg:grid-cols-3 gap-8' : 'space-y-8'}`}>
+                          {/* Text Content */}
+                          <div className={`${contentIsShort ? 'lg:col-span-2' : 'w-full'}`}>
+                            <div className="prose prose-lg max-w-none">
+                              <div className="text-gray-700 leading-relaxed space-y-4">
+                                {event.content.split('\n\n').map((paragraph, pIdx) => (
+                                  <p key={pIdx} className="text-lg">
+                                    {paragraph}
+                                  </p>
+                                ))}
+                              </div>
+                            </div>
+                          </div>
+
+                          {/* Media Gallery - Grid ngang hoặc dọc tùy vào độ dài nội dung */}
+                          {contentIsShort ? (
+                            // Grid ngang khi nội dung ngắn
+                            <div className="lg:col-span-1 space-y-4">
+                              <div className="flex items-center gap-2 mb-2">
+                                <div className="flex items-center gap-2 text-gray-700 font-semibold">
+                                  <ImageIcon className="w-5 h-5 text-red-600" />
+                                  <span>Tư liệu ({event.media.length})</span>
+                                </div>
+                              </div>
+                              
+                              <div className="space-y-4">
+                                {event.media.map((media, mediaIdx) => (
+                                  <div 
+                                    key={mediaIdx} 
+                                    className="group relative rounded-xl overflow-hidden border border-gray-300 bg-white shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer"
+                                    onClick={() => setSelectedMedia(media)}
+                                  >
+                                    <div className="aspect-video overflow-hidden bg-gray-100">
+                                      {media.type === 'image' ? (
+                                        <>
+                                          <img 
+                                            src={media.src} 
+                                            alt={media.caption}
+                                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                            loading="lazy"
+                                            onError={(e) => {
+                                              e.currentTarget.src = "https://placehold.co/600x400/ef4444/ffffff?text=Tư+Liệu+Lịch+Sử";
+                                            }}
+                                          />
+                                          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                        </>
+                                      ) : (
+                                        <div className="relative w-full h-full">
+                                          <div className="absolute inset-0 bg-gradient-to-r from-red-900/50 to-amber-900/50 flex items-center justify-center">
+                                            <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                                              <Play className="w-8 h-8 text-white" />
+                                            </div>
+                                          </div>
+                                          <img 
+                                            src={`https://img.youtube.com/vi/${media.src}/hqdefault.jpg`}
+                                            alt={media.caption}
+                                            className="w-full h-full object-cover opacity-60"
+                                          />
+                                        </div>
+                                      )}
+                                    </div>
+                                    <div className="p-4">
+                                      <div className="flex items-center gap-2 mb-2">
+                                        <div className={`w-3 h-3 rounded-full ${media.type === 'image' ? 'bg-red-500' : 'bg-amber-500'}`}></div>
+                                        <span className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+                                          {media.type === 'image' ? 'Ảnh' : 'Video'}
+                                        </span>
+                                      </div>
+                                      <p className="text-sm font-medium text-gray-800 line-clamp-2">{media.caption}</p>
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          ) : (
+                            // Grid dọc phía dưới khi nội dung dài
+                            <div className="w-full pt-8 border-t border-gray-100">
+                              <div className="flex items-center gap-2 mb-6">
+                                <div className="flex items-center gap-2 text-gray-700 font-semibold">
+                                  <ImageIcon className="w-5 h-5 text-red-600" />
+                                  <span>Tư liệu liên quan ({event.media.length})</span>
+                                </div>
+                              </div>
+                              
+                              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                {event.media.map((media, mediaIdx) => (
+                                  <div 
+                                    key={mediaIdx} 
+                                    className="group relative rounded-xl overflow-hidden border border-gray-300 bg-white shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer"
+                                    onClick={() => setSelectedMedia(media)}
+                                  >
+                                    <div className="aspect-video overflow-hidden bg-gray-100">
+                                      {media.type === 'image' ? (
+                                        <>
+                                          <img 
+                                            src={media.src} 
+                                            alt={media.caption}
+                                            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                            loading="lazy"
+                                          />
+                                          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                                        </>
+                                      ) : (
+                                        <div className="relative w-full h-full">
+                                          <div className="absolute inset-0 bg-gradient-to-r from-red-900/50 to-amber-900/50 flex items-center justify-center">
+                                            <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
+                                              <Play className="w-8 h-8 text-white" />
+                                            </div>
+                                          </div>
+                                          <img 
+                                            src={`https://img.youtube.com/vi/${media.src}/hqdefault.jpg`}
+                                            alt={media.caption}
+                                            className="w-full h-full object-cover opacity-60"
+                                          />
+                                        </div>
+                                      )}
+                                    </div>
+                                    <div className="p-4">
+                                      <div className="flex items-center gap-2 mb-2">
+                                        <div className={`w-3 h-3 rounded-full ${media.type === 'image' ? 'bg-red-500' : 'bg-amber-500'}`}></div>
+                                        <span className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+                                          {media.type === 'image' ? 'Ảnh' : 'Video'}
+                                        </span>
+                                      </div>
+                                      <p className="text-sm font-medium text-gray-800 line-clamp-2">{media.caption}</p>
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            </div>
+                          )}
+                        </div>
+                      ) : (
+                        // Không có media
                         <div className="prose prose-lg max-w-none">
                           <div className="text-gray-700 leading-relaxed space-y-4">
                             {event.content.split('\n\n').map((paragraph, pIdx) => (
@@ -157,83 +295,19 @@ export function Timeline1945() {
                             ))}
                           </div>
                         </div>
-                      </div>
-
-                      {/* Media Gallery - ĐÃ ĐƠN GIẢN HÓA */}
-                      {event.media.length > 0 && (
-                        <div className="lg:col-span-1">
-                          <div className="sticky top-6 space-y-4">
-                            {/* Media Header đơn giản */}
-                            <div className="flex items-center gap-2 mb-4">
-                              <div className="flex items-center gap-2 text-gray-700 font-semibold">
-                                <ImageIcon className="w-5 h-5 text-red-600" />
-                                <span>Tư liệu</span>
-                              </div>
-                            </div>
-                            
-                            <div className="space-y-4">
-                              {event.media.map((media, mediaIdx) => (
-                                <div 
-                                  key={mediaIdx} 
-                                  className="group relative rounded-xl overflow-hidden border border-gray-300 bg-white shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer"
-                                  onClick={() => setSelectedMedia(media)}
-                                >
-                                  <div className="aspect-video overflow-hidden bg-gray-100">
-                                    {media.type === 'image' ? (
-                                      <>
-                                        <img 
-                                          src={media.src} 
-                                          alt={media.caption}
-                                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                                          loading="lazy"
-                                          onError={(e) => {
-                                            e.currentTarget.src = "https://placehold.co/600x400/ef4444/ffffff?text=Tư+Liệu+Lịch+Sử";
-                                          }}
-                                        />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                                      </>
-                                    ) : (
-                                      <div className="relative w-full h-full">
-                                        <div className="absolute inset-0 bg-gradient-to-r from-red-900/50 to-amber-900/50 flex items-center justify-center">
-                                          <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center">
-                                            <Play className="w-8 h-8 text-white" />
-                                          </div>
-                                        </div>
-                                        <img 
-                                          src={`https://img.youtube.com/vi/${media.src}/hqdefault.jpg`}
-                                          alt={media.caption}
-                                          className="w-full h-full object-cover opacity-60"
-                                        />
-                                      </div>
-                                    )}
-                                  </div>
-                                  <div className="p-4">
-                                    <div className="flex items-center gap-2 mb-2">
-                                      <div className={`w-3 h-3 rounded-full ${media.type === 'image' ? 'bg-red-500' : 'bg-amber-500'}`}></div>
-                                      <span className="text-xs font-semibold uppercase tracking-wide text-gray-500">
-                                        {media.type === 'image' ? 'Ảnh' : 'Video'}
-                                      </span>
-                                    </div>
-                                    <p className="text-sm font-medium text-gray-800 line-clamp-2">{media.caption}</p>
-                                  </div>
-                                </div>
-                              ))}
-                            </div>
-                          </div>
-                        </div>
                       )}
                     </div>
                   </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
 
-        {/* TAB THƯ VIỆN TƯ LIỆU - Đã xóa phần thống kê */}
+        {/* TAB THƯ VIỆN TƯ LIỆU */}
         {activeTab === 'gallery' && (
           <div className="space-y-6">
-            {/* Media Grid - Không có phần thống kê */}
+            {/* Media Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {(showAllMedia ? allMedia : featuredMedia).map((media, idx) => (
                 <div 
