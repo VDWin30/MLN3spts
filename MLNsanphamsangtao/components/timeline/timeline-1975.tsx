@@ -207,6 +207,7 @@ Tổng thống Dương Văn Minh tuyên bố đầu hàng vô điều kiện.
     ],
     videos: []
   },
+  
   {
     date: '03/1975',
     title: '1. Điểm gãy chiến lược tại "Nóc nhà" Tây Nguyên',
@@ -220,13 +221,14 @@ Trái ngược hoàn toàn với bầu không khí hăng hái ấy, miền Nam l
 
 4. Cuộc xoay chiều lịch sử thần tốc
 Có thể nói, Việt Nam trong tháng 3/1975 như một chiếc lò xo đang bật tung về một phía. Một bên là sức mạnh tập trung đạt đến đỉnh điểm của mô hình miền Bắc, bên kia là sự sụp đổ dây chuyền về cả tổ chức lẫn tâm lý của hệ thống miền Nam. Sự tương phản này đã tạo nên một cục diện xoay chuyển thần tốc, biến những ngày tháng này trở thành khúc quanh kịch tính nhất của lịch sử dân tộc. Khi niềm tin và sức mạnh tổ chức của một phía đã đạt đến độ chín muồi, nó sẽ cuốn phăng mọi rào cản, biến khát vọng thống nhất thành hiện thực chỉ trong một thời gian ngắn ngủi nhưng đầy biến động.`,
-    media: [
-      {
-        type: 'image',
-        src: 'http://googleusercontent.com/image_collection/image_retrieval/11790618020959923489_0',
-        caption: 'Quân giải phóng tiến vào Buôn Ma Thuột, mở màn chiến dịch Tây Nguyên'
+    images: [
+      { 
+        type: 'image', 
+        src: 'https://media.vov.vn/uploaded/gnnlexby/2024_05_01/giaiphong_mien_nam_1_oxpv.jpg', 
+        caption: 'Lễ chào cờ đầu tiên sau giải phóng' 
       }
-    ]
+    ],
+    videos: []
   },
   {
     date: '04/1975',
@@ -242,13 +244,14 @@ Một trong những điểm đặc biệt nhất của thời khắc lịch sử
 
 4. Bước chuyển dịch sang thời kỳ quá độ lên Chủ nghĩa xã hội
 Sự kiện tháng 4/1975 đã thực hiện một bước ngoặt về quan hệ sở hữu: tài sản quốc gia không còn phục vụ lợi ích của một nhóm tinh hoa hay các tập đoàn nước ngoài mà trở thành sở hữu toàn dân. Toàn bộ hệ thống ngân hàng, đồn điền và các cơ sở sản xuất lớn được quốc hữu hóa, phục vụ cho kế hoạch phát triển kinh tế tập trung. Đây là giai đoạn chuyển tiếp quan trọng, nơi miền Nam bắt đầu bước vào thời kỳ quá độ, hòa nhập vào dòng chảy xã hội chủ nghĩa cùng miền Bắc. Sự thay đổi này không chỉ nằm ở tên gọi hay cờ hiệu, mà là sự thay đổi triệt để về bản chất kinh tế - xã hội, hướng tới mục tiêu xây dựng một đất nước thống nhất và tự chủ.`,
-    media: [
-      {
-        type: 'image',
-        src: 'http://googleusercontent.com/image_collection/image_retrieval/9287013776545893412_0',
-        caption: 'Xe tăng húc đổ cổng Dinh Độc Lập trưa ngày 30/4/1975'
+   images: [
+      { 
+        type: 'image', 
+        src: 'https://media.vov.vn/uploaded/gnnlexby/2024_05_01/giaiphong_mien_nam_1_oxpv.jpg', 
+        caption: 'Lễ chào cờ đầu tiên sau giải phóng' 
       }
-    ]
+    ],
+    videos: []
   },
   {
     date: '05/1975 - 08/1975',
@@ -264,7 +267,8 @@ Về mặt kinh tế, miền Nam đối mặt với thực tế nghiệt ngã kh
 
 4. Cuộc dịch chuyển dân cư và phong trào đi kinh tế mới
 Để giải tỏa áp lực dân số tại các đô thị đang rơi vào tình trạng thất nghiệp và thiếu lương thực, Nhà nước đã phát động phong trào đưa dân đi xây dựng các vùng kinh tế mới. Đây là một cuộc dịch chuyển dân cư mang tính chiến lược nhưng cũng đầy gian khổ, khi hàng vạn gia đình thành phố vốn chỉ quen với nếp sống đô thị phải rời bỏ nhà cửa để khai hoang, phục hồi sản xuất nông nghiệp tại các vùng đất hoang sơ. Sự thay đổi này không chỉ nhằm mục đích tự túc lương thực tại chỗ mà còn là một phần trong kế hoạch tái cấu trúc lại sự phân bổ lao động giữa thành thị và nông thôn, tạo tiền đề vật chất cho công cuộc xây dựng chủ nghĩa xã hội trên toàn quốc.`,
-    media: []
+    images: [],
+    videos: []
   },
   {
     date: '09/1975',
@@ -283,13 +287,8 @@ Song song với việc đổi tiền, hàng loạt ngân hàng tư nhân, nhà m
 
 5. Hệ quả và sự dịch chuyển vị thế xã hội
 Chiến dịch X1 và cuộc đổi tiền đã tạo ra một cuộc "thay máu" xã hội sâu sắc. Giới tư sản và tiểu chủ vốn giàu có trước đây bỗng chốc mất đi ưu thế kinh tế, nhiều người rơi vào cảnh khó khăn hoặc phải chuyển sang lao động trực tiếp. Ngược lại, tầng lớp công nhân và nhân dân lao động nghèo được hỗ trợ lương thực và nhu yếu phẩm thông qua hệ thống mậu dịch quốc doanh mới thành lập. Dù tạo ra sự công bằng tương đối về mức sống trong ngắn hạn và giúp Nhà nước nắm quyền điều tiết xã hội, nhưng các biện pháp này cũng gây ra những xáo trộn lớn trong sản xuất và phân phối, đặt miền Nam vào một lộ trình kinh tế đầy thử thách trong những năm tiếp theo.`,
-    media: [
-      {
-        type: 'image',
-        src: 'http://googleusercontent.com/image_collection/image_retrieval/7927220093379051889_0',
-        caption: 'Cảnh người dân thực hiện đổi tiền tại miền Nam tháng 9/1975'
-      }
-    ]
+     images: [],
+    videos: []
   },
   {
     date: '11/1975',
@@ -308,18 +307,8 @@ Hội nghị đã thống nhất các bước đi cụ thể để khai sinh ra 
 
 5. Bước chuyển mình từ chiến tranh sang hòa bình
 Khép lại hội nghị, một thông điệp mạnh mẽ được gửi đi: Thời đại chiến tranh đã thực sự kết thúc, thời đại xây dựng bắt đầu. Sự thống nhất về mặt chính trị tại Hội nghị Hiệp thương tháng 11/1975 đã hóa giải những mặc cảm chia cắt, tập trung mọi nguồn lực con người và tài lực vào một kế hoạch phát triển chung. Nó tạo ra tâm thế tự tin cho dân tộc trước khi bước vào năm 1976 – năm chính thức thành lập nước Cộng hòa Xã hội chủ nghĩa Việt Nam, đánh dấu một kỷ nguyên mới trong dòng chảy lịch sử dân tộc.`,
-    media: [
-      {
-        type: 'image',
-        src: 'http://googleusercontent.com/image_collection/image_retrieval/7062649357347517266_0',
-        caption: 'Quang cảnh Hội nghị Hiệp thương chính trị thống nhất tổ chức tại Sài Gòn'
-      },
-      {
-        type: 'video',
-        src: 'vb-WsyjoW50',
-        caption: 'Phim tư liệu về Hội nghị Hiệp thương tháng 11/1975'
-      }
-    ]
+    images: [],
+    videos: []
   },
     {
     date: '1976',
@@ -327,13 +316,8 @@ Khép lại hội nghị, một thông điệp mạnh mẽ được gửi đi: T
     content: `Sau thắng lợi mùa Xuân 1975, Việt Nam đứng trước một bước ngoặt lịch sử: Thống nhất đất nước và đưa cả nước tiến lên CNXH. Tại kỳ họp thứ nhất Quốc hội khóa VI (tháng 7/1976), nước Việt Nam thống nhất được khai sinh với tên gọi Cộng hòa Xã hội chủ nghĩa Việt Nam. Về mặt lý luận, đây là việc đồng bộ hóa Kiến trúc thượng tầng chính trị để tương ứng với một lãnh thổ đã thống nhất. 
 
 Đại hội IV của Đảng (12/1976) đã xác định đường lối chung cho thời kỳ quá độ là: "Nắm vững chuyên chính vô sản, phát huy quyền làm chủ tập thể của nhân dân lao động". Đảng khẳng định đặc điểm lớn nhất của Việt Nam là từ một nền sản xuất nhỏ tiến thẳng lên CNXH, bỏ qua giai đoạn phát triển tư bản chủ nghĩa. Đây là sự lựa chọn con đường "Quá độ gián tiếp" đầy thử thách, đòi hỏi phải tự tạo ra tiền đề vật chất – kỹ thuật mà lẽ ra chủ nghĩa tư bản đã thực hiện trước đó.`,
-    media: [
-      {
-        type: 'image',
-        src: 'http://googleusercontent.com/image_collection/image_retrieval/2981947242077674043_0',
-        caption: 'Quốc hội khóa VI - Sự thống nhất về mặt pháp lý và chính trị của cả dân tộc'
-      }
-    ]
+    images: [],
+    videos: []
   },
   {
     date: '1977 – 1978',
@@ -341,7 +325,8 @@ Khép lại hội nghị, một thông điệp mạnh mẽ được gửi đi: T
     content: `Trọng tâm lý luận của giai đoạn này là cuộc đấu tranh "ai thắng ai" giữa hai con đường: Xã hội chủ nghĩa và Tư bản chủ nghĩa. Nhà nước triển khai mạnh mẽ công cuộc cải tạo XHCN ở miền Nam trên cả 3 mặt: sở hữu, quản lý và phân phối. 
 
 Về công nghiệp, toàn bộ các xí nghiệp của tư sản mại bản bị quốc hữu hóa, chuyển thành sở hữu nhà nước (toàn dân). Về nông nghiệp, phong trào hợp tác hóa được đẩy nhanh nhằm đưa nông dân vào con đường làm ăn tập thể thông qua các tập đoàn sản xuất và HTX. Mục tiêu là xác lập sự thống trị tuyệt đối của hai hình thức sở hữu: toàn dân và tập thể. Tuy nhiên, việc nóng vội xóa bỏ ngay lập tức các thành phần kinh tế tư nhân và tiểu chủ đã vô tình làm đứt gãy mạch máu lưu thông hàng hóa, gây ra sự hụt hẫng trong cung ứng nhu yếu phẩm cho xã hội.`,
-    media: []
+    images: [],
+    videos: []
   },
   {
     date: '1979',
@@ -349,7 +334,8 @@ Về công nghiệp, toàn bộ các xí nghiệp của tư sản mại bản b�
     content: `Đến năm 1979, mâu thuẫn giữa mô hình quản lý kế hoạch hóa tập trung, quan liêu với trình độ thực tế của lực lượng sản xuất đã trở nên gay gắt. Sản xuất đình trệ, đời sống nhân dân cực kỳ khó khăn. Trước bối cảnh đó, Hội nghị Trung ương 6 (khóa IV) đã đưa ra một quyết sách mang tính đột phá: Cho phép "bung ra" các thành phần kinh tế.
 
 Lần đầu tiên trong thời kỳ quá độ, Đảng thừa nhận việc sử dụng các hình thức kinh tế trung gian và khuyến khích sản xuất nằm ngoài kế hoạch tập trung. Đây là bước nhận thức lại quan trọng: Trong thời kỳ quá độ, không thể ngay lập tức tiêu diệt kinh tế hàng hóa mà phải biết tận dụng nó để phát triển lực lượng sản xuất. Đây chính là những "tiếng súng lệnh" đầu tiên cho sự thay đổi về tư duy kinh tế sau này.`,
-    media: []
+     images: [],
+    videos: []
   },
   {
     date: '1981',
@@ -357,7 +343,8 @@ Lần đầu tiên trong thời kỳ quá độ, Đảng thừa nhận việc s�
     content: `Lý luận XHCN thời kỳ này bắt đầu chú trọng đến động lực con người. Sau một thời gian dài nông dân không mặn mà với ruộng đất tập thể, Chỉ thị 100 (tháng 1/1981) ra đời, cho phép "Khoán sản phẩm đến nhóm và người lao động". 
 
 Đây là bước đi chiến lược nhằm hoàn thiện quan hệ sản xuất. Bằng cách để người nông dân trực tiếp nắm giữ khâu cuối cùng của quá trình sản xuất và hưởng lợi từ phần vượt khoán, Nhà nước đã khơi dậy được tiềm năng lao động to lớn. Chỉ thị 100 chính là sự thừa nhận thực tế rằng: Trong thời kỳ quá độ, lợi ích cá nhân chính là động lực trực tiếp thúc đẩy sản xuất, và quan hệ sản xuất phải được điều chỉnh để phù hợp với trình độ tự giác còn hạn chế của người lao động.`,
-    media: []
+   images: [],
+    videos: []
   },
   {
     date: '1982 – 1985',
@@ -365,13 +352,8 @@ Lần đầu tiên trong thời kỳ quá độ, Đảng thừa nhận việc s�
     content: `Đại hội V (1982) đã có những điều chỉnh sâu sắc về bước đi của thời kỳ quá độ, xác định nông nghiệp là "mặt trận hàng đầu". Tuy nhiên, đất nước vẫn chưa thoát khỏi cái bóng của cơ chế tập trung bao cấp. Năm 1985, cuộc tổng điều chỉnh "Giá - Lương - Tiền" với mục tiêu xóa bỏ bao cấp bằng biện pháp hành chính đã thất bại nặng nề. 
 
 Việc đổi tiền (1 đồng mới đổi 10 đồng cũ) cùng lạm phát phi mã lên tới gần 800% đã đẩy nền kinh tế vào tình trạng khủng hoảng nghiêm trọng nhất. Sai lầm này là minh chứng thực tế cho việc duy ý chí, vi phạm quy luật khách quan của kinh tế hàng hóa. Nhưng chính từ đống đổ nát đó, bài học về việc phải tôn trọng quy luật giá trị và thực hiện kinh tế nhiều thành phần đã trở thành nhận thức chung của toàn Đảng, dọn đường cho công cuộc Đổi mới toàn diện năm 1986.`,
-    media: [
-      {
-        type: 'image',
-        src: 'http://googleusercontent.com/image_collection/image_retrieval/17828357209934202104_0',
-        caption: 'Cảnh xếp hàng thời bao cấp - Một hình ảnh điển hình của cơ chế phân phối cứng nhắc'
-      }
-    ]
+    images: [],
+    videos: []
   },
   {
     date: 'Tổng kết 1976 – 1985',
@@ -382,7 +364,8 @@ Việc đổi tiền (1 đồng mới đổi 10 đồng cũ) cùng lạm phát p
 3. Phải tập trung phát triển lực lượng sản xuất làm nền tảng trước khi đẩy mạnh cải tạo quan hệ sản xuất.
 
 Dù có những sai lầm chiến lược về kinh tế, nhưng đây là giai đoạn chuẩn bị quan trọng về mặt nhận thức. Việt Nam đã bảo vệ vững chắc độc lập dân tộc và chủ quyền – tiền đề chính trị không thể thiếu để tiếp tục con đường quá độ lên CNXH một cách đúng đắn và hiệu quả hơn trong kỷ nguyên Đổi mới.`,
-    media: []
+    images: [],
+    videos: []
   }
 ];
 
