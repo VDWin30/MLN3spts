@@ -142,7 +142,7 @@ Giai đoạn này tuy chưa trực tiếp xây dựng chủ nghĩa xã hội, nh
   }
 ];
 
-// --- COMPONENT CHÍNH - MODAL OVERLAY CỘT PHẢI HOÀN CHỈNH ---
+// --- COMPONENT CHÍNH ---
 interface TimelineProps {
   containerRef?: React.RefObject<HTMLDivElement>;
 }
@@ -152,10 +152,10 @@ export function Timeline1945({ containerRef }: TimelineProps) {
   const [isMobile, setIsMobile] = useState(false);
   const modalRef = useRef<HTMLDivElement>(null);
 
-  /* 🔒 KIỂM TRA MOBILE */
+  /* KIỂM TRA MOBILE */
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 1024);
+      setIsMobile(window.innerWidth < 768); // Giảm ngưỡng mobile
     };
     
     checkMobile();
@@ -164,7 +164,7 @@ export function Timeline1945({ containerRef }: TimelineProps) {
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
-  /* 🔒 FIX KHÓA SCROLL VÀ ESC KEY */
+  /* KHÓA SCROLL VÀ XỬ LÝ ESC KEY - CẬP NHẬT */
   useEffect(() => {
     const handleEscKey = (event: KeyboardEvent) => {
       if (event.key === 'Escape' && selectedMedia) {
@@ -174,55 +174,43 @@ export function Timeline1945({ containerRef }: TimelineProps) {
 
     const handleClickOutside = (event: MouseEvent) => {
       if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
-        // Chỉ đóng khi click vào overlay bên phải
-        const clickX = event.clientX;
-        const windowWidth = window.innerWidth;
-        const leftColumnWidth = windowWidth * 0.45;
-        
-        if (clickX > leftColumnWidth) {
-          setSelectedMedia(null);
-        }
+        setSelectedMedia(null);
       }
     };
 
     if (selectedMedia) {
-      document.documentElement.style.overflow = 'hidden';
+      // Khóa scroll
       document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+      
+      // Thêm event listeners
       document.addEventListener('keydown', handleEscKey);
       document.addEventListener('mousedown', handleClickOutside);
+      
+      // Thêm class để nhận biết modal đang mở
+      document.body.classList.add('modal-open');
     } else {
-      document.documentElement.style.overflow = '';
+      // Mở lại scroll
       document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+      
+      // Xóa event listeners
       document.removeEventListener('keydown', handleEscKey);
       document.removeEventListener('mousedown', handleClickOutside);
+      
+      // Xóa class
+      document.body.classList.remove('modal-open');
     }
 
     return () => {
-      document.documentElement.style.overflow = '';
+      // Cleanup
       document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
       document.removeEventListener('keydown', handleEscKey);
       document.removeEventListener('mousedown', handleClickOutside);
+      document.body.classList.remove('modal-open');
     };
   }, [selectedMedia]);
-
-  /* 🔒 TÍNH VỊ TRÍ MODAL CHO ĐẸP */
-  const getModalPosition = () => {
-    if (isMobile) {
-      // Mobile: modal ở giữa màn hình
-      return {
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)'
-      };
-    }
-    
-    // Desktop: modal ở giữa cột phải, cao 70% từ trên xuống
-    return {
-      top: '70vh',
-      left: 'calc(45% + 27.5%)', // 45% + (55%/2)
-      transform: 'translate(-50%, -50%)'
-    };
-  };
 
   return (
     <>
@@ -267,6 +255,7 @@ export function Timeline1945({ containerRef }: TimelineProps) {
                                 src={m.src}
                                 className="w-full h-full object-cover"
                                 alt={m.caption}
+                                loading="lazy"
                               />
                             ) : (
                               <>
@@ -274,6 +263,7 @@ export function Timeline1945({ containerRef }: TimelineProps) {
                                   src={`https://img.youtube.com/vi/${m.src}/hqdefault.jpg`}
                                   className="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity"
                                   alt={m.caption}
+                                  loading="lazy"
                                 />
                                 <div className="absolute inset-0 flex items-center justify-center">
                                   <div className="w-14 h-14 bg-red-600 rounded-full flex items-center justify-center hover:scale-110 transition-transform">
@@ -301,43 +291,34 @@ export function Timeline1945({ containerRef }: TimelineProps) {
         </div>
       </div>
 
-      {/* ================= MODAL OVERLAY CỘT PHẢI HOÀN CHỈNH ================= */}
+      {/* ================= MODAL FULLSCREEN CHÍNH GIỮA ================= */}
       {selectedMedia && (
-        <div className="fixed inset-0 z-[9999]">
-          {/* OVERLAY GRADIENT: CỘT TRÁI TRONG SUỐT, CỘT PHẢI ĐEN */}
+        <>
+          {/* Overlay đen full màn hình */}
           <div 
-            className="absolute inset-0 z-[9998]"
-            style={{
-              background: isMobile 
-                ? 'rgba(0, 0, 0, 0.95)' // Mobile: che toàn màn hình
-                : `linear-gradient(to right, 
-                    rgba(0, 0, 0, 0) 0%,
-                    rgba(0, 0, 0, 0) 45%,
-                    rgba(0, 0, 0, 0.95) 45%,
-                    rgba(0, 0, 0, 0.95) 100%
-                  )`
-            }}
-            onClick={(e) => {
-              const clickX = e.clientX;
-              const windowWidth = window.innerWidth;
-              const leftColumnWidth = windowWidth * 0.45;
-              
-              // Chỉ đóng khi click vào overlay bên phải (hoặc toàn bộ trên mobile)
-              if (isMobile || clickX > leftColumnWidth) {
-                setSelectedMedia(null);
-              }
-            }}
+            className="fixed inset-0 z-[9998] bg-black/95 backdrop-blur-sm transition-opacity duration-300"
+            onClick={() => setSelectedMedia(null)}
+            aria-hidden="true"
           />
-
-          {/* MODAL CONTENT */}
-          <div 
-            ref={modalRef}
-            className="fixed z-[10000]"
-            style={getModalPosition()}
-          >
-            <div className="w-full max-w-4xl max-h-[80vh] bg-black rounded-xl overflow-hidden shadow-2xl">
+          
+          {/* Modal container - CHIẾM TOÀN BỘ MÀN HÌNH */}
+          <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
+            <div 
+              ref={modalRef}
+              className="relative w-full max-w-6xl max-h-[90vh] bg-black rounded-2xl overflow-hidden shadow-2xl 
+                         animate-in zoom-in duration-300"
+            >
+              {/* Close button */}
+              <button
+                onClick={() => setSelectedMedia(null)}
+                className="absolute top-4 right-4 z-50 bg-black/80 hover:bg-black text-white rounded-full p-3 
+                           transition-all hover:scale-110 hover:rotate-90"
+                aria-label="Đóng"
+              >
+                <X className="w-6 h-6 md:w-8 md:h-8" />
+              </button>
               
-              {/* VIDEO */}
+              {/* Media content */}
               {selectedMedia.type === 'video' ? (
                 <div className="relative w-full pt-[56.25%]">
                   <iframe
@@ -347,46 +328,36 @@ export function Timeline1945({ containerRef }: TimelineProps) {
                     frameBorder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                     allowFullScreen
-                    loading="lazy"
                   />
                 </div>
-              ) : 
-              /* IMAGE */
-              (
-                <div className="w-full max-h-[70vh] min-h-[300px] flex items-center justify-center p-4">
+              ) : (
+                <div className="w-full h-[70vh] flex items-center justify-center p-8">
                   <img
                     src={selectedMedia.src}
-                    className="max-w-full max-h-full object-contain"
+                    className="max-w-full max-h-full object-contain rounded-lg"
                     alt={selectedMedia.caption}
                     onError={(e) => {
                       const target = e.target as HTMLImageElement;
                       target.src = 'https://via.placeholder.com/800x600/333333/cccccc?text=Không+tải+được+ảnh';
-                      target.className = 'max-w-full max-h-full object-contain opacity-60';
+                      target.className = 'max-w-full max-h-full object-contain opacity-60 rounded-lg';
                     }}
                   />
                 </div>
               )}
-
-              {/* CAPTION */}
-              <div className="bg-gradient-to-t from-black via-black/95 to-transparent px-4 py-6">
-                <div className="text-white font-semibold text-lg text-center">
+              
+              {/* Caption */}
+              <div className="bg-gradient-to-t from-black via-black to-transparent px-6 py-4">
+                <p className="text-white text-lg font-semibold text-center">
                   {selectedMedia.caption}
-                </div>
-                <div className="text-white/70 text-sm text-center mt-2">
-                  {selectedMedia.type === 'image' ? 'Ảnh' : 'Video'} • {isMobile ? 'Chạm ra ngoài' : 'Click bên phải'} để đóng
-                </div>
+                </p>
+                <p className="text-gray-400 text-sm text-center mt-1">
+                  {selectedMedia.type === 'image' ? 'Ảnh' : 'Video'} • 
+                  {isMobile ? ' Chạm ra ngoài' : ' Click ra ngoài'} để đóng • Nhấn ESC
+                </p>
               </div>
             </div>
-
-            {/* CLOSE BUTTON */}
-            <button
-              onClick={() => setSelectedMedia(null)}
-              className="absolute -top-12 right-0 md:-top-16 md:right-0 z-20 bg-black/80 hover:bg-black text-white rounded-full p-3 transition-all shadow-xl"
-            >
-              <X className="w-6 h-6 md:w-8 md:h-8" />
-            </button>
           </div>
-        </div>
+        </>
       )}
     </>
   );
