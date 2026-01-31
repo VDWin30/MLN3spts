@@ -245,65 +245,75 @@ export function Timeline1945() {
         })}
       </div>
 
-      {/* ================= MODAL FIX HOÀN TOÀN ================= */}
+      {/* ================= MODAL KHÔNG CẦN CUỘN - FIX HOÀN TOÀN ================= */}
       {selectedMedia && (
-        <div className="fixed inset-0 z-[9999] flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-[9999]">
           {/* OVERLAY */}
           <div
-            className="absolute inset-0 bg-black/90 backdrop-blur-sm"
+            className="absolute inset-0 bg-black/95 backdrop-blur-sm"
             onClick={() => setSelectedMedia(null)}
           />
 
           {/* CLOSE BUTTON */}
           <button
             onClick={() => setSelectedMedia(null)}
-            className="absolute top-4 right-4 md:top-8 md:right-8 z-20 bg-black/70 hover:bg-black text-white rounded-full p-3 transition-all shadow-lg"
+            className="absolute top-6 right-6 z-20 bg-black/80 hover:bg-black text-white rounded-full p-3 transition-all shadow-xl"
           >
-            <X className="w-6 h-6 md:w-8 md:h-8" />
+            <X className="w-8 h-8" />
           </button>
 
-          {/* MEDIA CONTAINER - CĂN GIỮA HOÀN TOÀN */}
-          <div className="relative z-10 w-full max-w-5xl max-h-[85vh] bg-black rounded-xl overflow-hidden shadow-2xl">
-            
-            {/* VIDEO - TỶ LỆ CỐ ĐỊNH 16:9 */}
-            {selectedMedia.type === 'video' ? (
-              <div className="relative w-full pt-[56.25%]"> {/* 16:9 Aspect Ratio */}
-                <iframe
-                  className="absolute top-0 left-0 w-full h-full"
-                  src={`https://www.youtube.com/embed/${selectedMedia.src}?autoplay=1&rel=0&modestbranding=1&showinfo=0`}
-                  title="YouTube video player"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                  loading="lazy"
-                />
-              </div>
-            ) : 
-            /* IMAGE - CĂN GIỮA HOÀN TOÀN */
-            (
-              <div className="w-full h-full min-h-[300px] max-h-[70vh] flex items-center justify-center p-4 md:p-8">
-                <div className="relative w-full h-full flex items-center justify-center">
-                  <img
-                    src={selectedMedia.src}
-                    className="w-auto h-auto max-w-full max-h-full object-contain"
-                    alt={selectedMedia.caption}
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = 'https://via.placeholder.com/800x600/cccccc/666666?text=Không+tải+được+ảnh';
-                      target.className = 'w-auto h-auto max-w-full max-h-full object-contain opacity-50';
-                    }}
-                  />
+          {/* MAIN CONTENT */}
+          <div className="relative z-10 w-full h-full flex items-center justify-center">
+            <div className="relative w-full h-full max-w-6xl max-h-[90vh] flex flex-col mx-4 my-auto">
+              
+              {/* VIDEO */}
+              {selectedMedia.type === 'video' ? (
+                <div className="flex-1 relative min-h-0">
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="w-full h-full max-w-5xl mx-auto">
+                      <div className="relative w-full pt-[56.25%]">
+                        <iframe
+                          className="absolute top-0 left-0 w-full h-full rounded-lg"
+                          src={`https://www.youtube.com/embed/${selectedMedia.src}?autoplay=1&rel=0&modestbranding=1`}
+                          title="YouTube video player"
+                          frameBorder="0"
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                          loading="lazy"
+                        />
+                      </div>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            )}
+              ) : 
+              /* IMAGE */
+              (
+                <div className="flex-1 relative min-h-0">
+                  <div className="absolute inset-0 flex items-center justify-center p-2 md:p-4">
+                    <div className="w-full h-full flex items-center justify-center">
+                      <img
+                        src={selectedMedia.src}
+                        className="max-w-full max-h-full w-auto h-auto object-contain"
+                        alt={selectedMedia.caption}
+                        onError={(e) => {
+                          const target = e.target as HTMLImageElement;
+                          target.src = 'https://via.placeholder.com/800x600/333333/cccccc?text=Không+tải+được+ảnh';
+                          target.className = 'max-w-full max-h-full w-auto h-auto object-contain opacity-60';
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              )}
 
-            {/* CAPTION - LUÔN Ở DƯỚI CÙNG */}
-            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black via-black/90 to-transparent pt-12 pb-4 px-4 md:px-6">
-              <div className="text-white font-semibold text-base md:text-lg text-center">
-                {selectedMedia.caption}
-              </div>
-              <div className="text-white/70 text-sm text-center mt-2">
-                {selectedMedia.type === 'image' ? 'Ảnh' : 'Video'} • Nhấn ESC hoặc click ra ngoài để đóng
+              {/* CAPTION */}
+              <div className="flex-shrink-0 bg-gradient-to-t from-black via-black/95 to-transparent px-4 py-6">
+                <div className="text-white font-semibold text-lg text-center">
+                  {selectedMedia.caption}
+                </div>
+                <div className="text-white/70 text-sm text-center mt-2">
+                  {selectedMedia.type === 'image' ? 'Ảnh' : 'Video'} • Nhấn ESC để đóng
+                </div>
               </div>
             </div>
           </div>
