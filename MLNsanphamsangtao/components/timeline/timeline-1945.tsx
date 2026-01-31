@@ -70,7 +70,23 @@ Về giáo dục, ngày 8/9/1945, Chủ tịch Hồ Chí Minh ký sắc lệnh t
     content: `Ngày 6/1/1946, cuộc Tổng tuyển cử đầu tiên được tổ chức với hơn 90% cử tri đi bầu. Quốc hội khóa I ra đời, đánh dấu bước trưởng thành của Nhà nước dân chủ nhân dân. Cuối năm 1946, Hiến pháp 1946 được thông qua – bản Hiến pháp đầu tiên trong lịch sử Việt Nam.
 
 Hiến pháp 1946 khẳng định các quyền tự do dân chủ cơ bản của nhân dân và nguyên tắc quyền lực thuộc về nhân dân. Đây là bước cụ thể hóa tư tưởng Hồ Chí Minh về một nhà nước của dân, do dân và vì dân – nền tảng chính trị cho quá trình quá độ lên CNXH sau này.`,
-    media: []
+    media: [
+       { 
+        type: 'image', 
+        src: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTY5cMNXxXgCbnt7umcby639X3Xm7RDCdVaOg&s', 
+        caption: 'Chủ tịch Hồ Chí Minh đến bầu cử tại nhà số 10, phố hàng vôi, Hà Nội' 
+      },
+       { 
+        type: 'image', 
+        src: 'https://cucphuong.ninhbinh.gov.vn/public/files/van%20hoa%20xa%20h%E1%BB%99i/tong%20tuyen%20cu%20(1).jpg', 
+        caption: 'Tổng tuyển cử đầu tiên ' 
+      },
+       { 
+        type: 'image', 
+        src: 'https://cand.com.vn/Files/Image/2015/12/18/thumb_660_quoc-hoi.cand%2018-12.cand.jpg', 
+        caption: 'Quốc hội khóa I ' 
+      }
+    ]
   },
   {
     date: '19/12/1946',
