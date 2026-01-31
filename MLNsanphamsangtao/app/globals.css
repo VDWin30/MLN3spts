@@ -5,7 +5,7 @@
 @custom-variant dark (&:is(.dark *));
 
 /* SAU ĐÓ IMPORT FONTS */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400&family=Inter:wght@300;400;500;600&display=swap');
 
 /* --- GIỮ NGUYÊN KHAI BÁO MÀU CŨ CỦA BẠN --- */
 :root {
@@ -145,369 +145,173 @@
   }
 }
 
-/* ========== VIDEO FIX HOÀN CHỈNH ========== */
+/* --- CÁC CLASS TÙY CHỈNH CHO GIAO DIỆN ĐẸP --- */
 
-/* 1. Video Container Fixed - GIẢI QUYẾT VẤN ĐỀ CUỘN */
-.video-fixed-container {
-  position: relative;
-  width: 100%;
-  margin: 2rem 0;
-  scroll-margin-top: 100px; /* Điều chỉnh theo header của bạn */
-  scroll-behavior: smooth;
+/* 1. Ẩn thanh cuộn */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
 }
 
-.video-fixed-container video,
-.video-fixed-container iframe {
-  width: 100%;
-  height: auto;
-  min-height: 450px;
-  border-radius: var(--radius-xl);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
-  display: block;
-  background: #000;
+/* 2. Thanh cuộn đẹp */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+}
+.custom-scrollbar:hover::-webkit-scrollbar-thumb {
+  background-color: rgba(185, 28, 28, 0.5);
 }
 
-/* Đảm bảo video luôn hiển thị đúng vị trí khi click */
-.video-fixed-container:target {
-  animation: video-highlight 1.2s ease;
-  scroll-margin-top: 120px; /* Tăng thêm để không bị header che */
-}
-
-@keyframes video-highlight {
-  0%, 100% { 
-    background-color: transparent; 
-  }
-  50% { 
-    background-color: rgba(220, 38, 38, 0.08); 
-  }
-}
-
-/* 2. Inline Video Player - HIỂN THỊ NGAY TẠI VỊ TRÍ */
-.video-inline-player {
-  position: relative;
-  width: 100%;
-  margin: 2.5rem auto;
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  z-index: 50;
-}
-
-.video-inline-player video,
-.video-inline-player iframe {
-  width: 100%;
-  height: 500px;
-  border-radius: var(--radius-2xl);
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
-  border: 3px solid var(--primary);
-  display: block;
-}
-
-/* 3. Video Modal Fixed Position - Không cuộn */
-.video-modal-fixed {
-  position: fixed !important;
-  top: 0 !important;
-  left: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-  background: rgba(0, 0, 0, 0.95) !important;
-  z-index: 99999 !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  opacity: 0 !important;
-  visibility: hidden !important;
-  transition: opacity 0.3s ease !important;
-  overflow: hidden !important;
-}
-
-.video-modal-fixed.active {
-  opacity: 1 !important;
-  visibility: visible !important;
-}
-
-.video-modal-content-fixed {
-  width: 95% !important;
-  max-width: 1200px !important;
-  position: relative !important;
-  padding: 20px !important;
-}
-
-.video-modal-close-fixed {
-  position: absolute !important;
-  top: -50px !important;
-  right: 0 !important;
-  background: var(--destructive) !important;
-  color: white !important;
-  border: none !important;
-  width: 44px !important;
-  height: 44px !important;
-  border-radius: 50% !important;
-  font-size: 1.8rem !important;
-  cursor: pointer !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  z-index: 100000 !important;
-  transition: all 0.3s ease !important;
-}
-
-.video-modal-close-fixed:hover {
-  background: #b91c1c !important;
-  transform: rotate(90deg) scale(1.1) !important;
-}
-
-/* 4. Video Anchor Fix - Giải quyết vấn đề cuộn */
-.video-anchor {
-  display: block;
-  position: relative;
-  top: -100px; /* Điều chỉnh theo header height */
-  visibility: hidden;
-}
-
-/* 5. Video Auto Play tại vị trí */
-.video-autoplay-here {
-  position: static !important;
-  display: block !important;
-  visibility: visible !important;
-  opacity: 1 !important;
-  transform: none !important;
-  margin: 2rem 0 !important;
-  scroll-margin-top: 80px !important;
-}
-
-/* 6. Video No Scroll - Ngăn cuộn khi mở video */
-body.video-no-scroll {
-  overflow: hidden !important;
-  position: fixed !important;
-  width: 100% !important;
-  height: 100% !important;
-}
-
-/* 7. Video Lightbox - Mở tại chỗ */
-.video-lightbox {
-  position: absolute !important;
-  top: 0 !important;
-  left: 0 !important;
-  width: 100% !important;
-  height: 100% !important;
-  background: rgba(0, 0, 0, 0.98) !important;
-  z-index: 9999 !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  opacity: 0 !important;
-  visibility: hidden !important;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
-  border-radius: var(--radius-xl) !important;
-  overflow: hidden !important;
-}
-
-.video-lightbox.active {
-  opacity: 1 !important;
-  visibility: visible !important;
-}
-
-.video-lightbox-content {
-  width: 100% !important;
-  height: 100% !important;
-  padding: 20px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-
-/* 8. Video Hover Play - Hiệu ứng khi hover */
-.video-hover-play {
-  position: relative;
-  cursor: pointer;
-  overflow: hidden;
-  border-radius: var(--radius-xl);
-  transition: all 0.4s ease;
-}
-
-.video-hover-play:hover {
-  transform: scale(1.02);
-  box-shadow: 0 25px 80px rgba(220, 38, 38, 0.3);
-}
-
-.video-hover-play .play-button {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 80px;
-  height: 80px;
-  background: rgba(220, 38, 38, 0.9);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 2.5rem;
-  transition: all 0.4s ease;
-  border: 4px solid white;
-  z-index: 10;
-}
-
-.video-hover-play:hover .play-button {
-  background: rgba(185, 28, 28, 0.95);
-  transform: translate(-50%, -50%) scale(1.15);
-  box-shadow: 0 0 0 15px rgba(220, 38, 38, 0.3);
-}
-
-/* 9. Video Scroll Prevention */
-.prevent-video-scroll {
-  overflow: hidden !important;
-  height: 100% !important;
-}
-
-.video-scroll-lock {
-  position: fixed !important;
-  width: 100% !important;
-}
-
-/* ========== TIMELINE STYLES ========== */
-
-/* 1. Timeline Year Buttons */
+/* 3. Hiệu ứng cho timeline years */
 .timeline-year-btn {
   position: relative;
   overflow: hidden;
-  padding: 1rem 1.5rem;
-  background: var(--card);
-  border: 2px solid var(--border);
-  border-radius: var(--radius-lg);
-  font-family: var(--font-serif);
-  font-weight: 600;
-  font-size: 1.125rem;
-  color: var(--foreground);
-  cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 100px;
-  text-align: center;
-}
-
-.timeline-year-btn:hover {
-  background: var(--primary);
-  color: var(--primary-foreground);
-  border-color: var(--primary);
-  transform: translateY(-3px);
-  box-shadow: 0 10px 25px rgba(220, 38, 38, 0.2);
-}
-
-.timeline-year-btn.active {
-  background: var(--primary);
-  color: var(--primary-foreground);
-  border-color: var(--primary);
-  box-shadow: 0 5px 15px rgba(220, 38, 38, 0.3);
 }
 
 .timeline-year-btn::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.4) 50%, transparent 70%);
+  background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.3) 50%, transparent 70%);
   transform: translateX(-100%);
-  transition: transform 0.7s ease;
-  pointer-events: none;
+  transition: transform 0.6s;
 }
 
 .timeline-year-btn:hover::before {
   transform: translateX(100%);
 }
 
-/* 2. History Card */
+/* 4. Hiệu ứng cho card */
 .history-card {
-  background: linear-gradient(145deg, var(--card), color-mix(in oklch, var(--card) 95%, var(--muted) 5%));
-  border: 1px solid var(--border);
-  border-radius: var(--radius-xl);
+  background: linear-gradient(145deg, #ffffff, #f5f5f5);
   box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-  overflow: hidden;
-  position: relative;
-}
-
-.history-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 4px;
-  height: 100%;
-  background: linear-gradient(to bottom, #dc2626, #ea580c);
-  opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .history-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 15px 50px rgba(185, 28, 28, 0.15);
-  border-color: var(--primary);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(185, 28, 28, 0.15);
 }
 
-.history-card:hover::before {
-  opacity: 1;
-}
-
-/* 3. Timeline Navigation */
-.timeline-navigation {
-  display: flex;
-  overflow-x: auto;
-  gap: 0.75rem;
-  padding: 1rem;
-  margin: 1rem 0;
-  scrollbar-width: thin;
-  background: var(--card);
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--border);
-}
-
-.timeline-navigation::-webkit-scrollbar {
-  height: 6px;
-}
-
-.timeline-navigation::-webkit-scrollbar-thumb {
-  background: var(--primary);
-  border-radius: 3px;
-}
-
-.timeline-navigation-btn {
-  flex: 0 0 auto;
-  padding: 0.75rem 1.25rem;
-  background: var(--muted);
-  border: 2px solid transparent;
-  border-radius: var(--radius-lg);
-  cursor: pointer;
-  white-space: nowrap;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  font-family: var(--font-serif);
-  font-weight: 500;
-  font-size: 1rem;
-  color: var(--foreground);
+/* 5. Gradient border */
+.gradient-border {
   position: relative;
-  overflow: hidden;
+  border-radius: 1.5rem;
 }
 
-.timeline-navigation-btn:hover {
-  background: var(--primary);
-  color: var(--primary-foreground);
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(220, 38, 38, 0.2);
+.gradient-border::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  background: linear-gradient(45deg, #dc2626, #ea580c, #dc2626);
+  z-index: -1;
+  opacity: 0.5;
 }
 
-.timeline-navigation-btn.active {
-  background: var(--primary);
-  color: var(--primary-foreground);
-  border-color: var(--primary);
-  box-shadow: 0 5px 15px rgba(220, 38, 38, 0.3);
+/* 6. Hiệu ứng Gradient chữ mạ vàng */
+.text-gold-gradient {
+  background: linear-gradient(to bottom, #fef3c7 0%, #facc15 50%, #b45309 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0px 2px 4px rgba(0,0,0,0.3));
 }
 
-/* ========== CÁC STYLE KHÁC ========== */
+/* 7. Skeleton loading animation - ĐÃ SỬA LỖI */
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+}
 
-/* Scrollbar */
+@keyframes loading {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* 8. Responsive improvements */
+@media (max-width: 768px) {
+  .text-gold-gradient {
+    font-size: 4rem !important;
+  }
+  
+  .timeline-year-btn {
+    padding: 0.75rem;
+  }
+  
+  .tab-responsive {
+    flex-direction: column;
+  }
+  
+  .tab-responsive button {
+    width: 100%;
+    justify-content: center;
+  }
+  
+  /* SỬA SELECTOR NÀY */
+  main > section:first-child h1 {
+    font-size: 5rem !important;
+  }
+  
+  main > section:first-child h2 {
+    font-size: 1.75rem !important;
+  }
+}
+
+/* 9. Print styles */
+@media print {
+  .no-print {
+    display: none;
+  }
+  
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  
+  .timeline-content {
+    break-inside: avoid;
+  }
+  
+  button, .timeline-year-btn, audio, iframe {
+    display: none !important;
+  }
+}
+
+/* 10. Hiệu ứng audio player */
+audio::-webkit-media-controls-panel {
+  background-color: #fef3c7;
+}
+
+audio::-webkit-media-controls-play-button {
+  background-color: #dc2626;
+  border-radius: 50%;
+}
+
+audio::-webkit-media-controls-current-time-display,
+audio::-webkit-media-controls-time-remaining-display {
+  color: #dc2626;
+  font-weight: bold;
+}
+
+/* 11. Hiệu ứng focus */
+button:focus-visible {
+  outline: 2px solid #dc2626;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* 12. Custom scrollbar */
 ::-webkit-scrollbar {
   width: 10px;
 }
@@ -526,53 +330,2182 @@ body.video-no-scroll {
   background: linear-gradient(to bottom, #b91c1c, #c2410c);
 }
 
-/* Text selection */
+/* 13. Text selection */
 ::selection {
   background-color: rgba(220, 38, 38, 0.3);
   color: #000;
 }
 
-/* Responsive */
+/* 14. Smooth transitions */
+* {
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* 15. Custom focus styles */
+.focus-gold:focus {
+  box-shadow: 0 0 0 3px rgba(234, 88, 12, 0.3);
+}
+
+/* 16. Glass effect */
+.glass-effect {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* 17. Card hover effects */
+.card-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* 18. Video container fix - GIẢI QUYẾT VẤN ĐỀ CUỘN VIDEO */
+.video-container {
+  position: relative;
+  width: 100%;
+  margin: 2rem 0;
+  scroll-margin-top: 80px;
+}
+
+.video-container video,
+.video-container iframe {
+  width: 100%;
+  height: auto;
+  min-height: 400px;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  display: block;
+}
+
+/* Đảm bảo video luôn hiển thị đúng vị trí khi click */
+.video-container:target {
+  animation: highlight-video 1.5s ease;
+}
+
+@keyframes highlight-video {
+  0% { background-color: transparent; }
+  50% { background-color: rgba(220, 38, 38, 0.1); }
+  100% { background-color: transparent; }
+}
+
+/* 19. Fixed/sticky video player cho trải nghiệm tốt hơn */
+.video-player-fixed {
+  position: sticky;
+  top: 20px;
+  z-index: 100;
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1rem;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.video-player-fixed:hover {
+  box-shadow: 0 12px 48px rgba(220, 38, 38, 0.15);
+}
+
+/* 20. Modal video player */
+.video-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.video-modal.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.video-modal-content {
+  width: 90%;
+  max-width: 1000px;
+  position: relative;
+  transform: scale(0.95);
+  transition: transform 0.3s ease;
+}
+
+.video-modal.active .video-modal-content {
+  transform: scale(1);
+}
+
+.video-modal-close {
+  position: absolute;
+  top: -40px;
+  right: 0;
+  background: var(--destructive);
+  color: white;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.3s, transform 0.3s;
+}
+
+.video-modal-close:hover {
+  background: #b91c1c;
+  transform: rotate(90deg);
+}
+
+/* 21. Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+/* 22. Đảm bảo video không bị ẩn hoặc che khuất */
+.video-visible {
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+}
+
+/* 23. Responsive video */
+.responsive-video {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  height: 0;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  background: #000;
+}
+
+.responsive-video iframe,
+.responsive-video video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* 24. Video controls styling */
+.custom-video-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--card);
+  border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+  border-top: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+
+.custom-video-controls button {
+  padding: 0.5rem 1rem;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.3s;
+  font-weight: 500;
+}
+
+.custom-video-controls button:hover {
+  background: var(--accent);
+  transform: translateY(-2px);
+}
+
+.custom-video-controls button:active {
+  transform: translateY(0);
+}
+
+/* 25. Auto-scroll prevention */
+.prevent-auto-scroll {
+  scroll-behavior: auto !important;
+}
+
+/* 26. Video focus styles */
+.video-container:focus-within {
+  outline: 3px solid var(--ring);
+  outline-offset: 4px;
+  border-radius: var(--radius-lg);
+}
+
+/* 27. Video loading state */
+.video-loading {
+  position: relative;
+  min-height: 400px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--muted);
+  border-radius: var(--radius-lg);
+}
+
+.video-loading::after {
+  content: '';
+  width: 50px;
+  height: 50px;
+  border: 4px solid var(--border);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* 28. Video thumbnail với play button */
+.video-thumbnail {
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+}
+
+.video-thumbnail img {
+  width: 100%;
+  height: auto;
+  transition: transform 0.5s ease;
+}
+
+.video-thumbnail:hover img {
+  transform: scale(1.05);
+}
+
+.video-play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 70px;
+  height: 70px;
+  background: rgba(220, 38, 38, 0.8);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 2rem;
+  transition: all 0.3s ease;
+  border: 3px solid white;
+}
+
+.video-thumbnail:hover .video-play-button {
+  background: rgba(185, 28, 28, 0.9);
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+/* 29. Video playlist */
+.video-playlist {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.video-playlist-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.75rem;
+  background: var(--card);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.video-playlist-item:hover {
+  background: var(--muted);
+  transform: translateX(5px);
+}
+
+.video-playlist-item.active {
+  background: var(--primary);
+  color: var(--primary-foreground);
+  border-color: var(--primary);
+}
+
+.video-playlist-item-number {
+  width: 30px;
+  height: 30px;
+  background: var(--secondary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.video-playlist-item.active .video-playlist-item-number {
+  background: var(--primary-foreground);
+  color: var(--primary);
+}
+
+/* 30. Mobile video adjustments */
 @media (max-width: 768px) {
-  .video-fixed-container video,
-  .video-fixed-container iframe,
-  .video-inline-player video,
-  .video-inline-player iframe {
-    height: 300px;
-    min-height: 300px;
+  .video-container video,
+  .video-container iframe {
+    min-height: 250px;
   }
   
-  .video-modal-content-fixed {
-    width: 98% !important;
-    padding: 10px !important;
+  .video-player-fixed {
+    position: relative;
+    top: 0;
+    margin-bottom: 1rem;
   }
   
-  .video-hover-play .play-button {
-    width: 60px;
-    height: 60px;
-    font-size: 2rem;
+  .video-modal-content {
+    width: 95%;
   }
   
-  .video-fixed-container:target {
-    scroll-margin-top: 80px;
+  .video-play-button {
+    width: 50px;
+    height: 50px;
+    font-size: 1.5rem;
+  }
+  
+  .custom-video-controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .custom-video-controls button {
+    width: 100%;
   }
 }
 
-/* Dark Mode */
-.dark .video-fixed-container:target {
-  background-color: rgba(220, 38, 38, 0.05);
-}
-
-.dark .video-hover-play .play-button {
-  border-color: #1f2937;
-}
-
-/* Print */
+/* 31. Print styles cho video */
 @media print {
-  .video-fixed-container,
-  .video-inline-player,
-  .video-modal-fixed,
-  .video-hover-play {
+  .video-container,
+  .video-player-fixed,
+  .video-modal,
+  .video-thumbnail,
+  .video-playlist {
     display: none !important;
   }
+  
+  .video-placeholder {
+    display: block !important;
+    text-align: center;
+    font-style: italic;
+    color: var(--muted-foreground);
+    border: 1px dashed var(--border);
+    padding: 2rem;
+    margin: 1rem 0;
+    break-inside: avoid;
+  }
+}
+
+/* 32. High contrast mode support */
+@media (prefers-contrast: high) {
+  .video-container {
+    border: 3px solid var(--foreground);
+  }
+  
+  .custom-video-controls button {
+    border: 2px solid var(--foreground);
+  }
+  
+  .video-play-button {
+    border: 3px solid #000;
+    background: #000;
+  }
+}
+
+/* 33. Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .video-container,
+  .video-modal,
+  .video-thumbnail,
+  .video-playlist-item,
+  .timeline-year-btn {
+    transition: none;
+  }
+  
+  .timeline-year-btn::before {
+    display: none;
+  }
+  
+  .video-thumbnail:hover img {
+    transform: none;
+  }
+  
+  .video-modal-content {
+    transition: none;
+  }
+  
+  .video-loading::after {
+    animation: none;
+    border-top-color: transparent;
+  }
+  
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* 34. Dark mode adjustments cho video */
+.dark .video-container {
+  border-color: var(--border);
+}
+
+.dark .video-player-fixed {
+  background: var(--card);
+  border-color: var(--border);
+}
+
+.dark .custom-video-controls {
+  background: var(--card);
+  border-color: var(--border);
+}
+
+.dark .video-playlist-item {
+  background: var(--card);
+  border-color: var(--border);
+}
+
+.dark .video-playlist-item:hover {
+  background: var(--muted);
+}
+
+/* 35. Fullscreen video styles */
+.video-fullscreen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  z-index: 9998;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-fullscreen video {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* 36. Video progress bar custom */
+.custom-progress-bar {
+  width: 100%;
+  height: 6px;
+  background: var(--muted);
+  border-radius: 3px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.custom-progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(to right, #dc2626, #ea580c);
+  width: 0%;
+  transition: width 0.1s;
+}
+
+/* 37. Video quality selector */
+.video-quality-selector {
+  position: absolute;
+  bottom: 60px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  border-radius: var(--radius);
+  padding: 0.5rem;
+  min-width: 120px;
+  display: none;
+  z-index: 100;
+}
+
+.video-container:hover .video-quality-selector {
+  display: block;
+}
+
+.video-quality-item {
+  padding: 0.5rem;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+}
+
+.video-quality-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.video-quality-item.active {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+/* 38. Video chapter markers */
+.video-chapters {
+  display: flex;
+  margin-top: 1rem;
+  gap: 2px;
+}
+
+.video-chapter {
+  flex: 1;
+  height: 4px;
+  background: var(--muted);
+  cursor: pointer;
+  position: relative;
+  border-radius: 2px;
+}
+
+.video-chapter:hover {
+  background: var(--accent);
+}
+
+.video-chapter::after {
+  content: attr(data-title);
+  position: absolute;
+  top: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--foreground);
+  color: var(--background);
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+.video-chapter:hover::after {
+  opacity: 1;
+}
+
+/* 39. Video speed control */
+.video-speed-control {
+  position: absolute;
+  bottom: 60px;
+  left: 20px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  border-radius: var(--radius);
+  padding: 0.5rem;
+  min-width: 100px;
+  display: none;
+  z-index: 100;
+}
+
+.video-container:hover .video-speed-control {
+  display: block;
+}
+
+.video-speed-item {
+  padding: 0.5rem;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  text-align: center;
+}
+
+.video-speed-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.video-speed-item.active {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+/* 40. Video error state */
+.video-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  background: var(--destructive);
+  color: white;
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  text-align: center;
+}
+
+.video-error-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.video-error button {
+  margin-top: 1rem;
+  padding: 0.5rem 1.5rem;
+  background: white;
+  color: var(--destructive);
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.3s;
+}
+
+.video-error button:hover {
+  background: #f0f0f0;
+  transform: translateY(-2px);
+}
+
+/* 41. Video preloader */
+.video-preloader {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--background);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  border-radius: var(--radius-lg);
+}
+
+/* 42. Video buffering indicator */
+.video-buffering {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  border: 3px solid var(--border);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  z-index: 5;
+}
+
+/* 43. Video subtitles/captions */
+.video-captions {
+  position: absolute;
+  bottom: 80px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  color: white;
+  font-size: 1.2rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  padding: 1rem;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+  pointer-events: none;
+  z-index: 4;
+}
+
+/* 44. Video keyboard shortcuts help */
+.video-shortcuts-help {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  border-radius: var(--radius);
+  padding: 1rem;
+  max-width: 300px;
+  display: none;
+  z-index: 1000;
+}
+
+.video-container:hover .video-shortcuts-help {
+  display: block;
+}
+
+.video-shortcut-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.video-shortcut-item:last-child {
+  margin-bottom: 0;
+}
+
+/* 45. Video annotations */
+.video-annotation {
+  position: absolute;
+  background: rgba(220, 38, 38, 0.9);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  z-index: 3;
+  transition: all 0.3s;
+  font-size: 0.875rem;
+  max-width: 200px;
+}
+
+.video-annotation:hover {
+  background: rgba(185, 28, 28, 0.95);
+  transform: scale(1.05);
+}
+
+/* 46. Video end screen */
+.video-end-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-align: center;
+  padding: 2rem;
+  border-radius: var(--radius-lg);
+  z-index: 6;
+}
+
+/* 47. Video stats overlay */
+.video-stats {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius);
+  font-size: 0.75rem;
+  display: none;
+  z-index: 100;
+}
+
+.video-container:hover .video-stats {
+  display: block;
+}
+
+/* 48. Video zoom controls */
+.video-zoom-controls {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  gap: 0.5rem;
+  z-index: 100;
+}
+
+.video-zoom-button {
+  width: 40px;
+  height: 40px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: all 0.3s;
+}
+
+.video-zoom-button:hover {
+  background: rgba(220, 38, 38, 0.9);
+  transform: scale(1.1);
+}
+
+/* 49. Video pip (Picture-in-Picture) button */
+.video-pip-button {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 100;
+  transition: all 0.3s;
+}
+
+.video-pip-button:hover {
+  background: rgba(220, 38, 38, 0.9);
+  transform: scale(1.1);
+}
+
+/* 50. Video download button */
+.video-download-button {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 100;
+  transition: all 0.3s;
+}
+
+.video-download-button:hover {
+  background: rgba(220, 38, 38, 0.9);
+  transform: scale(1.1);
+}
+
+/* 51. Video share menu */
+.video-share-menu {
+  position: absolute;
+  bottom: 60px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  border-radius: var(--radius);
+  padding: 1rem;
+  min-width: 200px;
+  display: none;
+  z-index: 100;
+}
+
+.video-share-menu.active {
+  display: block;
+}
+
+.video-share-option {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: background 0.3s;
+}
+
+.video-share-option:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* 52. Video volume mixer */
+.video-volume-mixer {
+  position: absolute;
+  bottom: 60px;
+  left: 20px;
+  background: rgba(0, 0, 0, 0.9);
+  padding: 1rem;
+  border-radius: var(--radius);
+  display: none;
+  z-index: 100;
+  width: 150px;
+}
+
+.video-volume-mixer.active {
+  display: block;
+}
+
+/* 53. Video theater mode */
+.video-theater-mode {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: calc(100vh - 120px);
+  background: #000;
+  z-index: 9997;
+  display: none;
+}
+
+.video-theater-mode.active {
+  display: block;
+}
+
+/* 54. Video autoplay toggle */
+.video-autoplay-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: var(--muted);
+  border-radius: var(--radius);
+  cursor: pointer;
+  user-select: none;
+}
+
+.video-autoplay-toggle input {
+  display: none;
+}
+
+.video-autoplay-toggle .toggle-slider {
+  width: 40px;
+  height: 20px;
+  background: var(--border);
+  border-radius: 10px;
+  position: relative;
+  transition: background 0.3s;
+}
+
+.video-autoplay-toggle input:checked + .toggle-slider {
+  background: var(--primary);
+}
+
+.video-autoplay-toggle .toggle-slider::before {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background: white;
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.3s;
+}
+
+.video-autoplay-toggle input:checked + .toggle-slider::before {
+  transform: translateX(20px);
+}
+
+/* 55. Video loop toggle */
+.video-loop-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background: var(--muted);
+  border-radius: var(--radius);
+  cursor: pointer;
+  user-select: none;
+}
+
+.video-loop-toggle input {
+  display: none;
+}
+
+.video-loop-toggle .toggle-slider {
+  width: 40px;
+  height: 20px;
+  background: var(--border);
+  border-radius: 10px;
+  position: relative;
+  transition: background 0.3s;
+}
+
+.video-loop-toggle input:checked + .toggle-slider {
+  background: var(--primary);
+}
+
+.video-loop-toggle .toggle-slider::before {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  background: white;
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+  transition: transform 0.3s;
+}
+
+.video-loop-toggle input:checked + .toggle-slider::before {
+  transform: translateX(20px);
+}
+
+/* 56. Video screenshot button */
+.video-screenshot-button {
+  position: absolute;
+  bottom: 20px;
+  right: 70px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 100;
+  transition: all 0.3s;
+}
+
+.video-screenshot-button:hover {
+  background: rgba(220, 38, 38, 0.9);
+  transform: scale(1.1);
+}
+
+/* 57. Video screenshot preview */
+.video-screenshot-preview {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 200px;
+  height: 112px;
+  border: 2px solid var(--primary);
+  border-radius: var(--radius);
+  overflow: hidden;
+  z-index: 10000;
+  display: none;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.video-screenshot-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 58. Video screenshot gallery */
+.video-screenshot-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.video-screenshot-item {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  cursor: pointer;
+  aspect-ratio: 16/9;
+}
+
+.video-screenshot-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s;
+}
+
+.video-screenshot-item:hover img {
+  transform: scale(1.05);
+}
+
+.video-screenshot-delete {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background: rgba(220, 38, 38, 0.9);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.video-screenshot-item:hover .video-screenshot-delete {
+  opacity: 1;
+}
+
+/* 59. Video bookmarks */
+.video-bookmark-button {
+  position: absolute;
+  top: 70px;
+  left: 20px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 100;
+  transition: all 0.3s;
+}
+
+.video-bookmark-button:hover {
+  background: rgba(220, 38, 38, 0.9);
+  transform: scale(1.1);
+}
+
+.video-bookmark-button.bookmarked {
+  color: #facc15;
+}
+
+/* 60. Video bookmarks list */
+.video-bookmarks-list {
+  position: absolute;
+  top: 120px;
+  left: 20px;
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  border-radius: var(--radius);
+  padding: 1rem;
+  min-width: 250px;
+  max-height: 300px;
+  overflow-y: auto;
+  display: none;
+  z-index: 100;
+}
+
+.video-bookmarks-list.active {
+  display: block;
+}
+
+.video-bookmark-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: background 0.3s;
+}
+
+.video-bookmark-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.video-bookmark-time {
+  background: var(--primary);
+  color: var(--primary-foreground);
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: bold;
+}
+
+/* 61. Video transcript */
+.video-transcript {
+  margin-top: 2rem;
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.video-transcript-item {
+  padding: 0.75rem;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.video-transcript-item:hover {
+  background: var(--muted);
+}
+
+.video-transcript-item.active {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.video-transcript-time {
+  font-weight: bold;
+  color: var(--primary);
+  margin-right: 0.5rem;
+}
+
+.video-transcript-item.active .video-transcript-time {
+  color: var(--primary-foreground);
+}
+
+/* 62. Video search */
+.video-search {
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.video-search input {
+  width: 100%;
+  padding: 0.75rem 1rem 0.75rem 2.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.video-search-icon {
+  position: absolute;
+  left: 0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--muted-foreground);
+}
+
+/* 63. Video comment section */
+.video-comments {
+  margin-top: 2rem;
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+}
+
+.video-comment {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.video-comment:last-child {
+  border-bottom: none;
+}
+
+.video-comment-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+}
+
+.video-comment-content {
+  flex: 1;
+}
+
+.video-comment-author {
+  font-weight: bold;
+  margin-bottom: 0.25rem;
+}
+
+.video-comment-time {
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+}
+
+/* 64. Video related content */
+.video-related {
+  margin-top: 2rem;
+}
+
+.video-related-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.video-related-item {
+  background: var(--card);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.video-related-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.video-related-thumbnail {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+}
+
+.video-related-info {
+  padding: 1rem;
+}
+
+.video-related-title {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.video-related-meta {
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+}
+
+/* 65. Video loading skeleton */
+.video-skeleton {
+  background: linear-gradient(90deg, var(--muted) 25%, var(--border) 50%, var(--muted) 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: var(--radius-lg);
+}
+
+.video-skeleton-thumbnail {
+  width: 100%;
+  height: 200px;
+}
+
+.video-skeleton-title {
+  height: 24px;
+  width: 80%;
+  margin: 1rem 1rem 0.5rem;
+}
+
+.video-skeleton-meta {
+  height: 16px;
+  width: 60%;
+  margin: 0 1rem 1rem;
+}
+
+/* 66. Video empty state */
+.video-empty-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--muted-foreground);
+}
+
+.video-empty-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
+}
+
+/* 67. Video warning/notice */
+.video-warning {
+  background: linear-gradient(to right, #fef3c7, #fde68a);
+  border-left: 4px solid #f59e0b;
+  padding: 1rem;
+  border-radius: var(--radius);
+  margin-bottom: 1rem;
+}
+
+.video-warning.dark {
+  background: linear-gradient(to right, #78350f, #92400e);
+  border-left-color: #f59e0b;
+  color: #fef3c7;
+}
+
+/* 68. Video success message */
+.video-success {
+  background: linear-gradient(to right, #d1fae5, #a7f3d0);
+  border-left: 4px solid #10b981;
+  padding: 1rem;
+  border-radius: var(--radius);
+  margin-bottom: 1rem;
+}
+
+.video-success.dark {
+  background: linear-gradient(to right, #064e3b, #047857);
+  border-left-color: #10b981;
+  color: #d1fae5;
+}
+
+/* 69. Video error message */
+.video-error-message {
+  background: linear-gradient(to right, #fee2e2, #fecaca);
+  border-left: 4px solid #ef4444;
+  padding: 1rem;
+  border-radius: var(--radius);
+  margin-bottom: 1rem;
+}
+
+.video-error-message.dark {
+  background: linear-gradient(to right, #7f1d1d, #991b1b);
+  border-left-color: #ef4444;
+  color: #fee2e2;
+}
+
+/* 70. Video info message */
+.video-info {
+  background: linear-gradient(to right, #dbeafe, #bfdbfe);
+  border-left: 4px solid #3b82f6;
+  padding: 1rem;
+  border-radius: var(--radius);
+  margin-bottom: 1rem;
+}
+
+.video-info.dark {
+  background: linear-gradient(to right, #1e3a8a, #1e40af);
+  border-left-color: #3b82f6;
+  color: #dbeafe;
+}
+
+/* 71. Video tooltip */
+.video-tooltip {
+  position: absolute;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  white-space: nowrap;
+  z-index: 1000;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.video-tooltip.active {
+  opacity: 1;
+}
+
+/* 72. Video context menu */
+.video-context-menu {
+  position: absolute;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  min-width: 200px;
+  z-index: 1000;
+  display: none;
+}
+
+.video-context-menu.active {
+  display: block;
+}
+
+.video-context-item {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.video-context-item:hover {
+  background: var(--muted);
+}
+
+.video-context-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 0.25rem 0;
+}
+
+/* 73. Video mini player */
+.video-mini-player {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 300px;
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  overflow: hidden;
+  transform: translateY(100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.video-mini-player.active {
+  transform: translateY(0);
+}
+
+.video-mini-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  cursor: move;
+}
+
+.video-mini-close {
+  background: none;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+  font-size: 1.2rem;
+  padding: 0.25rem;
+}
+
+.video-mini-content {
+  padding: 1rem;
+}
+
+/* 74. Video playlist carousel */
+.video-playlist-carousel {
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  padding: 1rem 0;
+  scroll-snap-type: x mandatory;
+}
+
+.video-playlist-carousel::-webkit-scrollbar {
+  height: 6px;
+}
+
+.video-playlist-carousel::-webkit-scrollbar-thumb {
+  background: var(--primary);
+  border-radius: 3px;
+}
+
+.video-playlist-carousel-item {
+  flex: 0 0 auto;
+  width: 200px;
+  scroll-snap-align: start;
+}
+
+/* 75. Video categories filter */
+.video-categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.video-category {
+  padding: 0.5rem 1rem;
+  background: var(--muted);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 0.875rem;
+}
+
+.video-category:hover {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.video-category.active {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+/* 76. Video sorting options */
+.video-sort {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.video-sort-option {
+  padding: 0.5rem 1rem;
+  background: var(--muted);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.3s;
+  font-size: 0.875rem;
+}
+
+.video-sort-option:hover {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.video-sort-option.active {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+/* 77. Video pagination */
+.video-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+}
+
+.video-page-button {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--muted);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.video-page-button:hover {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.video-page-button.active {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+/* 78. Video loading more indicator */
+.video-loading-more {
+  text-align: center;
+  padding: 2rem;
+}
+
+.video-loading-more-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--border);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  margin: 0 auto 1rem;
+  animation: spin 1s linear infinite;
+}
+
+/* 79. Video grid/list view toggle */
+.video-view-toggle {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.video-view-option {
+  padding: 0.5rem 1rem;
+  background: var(--muted);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.video-view-option:hover {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.video-view-option.active {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+/* 80. Video analytics dashboard */
+.video-analytics {
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-top: 2rem;
+}
+
+.video-analytics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.video-analytics-card {
+  background: var(--background);
+  border-radius: var(--radius);
+  padding: 1rem;
+  text-align: center;
+}
+
+.video-analytics-value {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--primary);
+  margin-bottom: 0.5rem;
+}
+
+.video-analytics-label {
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+}
+
+/* 81. Video chapter navigation */
+.video-chapter-navigation {
+  display: flex;
+  overflow-x: auto;
+  gap: 1rem;
+  padding: 1rem 0;
+  margin-bottom: 1rem;
+  scrollbar-width: thin;
+}
+
+.video-chapter-button {
+  flex: 0 0 auto;
+  padding: 0.5rem 1rem;
+  background: var(--muted);
+  border-radius: var(--radius);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.3s;
+}
+
+.video-chapter-button:hover {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.video-chapter-button.active {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+/* 82. Video resolution selector */
+.video-resolution-selector {
+  position: absolute;
+  bottom: 100px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  border-radius: var(--radius);
+  padding: 0.5rem;
+  min-width: 150px;
+  z-index: 100;
+  display: none;
+}
+
+.video-container:hover .video-resolution-selector {
+  display: block;
+}
+
+.video-resolution-option {
+  padding: 0.5rem;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  text-align: center;
+}
+
+.video-resolution-option:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.video-resolution-option.active {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+/* 83. Video keyboard shortcuts overlay */
+.video-shortcuts-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+
+.video-shortcuts-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.video-shortcuts-content {
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  max-width: 600px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.video-shortcuts-title {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.video-shortcuts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.video-shortcut {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem;
+  background: var(--background);
+  border-radius: var(--radius);
+}
+
+.video-shortcut-key {
+  background: var(--primary);
+  color: var(--primary-foreground);
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-sm);
+  font-family: monospace;
+}
+
+/* 84. Video accessibility features */
+.video-accessibility {
+  margin-top: 2rem;
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+}
+
+.video-accessibility-option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.video-accessibility-option:last-child {
+  border-bottom: none;
+}
+
+/* 85. Video chapter progress */
+.video-chapter-progress {
+  display: flex;
+  height: 4px;
+  background: var(--muted);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 0.5rem;
+}
+
+.video-chapter-progress-fill {
+  height: 100%;
+  background: var(--primary);
+  transition: width 0.3s;
+}
+
+/* 86. Video timeline markers */
+.video-timeline-marker {
+  position: absolute;
+  top: -5px;
+  width: 10px;
+  height: 10px;
+  background: var(--primary);
+  border-radius: 50%;
+  transform: translateX(-50%);
+  cursor: pointer;
+  z-index: 10;
+}
+
+.video-timeline-marker:hover {
+  transform: translateX(-50%) scale(1.5);
+}
+
+/* 87. Video thumbnail hover effect */
+.video-thumbnail-hover {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius);
+}
+
+.video-thumbnail-hover img {
+  transition: transform 0.5s ease;
+}
+
+.video-thumbnail-hover:hover img {
+  transform: scale(1.1);
+}
+
+.video-thumbnail-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent 50%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 1rem;
+  color: white;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.video-thumbnail-hover:hover .video-thumbnail-overlay {
+  opacity: 1;
+}
+
+/* 88. Video play count */
+.video-play-count {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+}
+
+/* 89. Video like/dislike buttons */
+.video-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.video-like-button,
+.video-dislike-button {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--muted);
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.video-like-button:hover {
+  background: #10b981;
+  color: white;
+}
+
+.video-dislike-button:hover {
+  background: #ef4444;
+  color: white;
+}
+
+.video-like-button.active {
+  background: #10b981;
+  color: white;
+}
+
+.video-dislike-button.active {
+  background: #ef4444;
+  color: white;
+}
+
+/* 90. Video save button */
+.video-save-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--muted);
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.video-save-button:hover {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+.video-save-button.active {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+/* 91. Video share button */
+.video-share-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--muted);
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.video-share-button:hover {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}
+
+/* 92. Video report button */
+.video-report-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--muted);
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.3s;
+  color: var(--destructive);
+}
+
+.video-report-button:hover {
+  background: var(--destructive);
+  color: white;
+}
+
+/* 93. Video embed code */
+.video-embed-code {
+  background: var(--background);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  margin-top: 1rem;
+}
+
+.video-embed-code pre {
+  margin: 0;
+  overflow-x: auto;
+  font-family: monospace;
+  font-size: 0.875rem;
+}
+
+/* 94. Video QR code */
+.video-qr-code {
+  text-align: center;
+  padding: 1rem;
+  background: var(--card);
+  border-radius: var(--radius);
+  margin-top: 1rem;
+}
+
+.video-qr-code img {
+  width: 150px;
+  height: 150px;
+  margin-bottom: 0.5rem;
+}
+
+/* 95. Video download options */
+.video-download-options {
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem;
+  margin-top: 1rem;
+}
+
+.video-download-option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.video-download-option:last-child {
+  border-bottom: none;
+}
+
+.video-download-button-small {
+  padding: 0.5rem 1rem;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  border: none;
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.video-download-button-small:hover {
+  background: var(--accent);
+  transform: translateY(-2px);
+}
+
+/* 96. Video metadata */
+.video-metadata {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+}
+
+.video-metadata-item {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+/* 97. Video license information */
+.video-license {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: var(--muted);
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+}
+
+/* 98. Video attribution */
+.video-attribution {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: var(--background);
+  border-radius: var(--radius);
+  font-size: 0.875rem;
+}
+
+/* 99. Video recommendations */
+.video-recommendations {
+  margin-top: 2rem;
+}
+
+.video-recommendations-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+.video-recommendation-card {
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.video-recommendation-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.1);
+}
+
+/* 100. Video auto-play next */
+.video-autoplay-next {
+  margin-top: 2rem;
+  padding: 1rem;
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.video-autoplay-next-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.video-autoplay-next-thumbnail {
+  width: 120px;
+  height: 68px;
+  border-radius: var(--radius);
+  object-fit: cover;
+}
+
+.video-countdown {
+  width: 40px;
+  height: 40px;
+  border: 2px solid var(--primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: var(--primary);
 }
