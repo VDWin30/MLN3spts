@@ -179,6 +179,46 @@
   }
 }
 
+/* ==================== MODAL ANIMATIONS (THÊM VÀO ĐÂY) ==================== */
+@keyframes zoom-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.9) translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.animate-in {
+  animation-duration: 300ms;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  animation-fill-mode: both;
+}
+
+.zoom-in {
+  animation-name: zoom-in;
+}
+
+.fade-in {
+  animation-name: fade-in;
+}
+
+/* Ngăn scroll body khi modal mở */
+body.modal-open {
+  overflow: hidden !important;
+}
+
 /* ==================== UTILITY CLASSES ==================== */
 
 /* 1. Ẩn thanh cuộn */
@@ -1095,49 +1135,4 @@ button,
     background: var(--muted);
     border-radius: var(--radius);
   }
-  /* ==================== MODAL ANIMATIONS ==================== */
-@keyframes zoom-in {
-  0% {
-    opacity: 0;
-    transform: scale(0.9) translateY(10px);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-  }
-}
-
-@keyframes fade-in {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-.animate-in {
-  animation-duration: 300ms;
-  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-  animation-fill-mode: both;
-}
-
-.zoom-in {
-  animation-name: zoom-in;
-}
-
-.fade-in {
-  animation-name: fade-in;
-}
-
-/* Ngăn scroll body khi modal mở */
-body.modal-open {
-  overflow: hidden !important;
-}
-
-/* Đảm bảo modal hiển thị trên tất cả */
-.z-\[9998\],
-.z-\[9999\] {
-  z-index: 9998 !important;
-}
 }
