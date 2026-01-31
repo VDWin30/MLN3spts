@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import { FileText, Film, Calendar, Play, Image as ImageIcon, Video, X, ChevronRight, ChevronLeft } from 'lucide-react';
 
 // --- CẤU TRÚC DỮ LIỆU (giữ nguyên) ---
@@ -18,7 +18,7 @@ interface TimelineEvent {
 }
 
 const DATA_1945: TimelineEvent[] = [
- {
+  {
     date: '1945',
     title: 'Khái Niệm "Quá Độ Gián Tiếp" Trong Tư Tưởng Hồ Chí Minh',
     content: `Trong lý luận của chủ nghĩa Mác – Lênin và được Hồ Chí Minh vận dụng sáng tạo vào điều kiện Việt Nam, quá độ gián tiếp lên chủ nghĩa xã hội là con đường phát triển từ một nước thuộc địa, nông nghiệp lạc hậu, bỏ qua việc thiết lập chế độ tư bản chủ nghĩa hoàn chỉnh để tiến lên chủ nghĩa xã hội.
@@ -47,8 +47,8 @@ Ngay sau khi giành chính quyền, Hồ Chí Minh xác định nhiệm vụ tru
   },
   {
     date: 'Cuối năm 1945',
-    title: 'Giải quyết “giặc đói” và “giặc dốt”',
-    content: `Sau khi độc lập, đất nước rơi vào tình trạng khủng hoảng nghiêm trọng. Nạn đói năm 1945 đã làm hơn 2 triệu người chết ở miền Bắc. Trước tình hình đó, Chính phủ phát động phong trào “nhường cơm sẻ áo”, kêu gọi mỗi người dân nhịn ăn một bữa để cứu đói đồng bào. Đồng thời, phong trào tăng gia sản xuất được triển khai rộng khắp.
+    title: 'Giải quyết "giặc đói" và "giặc dốt"',
+    content: `Sau khi độc lập, đất nước rơi vào tình trạng khủng hoảng nghiêm trọng. Nạn đói năm 1945 đã làm hơn 2 triệu người chết ở miền Bắc. Trước tình hình đó, Chính phủ phát động phong trào "nhường cơm sẻ áo", kêu gọi mỗi người dân nhịn ăn một bữa để cứu đói đồng bào. Đồng thời, phong trào tăng gia sản xuất được triển khai rộng khắp.
 
 Về giáo dục, ngày 8/9/1945, Chủ tịch Hồ Chí Minh ký sắc lệnh thành lập Nha Bình dân học vụ nhằm xóa nạn mù chữ. Hàng triệu người dân đã tham gia học chữ trong những năm đầu của chính quyền cách mạng. Điều này thể hiện quan điểm của Hồ Chí Minh: xây dựng xã hội mới phải bắt đầu từ nâng cao dân trí, phát huy vai trò làm chủ của nhân dân.`,
     media: [
@@ -79,21 +79,21 @@ Hiến pháp 1946 khẳng định các quyền tự do dân chủ cơ bản củ
        { 
         type: 'image', 
         src: 'https://cucphuong.ninhbinh.gov.vn/public/files/van%20hoa%20xa%20h%E1%BB%99i/tong%20tuyen%20cu%20(1).jpg', 
-        caption: 'Tổng tuyển cử đầu tiên ' 
+        caption: 'Tổng tuyển cử đầu tiên' 
       },
        { 
         type: 'image', 
         src: 'https://cand.com.vn/Files/Image/2015/12/18/thumb_660_quoc-hoi.cand%2018-12.cand.jpg', 
-        caption: 'Quốc hội khóa I ' 
+        caption: 'Quốc hội khóa I' 
       }
     ]
   },
   {
     date: '19/12/1946',
     title: 'Toàn quốc kháng chiến',
-    content: `Trước dã tâm xâm lược trở lại của thực dân Pháp, ngày 19/12/1946, Chủ tịch Hồ Chí Minh ra Lời kêu gọi Toàn quốc kháng chiến với tinh thần: “Chúng ta thà hy sinh tất cả chứ nhất định không chịu mất nước, nhất định không chịu làm nô lệ.”
+    content: `Trước dã tâm xâm lược trở lại của thực dân Pháp, ngày 19/12/1946, Chủ tịch Hồ Chí Minh ra Lời kêu gọi Toàn quốc kháng chiến với tinh thần: "Chúng ta thà hy sinh tất cả chứ nhất định không chịu mất nước, nhất định không chịu làm nô lệ."
 
-Cuộc kháng chiến chống Pháp bước vào giai đoạn toàn diện, lâu dài. Hồ Chí Minh xác định phương châm kháng chiến là “toàn dân, toàn diện, trường kỳ, tự lực cánh sinh”. Đây cũng là giai đoạn thể hiện rõ đặc điểm của thời kỳ quá độ: vừa chiến đấu bảo vệ độc lập, vừa xây dựng nền tảng kinh tế – xã hội mới.`,
+Cuộc kháng chiến chống Pháp bước vào giai đoạn toàn diện, lâu dài. Hồ Chí Minh xác định phương châm kháng chiến là "toàn dân, toàn diện, trường kỳ, tự lực cánh sinh". Đây cũng là giai đoạn thể hiện rõ đặc điểm của thời kỳ quá độ: vừa chiến đấu bảo vệ độc lập, vừa xây dựng nền tảng kinh tế – xã hội mới.`,
     media: [
       { 
         type: 'image', 
@@ -121,14 +121,14 @@ Thắng lợi này củng cố niềm tin của nhân dân, nâng cao vị thế
   {
     date: '1953',
     title: 'Luật Cải cách ruộng đất',
-    content: `Ngày 4/12/1953, Quốc hội thông qua Luật Cải cách ruộng đất. Mục tiêu là xóa bỏ quan hệ sản xuất phong kiến ở nông thôn, thực hiện khẩu hiệu “người cày có ruộng”. Chính sách này tịch thu ruộng đất của địa chủ phản động chia cho nông dân nghèo.
+    content: `Ngày 4/12/1953, Quốc hội thông qua Luật Cải cách ruộng đất. Mục tiêu là xóa bỏ quan hệ sản xuất phong kiến ở nông thôn, thực hiện khẩu hiệu "người cày có ruộng". Chính sách này tịch thu ruộng đất của địa chủ phản động chia cho nông dân nghèo.
 
 Cải cách ruộng đất không chỉ có ý nghĩa kinh tế mà còn mang ý nghĩa chính trị sâu sắc: củng cố khối liên minh công – nông, tăng cường hậu phương kháng chiến và chuẩn bị điều kiện cho sự phát triển tiếp theo của cách mạng.`,
     media: [
       { 
         type: 'video', 
         src: 'h6qEJkQwFPs', 
-        caption: 'Ngày này năm xưa 4-12-1953: Luật Cải cách ruộng đất được thông qua' 
+        caption: 'Ngày này năm xưa 4-12-1953: Luật Cải cách ruộng đất được thông qua' 
       }
     ]
   },
@@ -142,11 +142,12 @@ Giai đoạn này tuy chưa trực tiếp xây dựng chủ nghĩa xã hội, nh
   }
 ];
 
-// --- COMPONENT CHÍNH - ĐÃ CẬP NHẬT VỚI MODAL VIDEO FIXED ---
+// --- COMPONENT CHÍNH - HOÀN CHỈNH VỚI MODAL VIDEO MỞ TẠI CHỖ ---
 export function Timeline1945() {
   const [activeTab, setActiveTab] = useState<'timeline' | 'gallery'>('timeline');
   const [selectedMedia, setSelectedMedia] = useState<MediaItem | null>(null);
   const [showAllMedia, setShowAllMedia] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   const allMedia = DATA_1945.flatMap(event => 
     event.media.map(m => ({ 
@@ -161,8 +162,101 @@ export function Timeline1945() {
   // Hàm kiểm tra nội dung ngắn
   const isShortContent = (content: string) => {
     const wordCount = content.split(/\s+/).length;
-    return wordCount < 150; // Nếu ít hơn 150 từ coi là ngắn
+    return wordCount < 150;
   };
+
+  // Hàm xử lý mở modal - ĐÃ TỐI ƯU
+  const handleOpenMedia = (media: MediaItem) => {
+    setSelectedMedia(media);
+    setIsModalOpen(true);
+    
+    // Lưu scroll position trước khi lock
+    const scrollY = window.scrollY;
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.width = '100%';
+    document.body.style.overflow = 'hidden';
+  };
+
+  // Hàm xử lý đóng modal - ĐÃ TỐI ƯU
+  const handleCloseMedia = () => {
+    setIsModalOpen(false);
+    
+    // Khôi phục scroll position
+    const scrollY = document.body.style.top;
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.width = '';
+    document.body.style.overflow = '';
+    
+    if (scrollY) {
+      window.scrollTo(0, parseInt(scrollY || '0') * -1);
+    }
+    
+    setTimeout(() => {
+      setSelectedMedia(null);
+    }, 300);
+  };
+
+  // Hàm chuyển sang media trước/tiếp theo
+  const handlePrevMedia = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!selectedMedia) return;
+    
+    const currentIndex = allMedia.findIndex(m => 
+      m.src === selectedMedia.src && m.type === selectedMedia.type
+    );
+    const prevIndex = (currentIndex - 1 + allMedia.length) % allMedia.length;
+    setSelectedMedia(allMedia[prevIndex]);
+  };
+
+  const handleNextMedia = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    if (!selectedMedia) return;
+    
+    const currentIndex = allMedia.findIndex(m => 
+      m.src === selectedMedia.src && m.type === selectedMedia.type
+    );
+    const nextIndex = (currentIndex + 1) % allMedia.length;
+    setSelectedMedia(allMedia[nextIndex]);
+  };
+
+  // Xử lý phím ESC để đóng modal
+  useEffect(() => {
+    const handleEscapeKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && isModalOpen) {
+        handleCloseMedia();
+      }
+    };
+
+    window.addEventListener('keydown', handleEscapeKey);
+    
+    return () => {
+      window.removeEventListener('keydown', handleEscapeKey);
+    };
+  }, [isModalOpen]);
+
+  // Ngăn scroll khi modal mở
+  useEffect(() => {
+    if (isModalOpen) {
+      const handleScroll = (e: Event) => {
+        e.preventDefault();
+        e.stopPropagation();
+        return false;
+      };
+
+      // Ngăn scroll bằng nhiều cách
+      document.addEventListener('scroll', handleScroll, { passive: false });
+      document.addEventListener('wheel', handleScroll, { passive: false });
+      document.addEventListener('touchmove', handleScroll, { passive: false });
+
+      return () => {
+        document.removeEventListener('scroll', handleScroll);
+        document.removeEventListener('wheel', handleScroll);
+        document.removeEventListener('touchmove', handleScroll);
+      };
+    }
+  }, [isModalOpen]);
 
   return (
     <div className="space-y-8">
@@ -217,7 +311,7 @@ export function Timeline1945() {
       {/* Content Area */}
       <div className="min-h-[600px] animate-in fade-in duration-700">
         
-        {/* TAB DÒNG THỜI GIAN - ĐÃ CẬP NHẬT VỚI GRID NGANG */}
+        {/* TAB DÒNG THỜI GIAN */}
         {activeTab === 'timeline' && (
           <div className="space-y-12">
             {DATA_1945.map((event, idx) => {
@@ -246,7 +340,7 @@ export function Timeline1945() {
                       </div>
                     </div>
 
-                    {/* Content and Media - CẬP NHẬT: Grid ngang khi nội dung ngắn */}
+                    {/* Content and Media */}
                     <div className="p-6">
                       {event.media.length > 0 ? (
                         <div className={`${contentIsShort ? 'grid grid-cols-1 lg:grid-cols-3 gap-8' : 'space-y-8'}`}>
@@ -263,9 +357,8 @@ export function Timeline1945() {
                             </div>
                           </div>
 
-                          {/* Media Gallery - Grid ngang hoặc dọc tùy vào độ dài nội dung */}
+                          {/* Media Gallery */}
                           {contentIsShort ? (
-                            // Grid ngang khi nội dung ngắn
                             <div className="lg:col-span-1 space-y-4">
                               <div className="flex items-center gap-2 mb-2">
                                 <div className="flex items-center gap-2 text-gray-700 font-semibold">
@@ -279,7 +372,7 @@ export function Timeline1945() {
                                   <div 
                                     key={mediaIdx} 
                                     className="group relative rounded-xl overflow-hidden border border-gray-300 bg-white shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer"
-                                    onClick={() => setSelectedMedia(media)}
+                                    onClick={() => handleOpenMedia(media)}
                                   >
                                     <div className="aspect-video overflow-hidden bg-gray-100">
                                       {media.type === 'image' ? (
@@ -324,7 +417,6 @@ export function Timeline1945() {
                               </div>
                             </div>
                           ) : (
-                            // Grid dọc phía dưới khi nội dung dài
                             <div className="w-full pt-8 border-t border-gray-100">
                               <div className="flex items-center gap-2 mb-6">
                                 <div className="flex items-center gap-2 text-gray-700 font-semibold">
@@ -338,7 +430,7 @@ export function Timeline1945() {
                                   <div 
                                     key={mediaIdx} 
                                     className="group relative rounded-xl overflow-hidden border border-gray-300 bg-white shadow-sm hover:shadow-xl transition-all duration-300 cursor-pointer"
-                                    onClick={() => setSelectedMedia(media)}
+                                    onClick={() => handleOpenMedia(media)}
                                   >
                                     <div className="aspect-video overflow-hidden bg-gray-100">
                                       {media.type === 'image' ? (
@@ -382,7 +474,6 @@ export function Timeline1945() {
                           )}
                         </div>
                       ) : (
-                        // Không có media
                         <div className="prose prose-lg max-w-none">
                           <div className="text-gray-700 leading-relaxed space-y-4">
                             {event.content.split('\n\n').map((paragraph, pIdx) => (
@@ -410,7 +501,7 @@ export function Timeline1945() {
                 <div 
                   key={idx} 
                   className="group relative rounded-2xl overflow-hidden border border-gray-300 bg-white shadow-sm hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 cursor-pointer"
-                  onClick={() => setSelectedMedia(media)}
+                  onClick={() => handleOpenMedia(media)}
                 >
                   {/* Media Preview */}
                   <div className="aspect-video overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200">
@@ -490,125 +581,88 @@ export function Timeline1945() {
         )}
       </div>
 
-      {/* Media Modal - ĐÃ CẬP NHẬT: Sử dụng flex và overflow-y-auto để xử lý scroll */}
+      {/* VIDEO/IMAGE MODAL - HOÀN CHỈNH MỞ TẠI CHỖ */}
       {selectedMedia && (
         <div 
-          className="fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-4"
-          onClick={() => setSelectedMedia(null)}
+          className={`video-modal-fixed ${isModalOpen ? 'active' : ''}`}
+          onClick={handleCloseMedia}
         >
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              setSelectedMedia(null);
-            }}
-            className="absolute top-6 right-6 text-white hover:text-red-300 transition-colors p-3 bg-black/50 rounded-full z-10 hover:bg-black/70"
-          >
-            <X className="w-8 h-8" />
-          </button>
-          
           <div 
-            className="relative w-full max-w-6xl flex flex-col items-center justify-center"
+            className="video-modal-container"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* Container chính với max-height cố định */}
-            <div className="w-full bg-gray-900 rounded-2xl overflow-hidden max-h-[90vh] flex flex-col">
-              {/* Nội dung video/ảnh - luôn visible */}
-              <div className="flex-1 min-h-0">
-                {selectedMedia.type === 'image' ? (
-                  <div className="w-full h-full flex items-center justify-center">
-                    <img 
-                      src={selectedMedia.src} 
-                      alt={selectedMedia.caption}
-                      className="w-auto h-auto max-w-full max-h-[70vh] object-contain"
-                      onError={(e) => {
-                        e.currentTarget.src = "https://placehold.co/800x600/ef4444/ffffff?text=Không+thể+tải+ảnh";
-                      }}
-                    />
+            <div className="video-modal-player">
+              {selectedMedia.type === 'image' ? (
+                <img 
+                  src={selectedMedia.src} 
+                  alt={selectedMedia.caption}
+                  className="w-full h-full object-contain"
+                  onError={(e) => {
+                    e.currentTarget.src = "https://placehold.co/800x600/ef4444/ffffff?text=Không+thể+tải+ảnh";
+                  }}
+                />
+              ) : (
+                <iframe
+                  src={`https://www.youtube.com/embed/${selectedMedia.src}?autoplay=1&rel=0&modestbranding=1`}
+                  title={selectedMedia.caption}
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowFullScreen
+                  className="w-full h-full"
+                  loading="lazy"
+                />
+              )}
+            </div>
+            
+            <button 
+              className="video-modal-close-btn"
+              onClick={handleCloseMedia}
+              aria-label="Đóng"
+            >
+              ×
+            </button>
+
+            {/* Thông tin caption */}
+            <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 via-black/60 to-transparent p-6 text-white z-10">
+              <div className="flex items-start gap-3">
+                <div className={`w-3 h-3 rounded-full mt-2 flex-shrink-0 ${
+                  selectedMedia.type === 'image' ? 'bg-red-500' : 'bg-amber-500'
+                }`}></div>
+                <div className="flex-1">
+                  <div className="flex items-center gap-3 mb-2">
+                    <span className="text-xs font-semibold uppercase tracking-wide bg-white/20 px-3 py-1 rounded-full">
+                      {selectedMedia.type === 'image' ? 'Ảnh tư liệu' : 'Video tư liệu'}
+                    </span>
                   </div>
-                ) : (
-                  <div className="relative w-full pt-[56.25%]"> {/* 16:9 aspect ratio */}
-                    <iframe
-                      width="100%"
-                      height="100%"
-                      src={`https://www.youtube.com/embed/${selectedMedia.src}?autoplay=1&rel=0`}
-                      title={selectedMedia.caption}
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                      allowFullScreen
-                      className="absolute top-0 left-0 w-full h-full"
-                    />
-                  </div>
-                )}
-              </div>
-              
-              {/* Thông tin caption - có thể scroll nếu dài */}
-              <div className="p-6 bg-gray-800 border-t border-gray-700">
-                <div className="flex items-start gap-4">
-                  <div className={`w-4 h-4 rounded-full mt-1 flex-shrink-0 ${
-                    selectedMedia.type === 'image' ? 'bg-red-500' : 'bg-amber-500'
-                  }`}></div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-3">
-                      <span className="text-xs font-semibold uppercase tracking-wide text-gray-300 bg-gray-700 px-3 py-1 rounded-full">
-                        {selectedMedia.type === 'image' ? 'Ảnh tư liệu' : 'Video tư liệu'}
-                      </span>
-                      <span className="text-xs text-gray-400">
-                        {selectedMedia.type === 'video' ? 'Nhấn phát để xem' : 'Nhấn để phóng to'}
-                      </span>
-                    </div>
-                    <h3 className="text-xl font-bold text-white mb-2">{selectedMedia.caption}</h3>
-                    
-                    {/* Hiển thị thêm các video khác nếu có */}
-                    {selectedMedia.type === 'video' && (
-                      <div className="mt-4 pt-4 border-t border-gray-700">
-                        <p className="text-sm text-gray-300 mb-2">Video khác</p>
-                        <div className="text-lg font-semibold text-white">
-                          ĐẠI HỘI ĐẢNG LẦN THỨ III
-                          <span className="block text-sm text-gray-300 mt-1">Video tư liệu lịch sử</span>
-                        </div>
-                      </div>
-                    )}
-                  </div>
+                  <h3 className="text-lg font-bold">{selectedMedia.caption}</h3>
                 </div>
               </div>
             </div>
-            
-            {/* Navigation buttons nếu có nhiều media */}
-            {allMedia.length > 1 && (
-              <div className="flex items-center justify-center gap-4 mt-6">
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    const currentIndex = allMedia.findIndex(m => 
-                      m.src === selectedMedia.src && m.type === selectedMedia.type
-                    );
-                    const prevIndex = (currentIndex - 1 + allMedia.length) % allMedia.length;
-                    setSelectedMedia(allMedia[prevIndex]);
-                  }}
-                  className="p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors"
-                >
-                  <ChevronLeft className="w-6 h-6 text-white" />
-                </button>
-                <div className="text-white text-sm">
-                  {allMedia.findIndex(m => 
-                    m.src === selectedMedia.src && m.type === selectedMedia.type
-                  ) + 1} / {allMedia.length}
-                </div>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    const currentIndex = allMedia.findIndex(m => 
-                      m.src === selectedMedia.src && m.type === selectedMedia.type
-                    );
-                    const nextIndex = (currentIndex + 1) % allMedia.length;
-                    setSelectedMedia(allMedia[nextIndex]);
-                  }}
-                  className="p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors"
-                >
-                  <ChevronRight className="w-6 h-6 text-white" />
-                </button>
-              </div>
-            )}
           </div>
+
+          {/* Navigation buttons nếu có nhiều media */}
+          {allMedia.length > 1 && (
+            <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex items-center gap-4 z-20">
+              <button
+                onClick={handlePrevMedia}
+                className="p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors backdrop-blur-sm"
+                aria-label="Media trước"
+              >
+                <ChevronLeft className="w-6 h-6 text-white" />
+              </button>
+              <div className="text-white text-sm bg-black/50 px-3 py-1 rounded-full">
+                {allMedia.findIndex(m => 
+                  m.src === selectedMedia.src && m.type === selectedMedia.type
+                ) + 1} / {allMedia.length}
+              </div>
+              <button
+                onClick={handleNextMedia}
+                className="p-3 bg-white/10 hover:bg-white/20 rounded-full transition-colors backdrop-blur-sm"
+                aria-label="Media tiếp theo"
+              >
+                <ChevronRight className="w-6 h-6 text-white" />
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>
